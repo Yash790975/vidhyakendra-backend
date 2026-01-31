@@ -1,0 +1,4791 @@
+{
+  "info": {
+    "name": "School/Coaching Management Collection",
+    "_postman_id": "subscription-api-collection",
+    "description": "API collection for Subscription Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    { 
+			"name": "Super Admin Authentications",
+			"item": [
+				{
+				"name": "Add Admin",
+				"request": {
+					"method": "POST",
+					"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+					],
+					"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"temporaryPassword123\"\n}"
+					},
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"add"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Update Admin",
+				"request": {
+					"method": "POST",
+					"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+					],
+					"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"68b53de1b15c8fc17680d281\",\n  \"name\": \"Updated Admin Name\",\n  \"email\": \"updated@example.com\",\n  \"password\": \"newPassword123\"\n}"
+					},
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"update"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Get All Admins",
+				"request": {
+					"method": "GET",
+					"header": [],
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/getAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"getAll"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Get Admin By ID",
+				"request": {
+					"method": "GET",
+					"header": [],
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/getById/68b53de1b15c8fc17680d281",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"getById",
+						"68b53de1b15c8fc17680d281"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Delete Admin",
+				"request": {
+					"method": "DELETE",
+					"header": [],
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/68b53de1b15c8fc17680d281",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"68b53de1b15c8fc17680d281"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Admin Login",
+				"event": [
+					{
+					"listen": "test",
+					"script": {
+						"exec": [
+						"if (pm.response.code === 200 && pm.response.json().token) {",
+						"    pm.globals.set('authToken', pm.response.json().token);",
+						"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+					}
+				],
+				"request": {
+					"method": "POST",
+					"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+					],
+					"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+					},
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"login"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Request OTP",
+				"event": [
+					{
+					"listen": "test",
+					"script": {
+						"exec": [
+						"if (pm.response.code === 200) {",
+						"    console.log('OTP sent successfully');",
+						"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+					}
+				],
+				"request": {
+					"method": "POST",
+					"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+					],
+					"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@example.com\"\n}"
+					},
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/request-otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"request-otp"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Verify OTP",
+				"event": [
+					{
+					"listen": "test",
+					"script": {
+						"exec": [
+						"if (pm.response.code === 200) {",
+						"    pm.globals.set('verifiedOTP', pm.request.body.raw.otp);",
+						"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+					}
+				],
+				"request": {
+					"method": "POST",
+					"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+					],
+					"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@example.com\",\n  \"otp\": \"123456\"\n}"
+					},
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/verify-otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"verify-otp"
+					]
+					}
+				},
+				"response": []
+				},
+				{
+				"name": "Change Password",
+				"request": {
+					"method": "POST",
+					"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+					],
+					"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@example.com\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"newSecurePassword123\"\n}"
+					},
+					"url": {
+					"raw": "http://localhost:4000/sms/admin/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"sms",
+						"admin",
+						"change-password"
+					]
+					}
+				},
+				"response": []
+				}
+			]
+		},
+    {
+      "name": "Subscription Management Module",
+      "item": [
+        {
+          "name": "Subscription Plan Master",
+          "item": [
+            {
+              "name": "Create Plan Master - Monthly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_name\": \"Monthly\",\n  \"plan_type\": \"subscription\",\n  \"duration_months\": 1,\n  \"description\": \"Monthly subscription plan\",\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Master - Quarterly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_name\": \"Quarterly\",\n  \"plan_type\": \"subscription\",\n  \"duration_months\": 3,\n  \"description\": \"Quarterly subscription plan with 10% discount\",\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Master - Yearly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_name\": \"Yearly\",\n  \"plan_type\": \"subscription\",\n  \"duration_months\": 12,\n  \"description\": \"Yearly subscription plan\",\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans"]
+                }
+              }
+            },
+            {
+              "name": "Get All Plan Masters",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans"]
+                }
+              }
+            },
+            {
+              "name": "Get Active Plan Masters",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans/active",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans", "active"]
+                }
+              }
+            },
+            {
+              "name": "Get Plan Master By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_PLAN_MASTER_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Plan Master",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Updated description\",\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_PLAN_MASTER_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Plan Master",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-plans/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-plans", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_PLAN_MASTER_ID"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Subscription Plan Variants",
+          "item": [
+            {
+              "name": "Create Plan Variant - School Monthly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_master_id\": \"YOUR_MONTHLY_PLAN_MASTER_ID\",\n  \"applicable_for\": \"school\",\n  \"price\": 2999,\n  \"discount_percentage\": 0,\n  \"features\": {\n    \"student_teacher_management\": true,\n    \"attendance_system\": true,\n    \"fee_collection\": true,\n    \"exam_management\": true,\n    \"parent_app\": true\n  },\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Variant - School + Coaching Monthly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_master_id\": \"YOUR_MONTHLY_PLAN_MASTER_ID\",\n  \"applicable_for\": \"both\",\n  \"price\": 3999,\n  \"discount_percentage\": 0,\n  \"features\": {\n    \"all_school_features\": true,\n    \"all_coaching_features\": true,\n    \"unified_dashboard\": true,\n    \"priority_support\": true,\n    \"custom_branding\": true\n  },\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Variant - Coaching Monthly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_master_id\": \"YOUR_MONTHLY_PLAN_MASTER_ID\",\n  \"applicable_for\": \"coaching\",\n  \"price\": 1999,\n  \"discount_percentage\": 0,\n  \"features\": {\n    \"batch_management\": true,\n    \"online_test_series\": true,\n    \"study_material_sharing\": true,\n    \"performance_analytics\": true,\n    \"student_app\": true\n  },\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Variant - School Yearly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_master_id\": \"YOUR_YEARLY_PLAN_MASTER_ID\",\n  \"applicable_for\": \"school\",\n  \"price\": 29990,\n  \"discount_percentage\": 17,\n  \"features\": {\n    \"student_teacher_management\": true,\n    \"attendance_system\": true,\n    \"fee_collection\": true,\n    \"exam_management\": true,\n    \"parent_app\": true\n  },\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Variant - School + Coaching Yearly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_master_id\": \"YOUR_YEARLY_PLAN_MASTER_ID\",\n  \"applicable_for\": \"both\",\n  \"price\": 39990,\n  \"discount_percentage\": 17,\n  \"features\": {\n    \"all_school_features\": true,\n    \"all_coaching_features\": true,\n    \"unified_dashboard\": true,\n    \"priority_support\": true,\n    \"custom_branding\": true\n  },\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Create Plan Variant - Coaching Yearly",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"plan_master_id\": \"YOUR_YEARLY_PLAN_MASTER_ID\",\n  \"applicable_for\": \"coaching\",\n  \"price\": 19990,\n  \"discount_percentage\": 17,\n  \"features\": {\n    \"batch_management\": true,\n    \"online_test_series\": true,\n    \"study_material_sharing\": true,\n    \"performance_analytics\": true,\n    \"student_app\": true\n  },\n  \"is_active\": true\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Get All Plan Variants",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants"]
+                }
+              }
+            },
+            {
+              "name": "Get Plan Variants By Institute Type - School",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/institute/school",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", "institute", "school"]
+                }
+              }
+            },
+            {
+              "name": "Get Plan Variants By Institute Type - Coaching",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/institute/coaching",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", "institute", "coaching"]
+                }
+              }
+            },
+            {
+              "name": "Get Plan Variants By Institute Type - Both",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/institute/both",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", "institute", "both"]
+                }
+              }
+            },
+            {
+              "name": "Get Plan Variants By Plan Master ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/plan-master/:plan_master_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", "plan-master", ":plan_master_id"],
+                  "variable": [
+                    {
+                      "key": "plan_master_id",
+                      "value": "YOUR_PLAN_MASTER_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Plan Variant By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_PLAN_VARIANT_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Plan Variant",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"price\": 3499,\n  \"discount_percentage\": 5\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_PLAN_VARIANT_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Plan Variant",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/plan-variants/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "plan-variants", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_PLAN_VARIANT_ID"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admins Onboarding Module",
+      "item": [
+        {
+          "name": "Onboarding",
+          "item": [
+            {
+              "name": "Create Onboarding - School",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_name\": \"St. Xavier's High School\",\n  \"institute_type\": \"school\",\n  \"owner_name\": \"Dr. Rajesh Kumar\",\n  \"designation\": \"Principal\",\n  \"email\": \"rajesh.kumar@stxaviers.edu\",\n  \"mobile\": \"9876543210\",\n  \"address\": \"123, MG Road, Bhopal, Madhya Pradesh - 462001\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding"]
+                }
+              }
+            },
+            {
+              "name": "Create Onboarding - Coaching",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_name\": \"Brilliant Academy\",\n  \"institute_type\": \"coaching\",\n  \"owner_name\": \"Amit Sharma\",\n  \"designation\": \"Director\",\n  \"email\": \"amit@brilliantacademy.com\",\n  \"mobile\": \"9123456789\",\n  \"address\": \"45, Civil Lines, Bhopal, Madhya Pradesh - 462002\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding"]
+                }
+              }
+            },
+            {
+              "name": "Create Onboarding - Both",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_name\": \"Wisdom International School & Coaching\",\n  \"institute_type\": \"both\",\n  \"owner_name\": \"Mrs. Priya Verma\",\n  \"designation\": \"Owner\",\n  \"email\": \"priya@wisdom.edu\",\n  \"mobile\": \"9988776655\",\n  \"address\": \"78, Arera Colony, Bhopal, Madhya Pradesh - 462016\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding"]
+                }
+              }
+            },
+            {
+              "name": "Send OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mobile\": \"9876543210\",\n  \"email\": \"rajesh.kumar@stxaviers.edu\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/send-otp",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", "send-otp"]
+                }
+              }
+            },
+            {
+              "name": "Resend OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mobile\": \"9876543210\",\n  \"email\": \"rajesh.kumar@stxaviers.edu\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/resend-otp",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", "resend-otp"]
+                }
+              }
+            },
+            {
+              "name": "Verify OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mobile\": \"9876543210\",\n  \"otp\": \"123456\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/verify-otp",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", "verify-otp"]
+                }
+              }
+            },
+            {
+              "name": "Get All Onboardings",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding"]
+                }
+              }
+            },
+            {
+              "name": "Get Verified Onboardings",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/verified",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", "verified"]
+                }
+              }
+            },
+            {
+              "name": "Get Unverified Onboardings",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/unverified",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", "unverified"]
+                }
+              }
+            },
+            {
+              "name": "Get Onboarding By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_ONBOARDING_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Onboarding",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"designation\": \"Principal & Director\",\n  \"address\": \"Updated Address, Bhopal, MP - 462001\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_ONBOARDING_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Onboarding",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_ONBOARDING_ID"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Institute Details",
+          "item": [
+            {
+              "name": "Create Institute Details - School",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"onboarding_basic_info_id\": \"YOUR_BASIC_INFO_ID\",\n  \"school_board\": \"CBSE\",\n  \"school_type\": \"private\",\n  \"classes_offered\": [\"Nursery\", \"KG\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\", \"12\"],\n  \"medium\": \"english\",\n  \"courses_offered\": [\"Science\", \"Commerce\", \"Arts\"],\n  \"approx_students_range\": \"500-1000\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details"]
+                }
+              }
+            },
+            {
+              "name": "Create Institute Details - Coaching",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"onboarding_basic_info_id\": \"YOUR_BASIC_INFO_ID\",\n  \"classes_offered\": [\"9\", \"10\", \"11\", \"12\"],\n  \"medium\": \"english\",\n  \"courses_offered\": [\"JEE Preparation\", \"NEET Preparation\", \"Foundation Course\"],\n  \"approx_students_range\": \"101-250\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details"]
+                }
+              }
+            },
+            {
+              "name": "Get All Institute Details",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details"]
+                }
+              }
+            },
+            {
+              "name": "Get Institute Details By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_INSTITUTE_DETAILS_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Institute Details By Basic Info ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/basic-info/:onboarding_basic_info_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", "basic-info", ":onboarding_basic_info_id"],
+                  "variable": [
+                    {
+                      "key": "onboarding_basic_info_id",
+                      "value": "YOUR_BASIC_INFO_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Complete Onboarding Data",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/complete/:onboarding_basic_info_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", "complete", ":onboarding_basic_info_id"],
+                  "variable": [
+                    {
+                      "key": "onboarding_basic_info_id",
+                      "value": "YOUR_BASIC_INFO_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get By School Board - CBSE",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/school-board/CBSE",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", "school-board", "CBSE"]
+                }
+              }
+            },
+            {
+              "name": "Get By School Type - Private",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/school-type/private",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", "school-type", "private"]
+                }
+              }
+            },
+            {
+              "name": "Get By Medium - English",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/medium/english",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", "medium", "english"]
+                }
+              }
+            },
+            {
+              "name": "Get By Students Range",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/students-range/500-1000",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", "students-range", "500-1000"]
+                }
+              }
+            },
+            {
+              "name": "Update Institute Details",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"school_board\": \"ICSE\",\n  \"approx_students_range\": \"1000+\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_INSTITUTE_DETAILS_ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Institute Details",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "YOUR_INSTITUTE_DETAILS_ID"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Onboarding Transactions",
+          "item": [
+            {
+              "name": "Create Transaction",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"onboarding_basic_info_id\": \"YOUR_ONBOARDING_ID\",\n  \"subscription_plan_variant_id\": \"YOUR_PLAN_VARIANT_ID\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/onboarding-transactions",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "onboarding-transactions"]
+                }
+              }
+            },
+
+            {
+              "name": "Get All Transactions",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions"
+              }
+            },
+
+            {
+              "name": "Get Transaction By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions/:id"
+              }
+            },
+
+            {
+              "name": "Get Transaction By Reference ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions/reference/:reference_id"
+              }
+            },
+
+            {
+              "name": "Get Transaction By Onboarding ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions/onboarding/:onboarding_id"
+              }
+            },
+
+            {
+              "name": "Get Transaction By Payment Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions/payment-status/:payment_status"
+              }
+            },
+
+            {
+              "name": "Get Transaction By Application Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions/onboarding-transactions/application-status/:application_status"
+              }
+            },
+
+            {
+              "name": "🆕 Get ALL Transactions With Full Details",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/onboarding-transactions/transactions/full-details"
+              }
+            },
+
+            {
+              "name": "🆕 Get Full Details By Onboarding ID (With / Without Transaction)",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/transaction/full-details/onboarding/:onboarding_basic_info_id"
+              }
+            },
+
+            {
+              "name": "Update Transaction",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_status\": \"success\",\n  \"payment_transaction_id\": \"PAY_12345\",\n  \"payment_gateway\": \"Razorpay\"\n}"
+                },
+                "url": "http://localhost:4000/sms/onboarding-transactions/update-transaction/:id"
+              }
+            },
+
+            {
+              "name": "Update Payment Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payment_status\": \"success\",\n  \"payment_transaction_id\": \"PAY_12345\",\n  \"payment_gateway\": \"Razorpay\"\n}"
+                },
+                "url": "http://localhost:4000/sms/onboarding-transactions/:id/payment-status"
+              }
+            },
+
+            {
+              "name": "Update Application Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"application_status\": \"approved\"\n}"
+                },
+                "url": "http://localhost:4000/sms/onboarding-transactions/:id/application-status"
+              }
+            },
+
+            {
+              "name": "Delete Transaction",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/onboarding-transactions/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Institutes",
+          "item": [
+            {
+              "name": "Activate Institute (Complete Onboarding)",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"onboarding_basic_info_id\": \"YOUR_ONBOARDING_ID\",\n  \"transaction_id\": \"YOUR_REFERENCE_ID\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institutes/activate"
+              }
+            },
+            {
+              "name": "Get All Institutes",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institutes"
+              }
+            },
+            {
+              "name": "Get Institutes By Institute Id",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institutes/:id"
+              }
+            },
+            {
+              "name": "Get Institute By Code",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institutes/code/:institute_code"
+              }
+            },
+            {
+              "name": "Get Institutes By Type",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institutes/type/school"
+              }
+            },
+            {
+              "name": "Get Institutes By Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institutes/status/active"
+              }
+            },
+            {
+              "name": "Update Institute Status",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"suspended\"\n}" 
+                },
+                "url": "http://localhost:4000/sms/institutes/:id"
+              }
+            },
+            {
+              "name": "Delete Institute",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/institutes/:id"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {   
+      "name": "Admin Institute Details Module",
+      "item": [
+            {
+          "name": "Institute Basic Information",
+          "item": [
+            {
+              "name": "Create Institute Basic Info",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"YOUR_INSTITUTE_ID\",\n  \"owner_name\": \"John Doe\",\n  \"designation\": \"Director\",\n  \"email\": \"john@example.com\",\n  \"mobile\": \"9876543210\",\n  \"address\": \"Indore, MP\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-basic-info",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-basic-info"]
+                }
+              }
+            },
+
+            {
+              "name": "Get All Institute Basic Info",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-basic-info"
+              }
+            },
+
+            {
+              "name": "Get Institute Basic Info By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-basic-info/:id"
+              }
+            },
+
+            {
+              "name": "Get Institute Basic Info By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-basic-info/institute/:institute_id"
+              }
+            },
+
+            {
+              "name": "Get Verified Institute Basic Info List",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-basic-info/verified/list"
+              }
+            },
+
+            {
+              "name": "Update Institute Basic Info",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner_name\": \"John Updated\",\n  \"designation\": \"Founder\",\n  \"email\": \"updated@example.com\",\n  \"mobile\": \"9999999999\",\n  \"address\": \"Bhopal, MP\",\n  \"email_verified\": true,\n  \"mobile_verified\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-basic-info/:id"
+              }
+            },
+
+            {
+              "name": "Delete Institute Basic Info",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/institute-basic-info/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Institute Details Master",
+          "item": [
+            {
+              "name": "Create Institute Details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"YOUR_INSTITUTE_ID\",\n  \"school_board\": \"CBSE\",\n  \"school_type\": \"private\",\n  \"classes_offered\": [\"1st\", \"2nd\", \"3rd\", \"4th\"],\n  \"courses_offered\": [\"Science\", \"Mathematics\"],\n  \"medium\": \"english\",\n  \"approx_students_range\": \"251-500\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-details-master",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-details-master"]
+                }
+              }
+            },
+
+            {
+              "name": "Get All Institute Details",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master"
+              }
+            },
+
+            {
+              "name": "Get Institute Details By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master/:id"
+              }
+            },
+
+            {
+              "name": "Get Institute Details By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master/institute/:institute_id"
+              }
+            },
+
+            {
+              "name": "Get Institute Details By School Board",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master/school-board/:school_board"
+              }
+            },
+
+            {
+              "name": "Get Institute Details By School Type",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master/school-type/:school_type"
+              }
+            },
+
+            {
+              "name": "Get Institute Details By Medium",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master/medium/:medium"
+              }
+            },
+
+            {
+              "name": "Get Institute Details By Students Range",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-details-master/students-range/:approx_students_range"
+              }
+            },
+
+            {
+              "name": "Update Institute Details",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"school_board\": \"ICSE\",\n  \"school_type\": \"public\",\n  \"classes_offered\": [\"5th\", \"6th\", \"7th\"],\n  \"courses_offered\": [\"English\", \"Computer Science\"],\n  \"medium\": \"hindi\",\n  \"approx_students_range\": \"500-1000\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-details-master/:id"
+              }
+            },
+
+            {
+              "name": "Delete Institute Details",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/institute-details-master/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Subscription Transactions",
+          "item": [
+            {
+              "name": "Create Subscription Transaction",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"YOUR_INSTITUTE_ID\",\n  \"subscription_plan_variant_id\": \"YOUR_PLAN_VARIANT_ID\",\n  \"amount\": 2999,\n  \"payment_status\": \"success\",\n  \"payment_gateway\": \"Razorpay\",\n  \"transaction_id\": \"TXN_123456789\",\n  \"receipt_url\": \"https://razorpay.com/receipt/123\",\n  \"paid_at\": \"2026-01-15T10:30:00.000Z\",\n  \"subscription_start_date\": \"2026-01-15T00:00:00.000Z\",\n  \"subscription_end_date\": \"2027-01-14T23:59:59.000Z\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subscription-transactions",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "subscription-transactions"]
+                }
+              }
+            },
+
+            {
+              "name": "Get All Subscription Transactions",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subscription-transactions"
+              }
+            },
+
+            {
+              "name": "Get Subscription Transaction By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subscription-transactions/:id"
+              }
+            },
+
+            {
+              "name": "Get Subscription Transactions By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subscription-transactions/institute/:institute_id"
+              }
+            },
+
+            {
+              "name": "Get Active Subscriptions",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subscription-transactions/active/list"
+              }
+            },
+
+            {
+              "name": "Get Expired Subscriptions",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subscription-transactions/expired/list"
+              }
+            },
+
+            {
+              "name": "Get Expiring Subscriptions (By Days)",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subscription-transactions/expiring/:days"
+              }
+            },
+
+            {
+              "name": "Update Subscription Transaction",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 3499,\n  \"payment_status\": \"success\",\n  \"payment_gateway\": \"Stripe\",\n  \"transaction_id\": \"TXN_UPDATED_98765\",\n  \"receipt_url\": \"https://stripe.com/receipt/987\",\n  \"subscription_end_date\": \"2027-06-30T23:59:59.000Z\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subscription-transactions/:id"
+              }
+            },
+
+            {
+              "name": "Deactivate Subscription",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:4000/sms/subscription-transactions/:id/deactivate"
+              }
+            },
+
+            {
+              "name": "Delete Subscription Transaction",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/subscription-transactions/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Institute Documents",
+          "item": [
+            {
+              "name": "Create Document",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1a",
+                      "type": "text"
+                    },
+                    {
+                      "key": "document_type",
+                      "value": "registration_certificate",
+                      "type": "text",
+                      "description": "Options: registration_certificate, affiliation_certificate, gst_certificate, logo"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/path/to/document.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Documents",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Documents with Filters",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents?institute_id=60d5ec49f1b2c72b8c8e4f1a&document_type=logo&verification_status=pending",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents"],
+                  "query": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1a"
+                    },
+                    {
+                      "key": "document_type",
+                      "value": "logo"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "pending"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Document by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Documents by Institute ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/institute/:institute_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", "institute", ":institute_id"],
+                  "variable": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1a"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Document (without file)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"approved\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Document (with file)",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "document_type",
+                      "value": "gst_certificate",
+                      "type": "text"
+                    },
+                    {
+                      "key": "institute_name",
+                      "value": "ABC School",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/path/to/new-document.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Verify Document (Approve)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"approved\",\n  \"verified_by\": \"60d5ec49f1b2c72b8c8e4f2a\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/:id/verify",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", ":id", "verify"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Verify Document (Reject)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"rejected\",\n  \"verified_by\": \"60d5ec49f1b2c72b8c8e4f2a\",\n  \"rejection_reason\": \"Document is not clear or incomplete\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/:id/verify",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", ":id", "verify"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Document",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Institute Identity Documents",
+          "item": [
+            {
+              "name": "Create Identity Document - Aadhaar",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"document_type\": \"aadhaar\",\n  \"document_number\": \"123456789012\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents"]
+                },
+                "description": "Create new Aadhaar document. Document number must be 12 digits."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Identity Document - PAN",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"document_type\": \"pan\",\n  \"document_number\": \"ABCDE1234F\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents"]
+                },
+                "description": "Create new PAN document. Format: ABCDE1234F (5 letters, 4 digits, 1 letter)"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Identity Documents",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents"]
+                },
+                "description": "Get all identity documents"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Identity Documents with Filters",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents?institute_id=60d5ec49f1b2c72b8c8e4f1a&document_type=aadhaar&verification_status=pending",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents"],
+                  "query": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1a",
+                      "description": "Filter by institute ID"
+                    },
+                    {
+                      "key": "document_type",
+                      "value": "aadhaar",
+                      "description": "Filter by document type (aadhaar or pan)"
+                    },
+                    {
+                      "key": "verification_status",
+                      "value": "pending",
+                      "description": "Filter by status (pending, approved, rejected)"
+                    }
+                  ]
+                },
+                "description": "Get identity documents with filters"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Identity Document by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Get identity document by ID (returns masked number only)"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Identity Document by ID (Decrypted - Admin Only)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id?decrypt=true",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id"],
+                  "query": [
+                    {
+                      "key": "decrypt",
+                      "value": "true",
+                      "description": "Set to true to get decrypted document number (admin only)"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Get identity document with decrypted number (admin use only)"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Identity Documents by Institute ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/institute/:institute_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": [
+                    "sms",
+                    "institute-identity-documents",
+                    "institute",
+                    ":institute_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1a"
+                    }
+                  ]
+                },
+                "description": "Get all identity documents of a specific institute"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Identity Document Number",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document_number\": \"987654321098\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Update document number (will be encrypted and masked automatically)"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Identity Document Status",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"approved\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Update verification status"
+              },
+              "response": []
+            },
+            {
+              "name": "Verify Identity Document (Approve)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"approved\",\n  \"verified_by\": \"60d5ec49f1b2c72b8c8e4f2a\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id/verify",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id", "verify"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Approve identity document"
+              },
+              "response": []
+            },
+            {
+              "name": "Verify Identity Document (Reject)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"rejected\",\n  \"verified_by\": \"60d5ec49f1b2c72b8c8e4f2a\",\n  \"rejection_reason\": \"Invalid Aadhaar number format\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id/verify",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id", "verify"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Reject identity document with reason"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Identity Document",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/institute-identity-documents/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "institute-identity-documents", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                },
+                "description": "Delete identity document"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Institute Admin",
+          "item": [
+            {
+              "name": "Create Admin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"69688b7471650e8588af5e37\",\n  \"name\": \"John Doe\",\n  \"email\": \"yasrajthakur87501@gmail.com\",\n  \"mobile\": \"9876543210\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/create"
+              }
+            },
+            {
+              "name": "Get All Admins",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-admin/get-all"
+              }
+            },
+            {
+              "name": "Get Admin By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-admin/get/:id" 
+              }
+            },
+            {
+              "name": "Get All Admins By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-admin/get-by-institute/:instituteId"
+              }
+            },
+            {
+              "name": "Update Admin",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Updated\",\n  \"mobile\": \"9876543211\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/update/:id"
+              }
+            },
+            {
+              "name": "Delete Admin",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/institute-admin/delete/:id"
+              }
+            },
+            {
+              "name": "Verify Login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"yasrajthakur87501@gmail.com\",\n  \"password\": \"12345678\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/verify-login"
+              }
+            },
+            {
+              "name": "Request OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"yasrajthakur87501@gmail.com\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/request-otp"
+              }
+            },
+            {
+              "name": "Verify OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"yasrajthakur87501@gmail.com\",\n  \"otp\": \"123456\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/verify-otp"
+              }
+            },
+            {
+              "name": "Change Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"yasrajthakur87501@gmail.com\",\n  \"old_password\": \"12345678\",\n  \"new_password\": \"newSecurePass123\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/change-password"
+              }
+            },
+            {
+              "name": "Reset Password (With OTP)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"yasrajthakur87501@gmail.com\",\n  \"otp\": \"123456\",\n  \"new_password\": \"newSecurePass123\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/reset-password"
+              }
+            },
+            {
+              "name": "Get Admins By Institute Type",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/institute-admin/get-by-type/school"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Teacher Management Module",
+      "item": [
+        {
+          "name": "Teachers Master",
+          "item": [
+            {
+              "name": "Create Teacher",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teachers"
+              }
+            },
+            {
+              "name": "Get Teacher With All Details",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teachers/teacher-with-all-details/696e0a40715f041b7764a616"
+              }
+            },
+            {
+              "name": "Get All Teachers",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teachers"
+              }
+            },
+            {
+              "name": "Get Teachers with Filters",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/teachers?institute_id=60d5ec49f1b2c72b8c8e4f1a&teacher_type=school&status=active",
+                  "query": [
+                    {"key": "institute_id", "value": "60d5ec49f1b2c72b8c8e4f1a"},
+                    {"key": "teacher_type", "value": "school"},
+                    {"key": "status", "value": "active"}
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Teacher by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teachers/696e0a40715f041b7764a616"
+              }
+            },
+            {
+              "name": "Get Teacher by Code",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teachers/code/BA-CCH-TCH-001"
+              }
+            },
+            {
+              "name": "Update Teacher",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"John Updated Doe\",\n  \"employment_type\": \"part_time\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teachers/696e0a40715f041b7764a616"
+              }
+            },
+            {
+              "name": "Update Teacher With All Details",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher\": {\n    \"full_name\": \"John Updated Doe\",\n    \"blood_group\": \"A+\",\n    \"marital_status\": \"married\",\n    \"spouse_name\": \"Jane Updated Doe\"\n  },\n  \"contact_information\": [\n    {\n      \"_id\": \"696e0ab9715f041b7764a619\",\n      \"mobile\": \"9999999999\",\n      \"email\": \"updated@gmail.com\",\n      \"alternate_mobile\": \"8888888888\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"_id\": \"696e0b21715f041b7764a620\",\n      \"address_type\": \"current\",\n      \"address\": \"456 New Street\",\n      \"city\": \"Delhi\",\n      \"state\": \"Delhi\",\n      \"pincode\": \"110001\"\n    }\n  ],\n  \"emergency_contacts\": [\n    {\n      \"_id\": \"696e21ef62c81750bf6d6cdd\",\n      \"name\": \"Jane Updated Doe\",\n      \"relation\": \"Spouse\",\n      \"mobile\": \"7777777777\"\n    }\n  ]\n}"
+                },
+                "url": "http://localhost:4000/sms/teachers/update-with-all-details/696e0a40715f041b7764a616"
+              }
+            },
+            {
+              "name": "Delete Teacher",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teachers/696e0a40715f041b7764a616"
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "Teachers Contact Information",
+          "item": [
+            {
+              "name": "Create Contact",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"mobile\": \"9876543210\",\n  \"email\": \"yasrajthakur87501@gmail.com\",\n  \"alternate_mobile\": \"9876543211\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact"
+              }
+            }, 
+            {
+              "name": "Verify OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"teacher@example.com\",\n  \"otp\": \"123456\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact/verify-otp"
+              }
+            },
+            {
+              "name": "Resend OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"teacher@example.com\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact/resend-otp"
+              }
+            },
+            {
+              "name": "Get Contact by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact/:teacher_id"
+              }
+            },
+            {
+              "name": "Get All Teachers Contacts",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact"
+              }
+            },
+            {
+              "name": "Update Contact",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alternate_mobile\": \"9999999999\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact/:teacher_id"
+              }
+            },
+            {
+              "name": "Delete Contact",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-contact-information/contact/:teacher_id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Teachers Addresses",
+          "item": [
+            {
+              "name": "Create Address",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"address_type\": \"current\",\n  \"address\": \"123 Main Street\",\n  \"city\": \"Mumbai\",\n  \"state\": \"Maharashtra\",\n  \"pincode\": \"400001\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-addresses/address"
+              }
+            },
+            {
+              "name": "Get All Addresses",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-addresses/address"
+              }
+            },
+            {
+              "name": "Get Address By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-addresses/address/:id"
+              }
+            },
+            {
+              "name": "Get Addresses By Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-addresses/address/teacher/:teacher_id"
+              }
+            },
+            {
+              "name": "Update Address",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"456 Updated Street\",\n  \"city\": \"Pune\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-addresses/address/:id"
+              }
+            },
+            {
+              "name": "Delete Address",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-addresses/address/:id"
+              }
+            }
+          ] 
+        },
+        {
+          "name": "Teachers Identity Documents",
+          "item": [
+            {
+              "name": "Institute Admin Login (Get Token First)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@institute.com\",\n  \"password\": \"your-password\"\n}"
+                },
+                "url": "http://localhost:4000/sms/institute-admin/login"
+              },
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "if (jsonData.result && jsonData.result.token) {",
+                      "    pm.environment.set(\"institute_admin_token\", jsonData.result.token);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ]
+            },
+
+            {
+              "name": "Create Identity Document - PAN",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Authorization", "value": "Bearer {{institute_admin_token}}" }],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "teacher_id", "value": "60d5ec49f1b2c72b8c8e4f1b", "type": "text" },
+                    { "key": "document_type", "value": "pan_card", "type": "text" },
+                    { "key": "document_number", "value": "ABCDE1234F", "type": "text" },
+                    { "key": "teacher_name", "value": "John Doe", "type": "text" },
+                    { "key": "file", "type": "file" }
+                  ]
+                },
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document"
+              }
+            },
+
+            {
+              "name": "Get All Identity Documents (Admin)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{institute_admin_token}}" }],
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document"
+              }
+            },
+
+            {
+              "name": "Get Identity Document By ID (Admin)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{institute_admin_token}}" }],
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document/:id"
+              }
+            },
+
+            {
+              "name": "Get Identity Documents by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document/teacher/:teacher_id"
+              }
+            },
+
+            {
+              "name": "Update Identity Document",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Authorization", "value": "Bearer {{institute_admin_token}}" }],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "document_number", "value": "NEWPAN1234X", "type": "text" },
+                    { "key": "file", "type": "file" }
+                  ]
+                },
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document/:id"
+              }
+            },
+
+            {
+              "name": "Verify Identity Document - Approve",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{institute_admin_token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"approved\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document/:id/verify"
+              }
+            },
+
+            {
+              "name": "Verify Identity Document - Reject",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{institute_admin_token}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verification_status\": \"rejected\",\n  \"rejection_reason\": \"Document image is not clear, please re-upload\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document/:id/verify"
+              }
+            },
+
+            {
+              "name": "Delete Identity Document",
+              "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{institute_admin_token}}" }],
+                "url": "http://localhost:4000/sms/teacher-identity-documents/identity-document/:id"
+              }
+            }
+          ]
+        }, 
+        { 
+          "name": "Teachers Qualifications",
+          "item": [
+            {
+              "name": "Create Qualification",
+              "request": {
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "teacher_id", "value": "60d5ec49f1b2c72b8c8e4f1b", "type": "text" },
+                    { "key": "qualification", "value": "B.Ed", "type": "text" },
+                    { "key": "specialization", "value": "Mathematics", "type": "text" },
+                    { "key": "institute_name", "value": "ABC University", "type": "text" },
+                    { "key": "passing_year", "value": "2015-01-01", "type": "text" },
+                    { "key": "teacher_name", "value": "John Doe", "type": "text" },
+                    { "key": "file", "type": "file" }
+                  ]
+                },
+                "url": "http://localhost:4000/sms/teacher-qualification-details/qualification"
+              }
+            },
+
+            {
+              "name": "Get All Qualifications",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-qualification-details/qualification"
+              }
+            },
+
+            {
+              "name": "Get Qualification By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-qualification-details/qualification/:id"
+              }
+            },
+
+            {
+              "name": "Get Qualifications by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-qualification-details/qualification/teacher/:teacher_id"
+              }
+            },
+
+            {
+              "name": "Update Qualification",
+              "request": {
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "specialization", "value": "Physics", "type": "text" },
+                    { "key": "file", "type": "file" }
+                  ]
+                },
+                "url": "http://localhost:4000/sms/teacher-qualification-details/qualification/:id"
+              }
+            },
+
+            {
+              "name": "Delete Qualification",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-qualification-details/qualification/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Teachers Experience",
+          "item": [
+            {
+              "name": "Create Experience",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"organization_name\": \"XYZ School\",\n  \"role\": \"Mathematics Teacher\",\n  \"from_date\": \"2018-06-01\",\n  \"to_date\": \"2023-12-31\",\n  \"is_current\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-experience/experience"
+              }
+            },
+
+            {
+              "name": "Get All Experiences",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-experience/experience"
+              }
+            },
+
+            {
+              "name": "Get Experience By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-experience/experience/:id"
+              }
+            },
+
+            {
+              "name": "Get Experiences by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-experience/experience/teacher/:teacher_id"
+              }
+            },
+
+            {
+              "name": "Update Experience",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"Senior Mathematics Teacher\",\n  \"is_current\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-experience/experience/:id"
+              }
+            },
+
+            {
+              "name": "Delete Experience",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-experience/experience/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Teachers Bank Details",
+          "item": [
+            {
+              "name": "Create Bank Details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"account_holder_name\": \"John Doe\",\n  \"bank_name\": \"HDFC Bank\",\n  \"account_number\": \"1234567890\",\n  \"ifsc_code\": \"HDFC0001234\",\n  \"upi_id\": \"johndoe@paytm\",\n  \"is_primary\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-bank-details/bank-details"
+              }
+            },
+            {
+              "name": "Get All Bank Details",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-bank-details/bank-details"
+              }
+            },
+            {
+              "name": "Get Bank Details by Bank ID (Explicit /id route)",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-bank-details/bank-details/id/:id"
+              }
+            },
+            {
+              "name": "Get Bank Details by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-bank-details/bank-details/:teacher_id"
+              }
+            },
+            {
+              "name": "Update Bank Details",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"upi_id\": \"johndoe@googlepay\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-bank-details/bank-details/:id"
+              }
+            },
+            {
+              "name": "Delete Bank Details",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-bank-details/bank-details/:id"
+              }
+            }
+          ] 
+        }, 
+        {
+          "name": "Teachers Emergency Contacts",
+          "item": [
+            {
+              "name": "Create Emergency Contact",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"name\": \"Jane Doe\",\n  \"relation\": \"Spouse\",\n  \"mobile\": \"9876543210\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-emergency-contacts/emergency-contact"
+              }
+            },
+            {
+              "name": "Get All Emergency Contacts",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-emergency-contacts/emergency-contact"
+              }
+            },
+            {
+              "name": "Get Emergency Contact by Contact ID (Explicit /id route)",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-emergency-contacts/emergency-contact/id/:id"
+              }
+            },
+            {
+              "name": "Get Emergency Contacts by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-emergency-contacts/emergency-contact/:teacher_id"
+              }
+            },
+            {
+              "name": "Update Emergency Contact",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mobile\": \"9999999999\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-emergency-contacts/emergency-contact/:id"
+              }
+            },
+            {
+              "name": "Delete Emergency Contact",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-emergency-contacts/emergency-contact/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Teacher Auth",
+          "item": [
+            {
+              "name": "Create Teacher Auth",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"69688b7471650e8588af5e37\",\n  \"email\": \"jane.smith@example.com\",\n  \"mobile\": \"9876543210\",\n  \"status\": \"active\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/create",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "create"]
+                },
+                "description": "Create teacher authentication with auto-generated temporary password. Teacher must exist in teachers collection first."
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Teacher Auths",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/get-all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "get-all"]
+                },
+                "description": "Retrieve all teacher authentication records with populated teacher details"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Teacher Auth By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/get/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "get", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6968a12345678901234abcde",
+                      "description": "Teacher Auth MongoDB ObjectId"
+                    }
+                  ]
+                },
+                "description": "Get a specific teacher auth record by its ID"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Teacher Auth By Teacher ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/get-by-teacher/:teacherId",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "get-by-teacher", ":teacherId"],
+                  "variable": [
+                    {
+                      "key": "teacherId",
+                      "value": "69688b7471650e8588af5e37",
+                      "description": "Teacher MongoDB ObjectId"
+                    }
+                  ]
+                },
+                "description": "Get teacher auth record by teacher_id reference"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Teacher Auth",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.updated@example.com\",\n  \"mobile\": \"9876543211\",\n  \"status\": \"active\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/update/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "update", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6968a12345678901234abcde",
+                      "description": "Teacher Auth MongoDB ObjectId"
+                    }
+                  ]
+                },
+                "description": "Update teacher auth details (email, mobile, status)"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Teacher Auth",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/delete/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "delete", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6968a12345678901234abcde",
+                      "description": "Teacher Auth MongoDB ObjectId"
+                    }
+                  ]
+                },
+                "description": "Permanently delete a teacher authentication record"
+              },
+              "response": []
+            },
+            {
+              "name": "Verify Login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"12345678\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/verify-login",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "verify-login"]
+                },
+                "description": "Authenticate teacher and receive JWT token. Returns is_first_login flag."
+              },
+              "response": []
+            },
+            {
+              "name": "Request OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.smith@example.com\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/request-otp",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "request-otp"]
+                },
+                "description": "Request 6-digit OTP for password reset (valid for 10 minutes)"
+              },
+              "response": []
+            },
+            {
+              "name": "Verify OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.smith@example.com\",\n  \"otp\": \"123456\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/verify-otp",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "verify-otp"]
+                },
+                "description": "Verify the 6-digit OTP sent to email"
+              },
+              "response": []
+            },
+            {
+              "name": "Change Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.smith@example.com\",\n  \"old_password\": \"12345678\",\n  \"new_password\": \"newSecurePass123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/change-password",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "change-password"]
+                },
+                "description": "Change password when teacher knows their old password. Sets is_first_login to false."
+              },
+              "response": []
+            },
+            {
+              "name": "Reset Password (With OTP)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"jane.smith@example.com\",\n  \"otp\": \"123456\",\n  \"new_password\": \"newSecurePass123\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-auth/reset-password",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-auth", "reset-password"]
+                },
+                "description": "Reset password using OTP (forgot password flow). Clears OTP and sets is_first_login to false."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher Salary Structure",
+          "item": [
+            {
+              "name": "Create Salary Structure",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{INSTITUTE_ADMIN_TOKEN}}"
+                  }
+                ], 
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60a7f9b8e4b0f83d6c8e9f1a\",\n  \"salary_type\": \"fixed_monthly\",\n  \"pay_frequency\": \"monthly\",\n  \"currency\": \"INR\",\n\n  \"basic_salary\": 50000,\n  \"hra\": 10000,\n  \"da\": 5000,\n  \"conveyance_allowance\": 2000,\n  \"medical_allowance\": 1500,\n\n  \"per_lecture_rate\": 800,\n  \"hourly_rate\": 500,\n  \"revenue_percentage\": 15,\n\n  \"incentive_amount\": 5000,\n  \"bonus_amount\": 1000,\n\n  \"max_lectures_per_month\": 60,\n  \"max_hours_per_month\": 160,\n\n  \"pf_applicable\": true,\n  \"pf_percentage\": 12,\n\n  \"tds_applicable\": true,\n  \"tds_percentage\": 10,\n\n  \"other_deductions\": [\n    {\n      \"name\": \"Professional Tax\",\n      \"amount\": 200\n    },\n    {\n      \"name\": \"Staff Welfare\",\n      \"amount\": 300\n    }\n  ],\n\n  \"effective_from\": \"2025-01-01\",\n  \"effective_to\": null,\n\n  \"status\": \"active\"}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/teacher-salary-structure/salary-structure",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "teacher-salary-structure", "salary-structure"]
+                }
+              }
+            },
+            {
+              "name": "Update Salary Structure",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{INSTITUTE_ADMIN_TOKEN}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"basic_salary\": 55000,\n  \"hra\": 12000,\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/:id"
+              }
+            },
+            {
+              "name": "Approve Salary Structure",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{INSTITUTE_ADMIN_TOKEN}}" }
+                ],
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/:id/approve"
+              }
+            },
+            {
+              "name": "Archive Salary Structure",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{INSTITUTE_ADMIN_TOKEN}}" }
+                ],
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/:id/archive"
+              }
+            },
+            {
+              "name": "Delete Salary Structure",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{INSTITUTE_ADMIN_TOKEN}}" }
+                ],
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/:id"
+              }
+            },
+            {
+              "name": "Get All Salary Structures",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure"
+              }
+            },
+            {
+              "name": "Get Salary Structure By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/:id"
+              }
+            },
+            {
+              "name": "Get Salary Structures By Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/teacher/:teacher_id"
+              }
+            },
+            {
+              "name": "Get Active Salary Structure By Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-structure/salary-structure/teacher/:teacher_id/active"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Teacher Salary Transactions",
+          "item": [
+            {
+              "name": "Create Transaction",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60a7f9b8e4b0f83d6c8e9f1a\",\n  \"amount\": 68500,\n  \"payment_month\": \"2025-01\",\n  \"payment_date\": \"2025-01-31\",\n  \"payment_mode\": \"bank_transfer\",\n  \"reference_id\": \"TXN123456789\",\n  \"status\": \"paid\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction"
+              }
+            },
+            {
+              "name": "Get All Transactions",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction"
+              }
+            },
+            {
+              "name": "Get Transaction By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction/:id"
+              }
+            },
+            {
+              "name": "Get Transactions By Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction/teacher/:teacher_id"
+              }
+            },
+            {
+              "name": "Get Transactions By Month",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction/month/:month"
+              }
+            },
+            {
+              "name": "Get Transactions By Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction/status/:status"
+              }
+            },
+            {
+              "name": "Update Transaction",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"paid\",\n  \"payment_date\": \"2025-01-31\",\n  \"reference_id\": \"TXN987654321\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction/:id"
+              }
+            },
+            {
+              "name": "Delete Transaction",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-salary-transactions/transaction/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Teacher Attendance",
+          "item": [
+            {
+              "name": "Create Attendance",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60a7f9b8e4b0f83d6c8e9f1a\",\n  \"date\": \"2025-01-20\",\n  \"status\": \"present\",\n  \"check_in_time\": \"2025-01-20T09:00:00Z\",\n  \"check_out_time\": \"2025-01-20T17:00:00Z\",\n  \"remarks\": \"On time\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance"
+              }
+            },
+            {
+              "name": "Get All Attendance",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance"
+              }
+            },
+            {
+              "name": "Get Attendance By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance/:id"
+              }
+            },
+            {
+              "name": "Get Attendance By Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance/teacher/:teacher_id"
+              }
+            },
+            {
+              "name": "Get Attendance By Date",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance/date/:date"
+              }
+            },
+            {
+              "name": "Get Attendance By Date Range",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance/date-range?startDate=2025-01-01&endDate=2025-01-31"
+              }
+            },
+            {
+              "name": "Update Attendance",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"half_day\",\n  \"remarks\": \"Left early due to personal work\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance/:id"
+              }
+            },
+            {
+              "name": "Delete Attendance",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/teacher-attendance/attendance/:id"
+              }
+            }
+          ]
+        }, 
+        {
+          "name": "Teacher Leaves",
+          "item": [
+            {
+              "name": "Create Leave",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60a7f9b8e4b0f83d6c8e9f1a\",\n  \"leave_type\": \"casual\",\n  \"from_date\": \"2025-01-25\",\n  \"to_date\": \"2025-01-27\",\n  \"reason\": \"Personal work\",\n  \"status\": \"pending\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-leaves/leave"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Leaves",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/teacher-leaves/leave"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Leave By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/:id"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Leaves By Teacher ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/teacher/:teacher_id"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Leaves By Status",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/status/:status"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Leave",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to_date\": \"2025-01-28\",\n  \"reason\": \"Extended personal work\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/:id"
+              },
+              "response": []
+            },
+            {
+              "name": "Approve Leave",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{institute_admin_token}}",
+                    "description": "JWT token from admin login"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/:id/approve",
+                "description": "Approve leave request. The approved_by field is automatically set from JWT token. No need to pass approved_by in body."
+              },
+              "response": []
+            },
+            {
+              "name": "Reject Leave",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{institute_admin_token}}",
+                    "description": "JWT token from admin login"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rejection_reason\": \"Not enough notice period\"\n}"
+                },
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/:id/reject",
+                "description": "Reject leave request. The approved_by field is automatically set from JWT token. Only rejection_reason is required in body."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Leave",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:4000/sms/teacher-leaves/leave/:id"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Subjects Management",
+      "item": [
+        {
+          "name": "Subjects Master",
+          "item": [
+            {
+              "name": "Create Subject",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"school\",\n  \"class_levels\": [\"10\", \"11\", \"12\"],\n  \"description\": \"Mathematics for secondary classes\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-master/subject"
+              }
+            }, 
+            {
+              "name": "Get All Subjects",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject"
+              }
+            },
+            {
+              "name": "Get Subject By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+              }
+            },
+            {
+              "name": "Get Subjects By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id"
+              }
+            },
+            {
+              "name": "Get Subjects By Type",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject/type/:type",
+                "description": "type can be: school or coaching"
+              }
+            },
+            {
+              "name": "Get Subjects By Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject/status/:status",
+                "description": "status can be: active, inactive or archived"
+              }
+            },
+            {
+              "name": "Get Subjects By Class Level",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject/class-level/:class_level",
+                "description": "Example: class_level = 10, 11, 12"
+              }
+            },
+            {
+              "name": "Get Subjects By Institute And Type",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id/type/:type",
+                "description": "Get subjects filtered by both institute_id and type (school/coaching)"
+              }
+            },
+            {
+              "name": "Update Subject",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_name\": \"Advanced Mathematics\",\n  \"class_levels\": [\"11\", \"12\"],\n  \"description\": \"Advanced mathematics for senior classes\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+              }
+            },
+            {
+              "name": "Delete Subject",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Students Management",
+      "item": [
+        {
+          "name": "Students Master",
+          "item": [
+            {
+              "name": "Create Student",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"student_type\": \"school\",\n  \"full_name\": \"Alice Johnson\",\n  \"gender\": \"female\",\n  \"date_of_birth\": \"2010-03-20\",\n  \"blood_group\": \"A+\"\n}"
+                },
+                "url": "http://localhost:4000/sms/students"
+              }
+            },
+            {
+              "name": "Get All Students",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/students"
+              }
+            },
+            {
+              "name": "Get Students with Filters",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/students?institute_id=60d5ec49f1b2c72b8c8e4f1a&student_type=school&status=active",
+                  "query": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1a"
+                    },
+                    {
+                      "key": "student_type",
+                      "value": "school"
+                    },
+                    {
+                      "key": "status",
+                      "value": "active"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Student by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/students/:id"
+              }
+            },
+            {
+              "name": "Get Student by Code",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/students/code/SBVPHS-SCH-STD-001"
+              }
+            },
+            {
+              "name": "Update Student",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Alice Updated Johnson\",\n  \"blood_group\": \"A+\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/students/:id"
+              }
+            },
+            {
+              "name": "Delete Student",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/students/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Students Contact Information",
+          "item": [
+            {
+              "name": "Create Contact",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"contact_type\": \"student\",\n  \"mobile\": \"9876543210\",\n  \"email\": \"student@example.com\",\n  \"alternate_mobile\": \"9876543211\",\n  \"is_primary\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/student-contact-information/contact"
+              }
+            },
+            {
+              "name": "Create Contact (Father)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"contact_type\": \"father\",\n  \"mobile\": \"9876543220\",\n  \"email\": \"father@example.com\",\n  \"is_primary\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/student-contact-information/contact"
+              }
+            },
+            {
+              "name": "Create Contact (Without Email)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"contact_type\": \"mother\",\n  \"mobile\": \"9876543230\",\n  \"alternate_mobile\": \"9876543231\",\n  \"is_primary\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/student-contact-information/contact"
+              }
+            },
+            {
+              "name": "Verify OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"student@example.com\",\n  \"otp\": \"123456\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-contact-information/contact/verify-otp"
+              }
+            },
+            {
+              "name": "Resend OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"student@example.com\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-contact-information/contact/resend-otp"
+              }
+            },
+            {
+              "name": "Get Contact by Student ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/student-contact-information/contact/:student_id"
+              }
+            },
+            {
+              "name": "Get All Contacts by Student ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/student-contact-information/contacts/:student_id"
+              }
+            },
+            {
+              "name": "Get Primary Contact by Student ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/student-contact-information/contact/primary/:student_id"
+              }
+            },
+            {
+              "name": "Get All Students Contacts",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/student-contact-information/contact"
+              }
+            },
+            {
+              "name": "Get Students Contacts with Filters",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-contact-information/contact?student_id=60d5ec49f1b2c72b8c8e4f1c&contact_type=father&is_primary=true",
+                  "query": [
+                    {
+                      "key": "student_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1c"
+                    },
+                    {
+                      "key": "contact_type",
+                      "value": "father"
+                    },
+                    {
+                      "key": "is_primary",
+                      "value": "true"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Contact",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contact_type\": \"guardian\",\n  \"alternate_mobile\": \"9999999999\",\n  \"is_primary\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/student-contact-information/contact/:id"
+              }
+            },
+            {
+              "name": "Delete Contact",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/student-contact-information/contact/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Student Authentication",
+          "item": [
+            {
+              "name": "Create Student Auth (Manual Password)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"username\": \"student123\",\n  \"password\": \"password123\",\n  \"generate_temp_password\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth"
+              }
+            },
+            {
+              "name": "Create Student Auth (Auto Generate Password)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"username\": \"student456\",\n  \"password\": \"temp123\",\n  \"generate_temp_password\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth"
+              }
+            },
+            {
+              "name": "Login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"student123\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth/login"
+              }
+            },
+            {
+              "name": "Change Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"old_password\": \"password123\",\n  \"new_password\": \"newpassword123\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth/change-password/:student_id"
+              }
+            },
+            {
+              "name": "Reset Password (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"new_password\": \"resetpass123\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth/reset-password"
+              }
+            },
+            {
+              "name": "Get Auth by Student ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/student-auth/:student_id"
+              }
+            },
+            {
+              "name": "Get All Student Auths",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/student-auth"
+              }
+            },
+            {
+              "name": "Get Student Auths with Filters",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-auth?status=active&is_first_login=true",
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "active"
+                    },
+                    {
+                      "key": "is_first_login",
+                      "value": "true"
+                    },
+                    {
+                      "key": "username",
+                      "value": "student"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Status to Blocked",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"blocked\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth/status/:student_id"
+              }
+            },
+            {
+              "name": "Update Status to Active",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth/status/:student_id"
+              }
+            },
+            {
+              "name": "Update Status to Disabled",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"disabled\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-auth/status/:student_id"
+              }
+            },
+            {
+              "name": "Delete Auth",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/student-auth/:student_id"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Classes Management",
+      "item": [
+        {
+          "name": "Classes Master",
+          "item": [
+            {
+              "name": "Create Class",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"class_name\": \"10th Grade\",\n  \"class_type\": \"school\",\n  \"class_teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"class_level\": \"10\",\n  \"academic_year\": \"2025-26\"\n}"
+                },
+                "url": "http://localhost:4000/sms/classes"
+              }
+            },
+            {
+              "name": "Get All Classes",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/classes"
+              }
+            },
+            {
+              "name": "Get Classes by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/classes/teacher/:teacher_id"
+              }
+            },
+            {
+              "name": "Get Classes with Filters",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/classes?institute_id=60d5ec49f1b2c72b8c8e4f1a&class_type=school&status=active",
+                  "query": [
+                    {"key": "institute_id", "value": "60d5ec49f1b2c72b8c8e4f1a"},
+                    {"key": "class_type", "value": "school"},
+                    {"key": "status", "value": "active"}
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Class by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/classes/:id"
+              }
+            },
+            {
+              "name": "Get Classes by Institute and Year",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/classes/institute/:institute_id/year/:academic_year"
+              }
+            },
+            {
+              "name": "Update Class",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"class_name\": \"10th Grade Updated\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/classes/:id"
+              }
+            },
+            {
+              "name": "Delete Class",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/classes/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Class Sections",
+          "item": [
+            {
+              "name": "Create Section",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"section_name\": \"A\",\n  \"class_teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-sections"
+              }
+            },
+            {
+              "name": "Get All Sections",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-sections"
+              }
+            },
+            {
+              "name": "Get Sections by Class ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-sections/class/:class_id"
+              }
+            },
+            {
+              "name": "Get Section by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-sections/:id"
+              }
+            },
+            {
+              "name": "Update Section",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"section_name\": \"B\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-sections/:id"
+              }
+            },
+            {
+              "name": "Delete Section",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/class-sections/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Coaching Batches",
+          "item": [
+            {
+              "name": "Create Batch",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1d\",\n  \"batch_name\": \"Morning Batch\",\n  \"start_time\": \"08:00\",\n  \"end_time\": \"10:00\",\n  \"capacity\": 30\n}"
+                },
+                "url": "http://localhost:4000/sms/coaching-batches"
+              }
+            },
+            {
+              "name": "Get All Batches",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/coaching-batches"
+              }
+            },
+            {
+              "name": "Get Batches by Class ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/coaching-batches/class/:class_id"
+              }
+            },
+            {
+              "name": "Get Batch by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/coaching-batches/:id"
+              }
+            },
+            {
+              "name": "Update Batch",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_name\": \"Evening Batch\",\n  \"capacity\": 35\n}"
+                },
+                "url": "http://localhost:4000/sms/coaching-batches/:id"
+              }
+            },
+            {
+              "name": "Delete Batch",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/coaching-batches/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Class Subjects",
+          "item": [
+            {
+              "name": "Assign Subject to Class",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"is_compulsory\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/class-subjects"
+              }
+            },
+            {
+              "name": "Get All Class Subjects",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-subjects"
+              }
+            },
+            {
+              "name": "Get Subjects by Class ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-subjects/class/:class_id"
+              }
+            },
+            {
+              "name": "Get Class Subject by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-subjects/:id"
+              }
+            },
+            {
+              "name": "Update Class Subject",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"is_compulsory\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/class-subjects/:id"
+              }
+            },
+            {
+              "name": "Delete Class Subject",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/class-subjects/:id"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Class Subject Schedule",
+          "item": [
+            {
+              "name": "Create Schedule",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4f1f\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"day_of_week\": \"mon\",\n  \"start_time\": \"08:00\",\n  \"end_time\": \"09:00\",\n  \"room_no\": \"101\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-subject-schedule"
+              }
+            },
+            {
+              "name": "Get All Schedules",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-subject-schedule"
+              }
+            },
+            {
+              "name": "Get Schedules with Filters",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule?class_id=60d5ec49f1b2c72b8c8e4f1c&day_of_week=mon",
+                  "query": [
+                    {"key": "class_id", "value": "60d5ec49f1b2c72b8c8e4f1c"},
+                    {"key": "day_of_week", "value": "mon"}
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Schedule by Class ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/class/:class_id?section_id=60d5ec49f1b2c72b8c8e4f1f",
+                  "query": [
+                    {"key": "section_id", "value": "60d5ec49f1b2c72b8c8e4f1f"}
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Schedule by Teacher ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-subject-schedule/teacher/:teacher_id"
+              }
+            },
+            {
+              "name": "Get Schedule by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+              }
+            },
+            {
+              "name": "Update Schedule",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_time\": \"09:00\",\n  \"end_time\": \"10:00\",\n  \"room_no\": \"102\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+              }
+            },
+            {
+              "name": "Delete Schedule",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Coaching Teacher Details (Currently not in use)",
+      "item": [
+        {
+          "name": "Create Detail",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teacher_id\": \"696cd28dfbf296c1e3492c43\",\n  \"role\": \"faculty\",\n  \"subjects\": [\"Physics\", \"Chemistry\"],\n  \"batch_ids\": [\"696cd28dfbf296c1e3492c50\", \"696cd28dfbf296c1e3492c51\"],\n  \"payout_model\": \"percentage\"\n}"
+            },
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/create"
+          }
+        },
+        {
+          "name": "Get All Details",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-all"
+          }
+        },
+        {
+          "name": "Get Detail By ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get/:id"
+          }
+        },
+        {
+          "name": "Get Detail By Teacher ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-teacher/:teacherId"
+          }
+        },
+        {
+          "name": "Get Details By Role - Mentor",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-role/mentor"
+          }
+        },
+        {
+          "name": "Get Details By Role - Faculty",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-role/faculty"
+          }
+        },
+        {
+          "name": "Get Details By Role - Guest Faculty",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-role/guest_faculty"
+          }
+        },
+        {
+          "name": "Get Details By Role - Counsellor",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-role/counsellor"
+          }
+        },
+        {
+          "name": "Get Details By Subject",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-subject/Physics"
+          }
+        },
+        {
+          "name": "Get Details By Batch ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-batch/:batchId"
+          }
+        },
+        {
+          "name": "Get Details By Payout - Fixed",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-payout/fixed"
+          }
+        },
+        {
+          "name": "Get Details By Payout - Percentage",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-payout/percentage"
+          }
+        },
+        {
+          "name": "Update Detail",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"mentor\",\n  \"subjects\": [\"Physics\", \"Chemistry\", \"Mathematics\"],\n  \"payout_model\": \"fixed\"\n}"
+            },
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/update/:id"
+          }
+        },
+        {
+          "name": "Add Batch",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"696cd28dfbf296c1e3492c52\"\n}"
+            },
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/add-batch/:id"
+          }
+        },
+        {
+          "name": "Remove Batch",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch_id\": \"696cd28dfbf296c1e3492c52\"\n}"
+            },
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/remove-batch/:id"
+          }
+        },
+        {
+          "name": "Delete Detail",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/delete/:id"
+          }
+        },
+        {
+          "name": "Delete Detail By Teacher ID",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:4000/sms/coaching-teacher-detail/delete-by-teacher/:teacherId"
+          }
+        }
+      ]
+    }
+  ]
+}
