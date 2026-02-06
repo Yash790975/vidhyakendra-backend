@@ -1,6 +1,5 @@
 node_modules
 .env
-.env.copy
 npm-debug.log*
 dist
 coverage
