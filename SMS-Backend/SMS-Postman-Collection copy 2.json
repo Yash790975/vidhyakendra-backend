@@ -1,0 +1,814 @@
+{
+  "info": {
+    "name": "Notices Management API",
+    "description": "Complete API collection for Super Admin Notices and Institute Notices with file upload support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Super Admin Notices",
+      "item": [
+        {
+          "name": "Create Notice - All Institutes (with file)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Annual Academic Calendar 2025",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "The academic calendar for 2025 has been finalized.",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "All institutes are requested to follow the new academic calendar starting from April 2025. Key dates include admission period, examination schedules, and holiday lists.",
+                  "type": "text"
+                },
+                {
+                  "key": "createdBy",
+                  "value": "60d5ec49f1b2c72b8c8e4abc",
+                  "type": "text",
+                  "description": "Super Admin ID"
+                },
+                {
+                  "key": "audience[type]",
+                  "value": "all-institutes",
+                  "type": "text"
+                },
+                {
+                  "key": "priority",
+                  "value": "high",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "academic",
+                  "type": "text"
+                },
+                {
+                  "key": "isPinned",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "Optional - Upload PDF/Image/Document"
+                }
+              ]
+            },
+            "url": "http://localhost:4000/sms/super-admin-notices"
+          }
+        },
+        {
+          "name": "Create Notice - Specific Institutes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Fee Structure Update",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Updated fee structure for selected institutes.",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "The fee structure has been revised for the institutes in metro cities.",
+                  "type": "text"
+                },
+                {
+                  "key": "createdBy",
+                  "value": "60d5ec49f1b2c72b8c8e4abc",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[type]",
+                  "value": "specific-institutes",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[instituteIds][0]",
+                  "value": "60d5ec49f1b2c72b8c8e4f10",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[instituteIds][1]",
+                  "value": "60d5ec49f1b2c72b8c8e4f11",
+                  "type": "text"
+                },
+                {
+                  "key": "priority",
+                  "value": "urgent",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "announcement",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": "http://localhost:4000/sms/super-admin-notices"
+          }
+        },
+        {
+          "name": "Get All Notices (Exclude Expired)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices?status=published&priority=high",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "published",
+                  "description": "Optional filter"
+                },
+                {
+                  "key": "priority",
+                  "value": "high",
+                  "description": "Optional filter"
+                },
+                {
+                  "key": "category",
+                  "value": "academic",
+                  "disabled": true
+                },
+                {
+                  "key": "audience_type",
+                  "value": "all-institutes",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Expired Notices Only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/expired",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", "expired"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "academic",
+                  "disabled": true
+                },
+                {
+                  "key": "priority",
+                  "value": "high",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Published Notices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:4000/sms/super-admin-notices/published"
+          }
+        },
+        {
+          "name": "Get Notice By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4f1b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Notices for Specific Institute",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/institute/:institute_id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", "institute", ":institute_id"],
+              "variable": [
+                {
+                  "key": "institute_id",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Notice (with new file)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Title",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Updated content",
+                  "type": "text"
+                },
+                {
+                  "key": "priority",
+                  "value": "urgent",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "Optional - replaces old file if uploaded"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4f1b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Publish Notice",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/:id/publish",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", ":id", "publish"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4f1b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Archive Notice",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/:id/archive",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", ":id", "archive"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4f1b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Notice",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/super-admin-notices/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "super-admin-notices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4f1b"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Institute Notices",
+      "item": [
+        {
+          "name": "Create Notice - All (with file)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Sports Day Announcement",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Annual sports day will be held on 25th March.",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "All students and teachers are requested to participate in the annual sports day event.",
+                  "type": "text"
+                },
+                {
+                  "key": "instituteId",
+                  "value": "60d5ec49f1b2c72b8c8e4f10",
+                  "type": "text"
+                },
+                {
+                  "key": "createdBy",
+                  "value": "60d5ec49f1b2c72b8c8e4def",
+                  "type": "text"
+                },
+                {
+                  "key": "createdByRole",
+                  "value": "institute_admin",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[type]",
+                  "value": "all",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "events",
+                  "type": "text"
+                },
+                {
+                  "key": "isPinned",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": "http://localhost:4000/sms/notices"
+          }
+        },
+        {
+          "name": "Create Notice - Specific Classes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Test Schedule - Class 10",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Mid-term examination schedule",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "Mid-term examinations for Class 10 will begin from 15th April.",
+                  "type": "text"
+                },
+                {
+                  "key": "instituteId",
+                  "value": "60d5ec49f1b2c72b8c8e4f10",
+                  "type": "text"
+                },
+                {
+                  "key": "createdBy",
+                  "value": "60d5ec49f1b2c72b8c8e4def",
+                  "type": "text"
+                },
+                {
+                  "key": "createdByRole",
+                  "value": "teacher",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[type]",
+                  "value": "specific-classes",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[classIds][0]",
+                  "value": "60d5ec49f1b2c72b8c8e4c10",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[sectionIds][0]",
+                  "value": "60d5ec49f1b2c72b8c8e4s10",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "academic",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": "http://localhost:4000/sms/notices"
+          }
+        },
+        {
+          "name": "Create Notice - Specific Students",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Fee Reminder",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Pending fee payment reminder",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "Your fee payment is pending. Please clear dues by end of month.",
+                  "type": "text"
+                },
+                {
+                  "key": "instituteId",
+                  "value": "60d5ec49f1b2c72b8c8e4f10",
+                  "type": "text"
+                },
+                {
+                  "key": "createdBy",
+                  "value": "60d5ec49f1b2c72b8c8e4def",
+                  "type": "text"
+                },
+                {
+                  "key": "createdByRole",
+                  "value": "institute_admin",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[type]",
+                  "value": "specific-users",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[studentIds][0]",
+                  "value": "60d5ec49f1b2c72b8c8e4st1",
+                  "type": "text"
+                },
+                {
+                  "key": "audience[studentIds][1]",
+                  "value": "60d5ec49f1b2c72b8c8e4st2",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "urgent",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": "http://localhost:4000/sms/notices"
+          }
+        },
+        {
+          "name": "Get All Notices (Exclude Expired)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices?instituteId=60d5ec49f1b2c72b8c8e4f10&status=published",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices"],
+              "query": [
+                {
+                  "key": "instituteId",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                },
+                {
+                  "key": "status",
+                  "value": "published"
+                },
+                {
+                  "key": "category",
+                  "value": "academic",
+                  "disabled": true
+                },
+                {
+                  "key": "createdByRole",
+                  "value": "teacher",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Expired Notices Only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/expired?instituteId=60d5ec49f1b2c72b8c8e4f10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", "expired"],
+              "query": [
+                {
+                  "key": "instituteId",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                },
+                {
+                  "key": "category",
+                  "value": "events",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Notice By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4n01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Notices for Student",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/student/:student_id/institute/:institute_id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", "student", ":student_id", "institute", ":institute_id"],
+              "variable": [
+                {
+                  "key": "student_id",
+                  "value": "60d5ec49f1b2c72b8c8e4st1"
+                },
+                {
+                  "key": "institute_id",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Notices for Teacher",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/teacher/:teacher_id/institute/:institute_id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", "teacher", ":teacher_id", "institute", ":institute_id"],
+              "variable": [
+                {
+                  "key": "teacher_id",
+                  "value": "60d5ec49f1b2c72b8c8e4def"
+                },
+                {
+                  "key": "institute_id",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Notices for Class",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/class/:class_id/institute/:institute_id?section_id=60d5ec49f1b2c72b8c8e4s10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", "class", ":class_id", "institute", ":institute_id"],
+              "query": [
+                {
+                  "key": "section_id",
+                  "value": "60d5ec49f1b2c72b8c8e4s10",
+                  "description": "Optional"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "class_id",
+                  "value": "60d5ec49f1b2c72b8c8e4c10"
+                },
+                {
+                  "key": "institute_id",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Notice (with new file)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Notice Title",
+                  "type": "text"
+                },
+                {
+                  "key": "content",
+                  "value": "Updated content",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "urgent",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "Optional - replaces old file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4n01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Publish Notice",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/:id/publish",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", ":id", "publish"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4n01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Archive Notice",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/:id/archive",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", ":id", "archive"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4n01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Notice",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/notices/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "notices", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4n01"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+} 

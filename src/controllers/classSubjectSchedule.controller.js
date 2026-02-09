@@ -47,6 +47,7 @@ const getAllSchedules = async (req, res) => {
       teacher_id: req.query.teacher_id,
       day_of_week: req.query.day_of_week,
       status: req.query.status,
+      academic_year: req.query.academic_year, // ✅ NEW
     };
 
     const schedules = await scheduleService.getAllSchedules(filters);
@@ -68,6 +69,8 @@ const getAllSchedules = async (req, res) => {
     });
   }
 };
+ 
+
 
 const getScheduleById = async (req, res) => {
   try {

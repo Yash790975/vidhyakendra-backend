@@ -107,6 +107,9 @@ app.use("/sms/class-subjects", require("./routes/classSubjects.routes"));
 app.use("/sms/class-subject-schedule", require("./routes/classSubjectSchedule.routes"));
 app.use("/sms/class-teacher-assignments", require("./routes/classTeacherAssignments.routes"));
 
+
+app.use("/sms/homework-assignments", require("./routes/homeworkAssignments.routes"))
+
 // app.use(notFound);   
 
 // app.use(errorHandler);   

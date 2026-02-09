@@ -305,13 +305,60 @@
           "name": "Super Admin Notices",
           "item": [
             {
-              "name": "Create Notice - All Institutes",
+              "name": "Create Notice - All Institutes (with file)",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"System Maintenance Notice\",\n  \"content\": \"The system will be under maintenance on Sunday\",\n  \"fullDescription\": \"We will be performing system maintenance this Sunday from 2 AM to 6 AM. All services will be temporarily unavailable during this period.\",\n  \"createdBy\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"audience\": {\n    \"type\": \"all-institutes\"\n  },\n  \"priority\": \"high\",\n  \"category\": \"announcement\",\n  \"isPinned\": true,\n  \"publishDate\": \"2025-02-06\",\n  \"expiryDate\": \"2025-02-07\"\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Annual Academic Calendar 2025",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "The academic calendar for 2025 has been finalized.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "fullDescription",
+                      "value": "All institutes are requested to follow the new academic calendar starting from April 2025. Key dates include admission period, examination schedules, and holiday lists.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "60d5ec49f1b2c72b8c8e4abc",
+                      "type": "text",
+                      "description": "Super Admin ID"
+                    },
+                    {
+                      "key": "audience[type]",
+                      "value": "all-institutes",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "high",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "academic",
+                      "type": "text"
+                    },
+                    {
+                      "key": "isPinned",
+                      "value": "true",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "description": "Optional - Upload PDF/Image/Document"
+                    }
+                  ]
                 },
                 "url": "http://localhost:4000/sms/super-admin-notices"
               }
@@ -320,73 +367,634 @@
               "name": "Create Notice - Specific Institutes",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"New Feature Launch\",\n  \"content\": \"Exciting new features coming to your institute\",\n  \"fullDescription\": \"We are launching new attendance and grade management features specifically for selected institutes.\",\n  \"docUrl\": \"https://example.com/docs/new-features.pdf\",\n  \"createdBy\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"audience\": {\n    \"type\": \"specific-institutes\",\n    \"instituteIds\": [\"60d5ec49f1b2c72b8c8e4f1b\", \"60d5ec49f1b2c72b8c8e4f1c\"]\n  },\n  \"priority\": \"medium\",\n  \"category\": \"news\",\n  \"isPinned\": false\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Fee Structure Update",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "Updated fee structure for selected institutes.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "fullDescription",
+                      "value": "The fee structure has been revised for the institutes in metro cities.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "60d5ec49f1b2c72b8c8e4abc",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[type]",
+                      "value": "specific-institutes",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[instituteIds][0]",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[instituteIds][1]",
+                      "value": "60d5ec49f1b2c72b8c8e4f11",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "urgent",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "announcement",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file"
+                    }
+                  ]
                 },
                 "url": "http://localhost:4000/sms/super-admin-notices"
               }
             },
             {
-              "name": "Get All Super Admin Notices",
+              "name": "Get All Notices (Exclude Expired)",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/super-admin-notices"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices?status=published&priority=high",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices"],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "published",
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "high",
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "category",
+                      "value": "academic",
+                      "disabled": true
+                    },
+                    {
+                      "key": "audience_type",
+                      "value": "all-institutes",
+                      "disabled": true
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Expired Notices Only",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/expired",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", "expired"],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "academic",
+                      "disabled": true
+                    },
+                    {
+                      "key": "priority",
+                      "value": "high",
+                      "disabled": true
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Get Published Notices",
               "request": {
                 "method": "GET",
+                "header": [],
                 "url": "http://localhost:4000/sms/super-admin-notices/published"
               }
             },
             {
-              "name": "Get Notices for Institute",
+              "name": "Get Notice By ID",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/super-admin-notices/institute/:institute_id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
               }
             },
             {
-              "name": "Get Notice by ID",
+              "name": "Get Notices for Specific Institute",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/super-admin-notices/:id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/institute/:institute_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", "institute", ":institute_id"],
+                  "variable": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10"
+                    }
+                  ]
+                }
               }
             },
             {
-              "name": "Update Notice",
+              "name": "Update Notice (with new file)",
               "request": {
                 "method": "PUT",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"Updated System Maintenance Notice\",\n  \"priority\": \"urgent\",\n  \"isPinned\": true\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Updated Title",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "Updated content",
+                      "type": "text"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "urgent",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "description": "Optional - replaces old file if uploaded"
+                    }
+                  ]
                 },
-                "url": "http://localhost:4000/sms/super-admin-notices/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Publish Notice",
               "request": {
                 "method": "PATCH",
-                "url": "http://localhost:4000/sms/super-admin-notices/:id/publish"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/:id/publish",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", ":id", "publish"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Archive Notice",
               "request": {
                 "method": "PATCH",
-                "url": "http://localhost:4000/sms/super-admin-notices/:id/archive"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/:id/archive",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", ":id", "archive"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Delete Notice",
               "request": {
                 "method": "DELETE",
-                "url": "http://localhost:4000/sms/super-admin-notices/:id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/super-admin-notices/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "super-admin-notices", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Assessments, Fees & Tests Module",
+      "item": [
+        {
+          "name": "Homework Assignments",
+          "item": [
+            {
+              "name": "Create Homework Assignment (with attachments)",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4abc",
+                      "type": "text",
+                      "description": "Required - Institute MongoDB ObjectId"
+                    },
+                    {
+                      "key": "title",
+                      "value": "Mathematics Chapter 5 - Trigonometry",
+                      "type": "text",
+                      "description": "Required"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Complete all exercises from chapter 5 on trigonometric ratios and identities",
+                      "type": "text",
+                      "description": "Optional"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "60d5ec49f1b2c72b8c8e4def",
+                      "type": "text",
+                      "description": "Required - Subject MongoDB ObjectId"
+                    },
+                    {
+                      "key": "class_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "type": "text",
+                      "description": "Required - Class MongoDB ObjectId"
+                    },
+                    {
+                      "key": "section_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f11",
+                      "type": "text",
+                      "description": "Optional - Section MongoDB ObjectId"
+                    },
+                    {
+                      "key": "batch_id",
+                      "value": "",
+                      "type": "text",
+                      "description": "Optional - Batch MongoDB ObjectId"
+                    },
+                    {
+                      "key": "assigned_by",
+                      "value": "60d5ec49f1b2c72b8c8e4f12",
+                      "type": "text",
+                      "description": "Required - Teacher MongoDB ObjectId"
+                    },
+                    {
+                      "key": "assigned_date",
+                      "value": "2025-02-10",
+                      "type": "text",
+                      "description": "Required - Date format: YYYY-MM-DD"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2025-02-17",
+                      "type": "text",
+                      "description": "Required - Date format: YYYY-MM-DD"
+                    },
+                    {
+                      "key": "total_marks",
+                      "value": "50",
+                      "type": "text",
+                      "description": "Optional - Total marks for the assignment"
+                    },
+                    {
+                      "key": "instructions",
+                      "value": "Submit handwritten solutions. Show all steps clearly. Use graph paper for diagrams.",
+                      "type": "text",
+                      "description": "Optional - Special instructions"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "high",
+                      "type": "text",
+                      "description": "Optional - low, medium, or high"
+                    },
+                    {
+                      "key": "status",
+                      "value": "active",
+                      "type": "text",
+                      "description": "Optional - active, closed, or archived (default: active)"
+                    },
+                    {
+                      "key": "attachments",
+                      "type": "file",
+                      "description": "Optional - Upload up to 10 files (PDF, images, documents)"
+                    },
+                    {
+                      "key": "attachments",
+                      "type": "file",
+                      "description": "Optional - Second attachment file"
+                    }
+                  ]
+                },
+                "url": "http://localhost:4000/sms/homework-assignments"
+              }
+            },
+            {
+              "name": "Get All Homework Assignments (with filters)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/homework-assignments?institute_id=60d5ec49f1b2c72b8c8e4abc&status=active&priority=high",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "homework-assignments"],
+                  "query": [
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4abc",
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "status",
+                      "value": "active",
+                      "description": "Optional filter - active, closed, or archived"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "high",
+                      "description": "Optional filter - low, medium, or high"
+                    },
+                    {
+                      "key": "class_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "disabled": true,
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "section_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f11",
+                      "disabled": true,
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "batch_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f13",
+                      "disabled": true,
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "60d5ec49f1b2c72b8c8e4def",
+                      "disabled": true,
+                      "description": "Optional filter"
+                    },
+                    {
+                      "key": "assigned_by",
+                      "value": "60d5ec49f1b2c72b8c8e4f12",
+                      "disabled": true,
+                      "description": "Optional filter - Teacher ID"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Homework Assignment By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/homework-assignments/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "homework-assignments", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b",
+                      "description": "Homework Assignment MongoDB ObjectId"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Homework Assignments By Class",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/homework-assignments/class/:class_id?section_id=60d5ec49f1b2c72b8c8e4f11",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "homework-assignments", "class", ":class_id"],
+                  "query": [
+                    {
+                      "key": "section_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f11",
+                      "description": "Optional - Filter by section"
+                    },
+                    {
+                      "key": "batch_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f13",
+                      "disabled": true,
+                      "description": "Optional - Filter by batch"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "class_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "description": "Class MongoDB ObjectId"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Homework Assignment (add more attachments)",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Mathematics Chapter 5 & 6 - Trigonometry and Statistics",
+                      "type": "text",
+                      "description": "Optional - Update title"
+                    },
+                    {
+                      "key": "description",
+                      "value": "Complete exercises from chapters 5 and 6",
+                      "type": "text",
+                      "description": "Optional - Update description"
+                    },
+                    {
+                      "key": "due_date",
+                      "value": "2025-02-20",
+                      "type": "text",
+                      "description": "Optional - Extend due date"
+                    },
+                    {
+                      "key": "total_marks",
+                      "value": "75",
+                      "type": "text",
+                      "description": "Optional - Update total marks"
+                    },
+                    {
+                      "key": "instructions",
+                      "value": "Updated instructions: Include statistical analysis",
+                      "type": "text",
+                      "description": "Optional - Update instructions"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "urgent",
+                      "type": "text",
+                      "description": "Optional - Update priority"
+                    },
+                    {
+                      "key": "status",
+                      "value": "active",
+                      "type": "text",
+                      "description": "Optional - active, closed, or archived"
+                    },
+                    {
+                      "key": "attachments",
+                      "type": "file",
+                      "description": "Optional - Add more attachments (appends to existing files)"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/homework-assignments/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "homework-assignments", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b",
+                      "description": "Homework Assignment MongoDB ObjectId"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Single Attachment",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"attachment_url\": \"/uploads/homework_assignments/filename.pdf\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/homework-assignments/:id/attachment",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "homework-assignments", ":id", "attachment"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b",
+                      "description": "Homework Assignment MongoDB ObjectId"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Homework Assignment",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/homework-assignments/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "homework-assignments", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b",
+                      "description": "Homework Assignment MongoDB ObjectId"
+                    }
+                  ]
+                }
               }
             }
           ]
@@ -2634,13 +3242,63 @@
           "name": "Institute Notices",
           "item": [
             {
-              "name": "Create Notice - All",
+              "name": "Create Notice - All (with file)",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"School Holiday Announcement\",\n  \"content\": \"School will be closed next Monday\",\n  \"fullDescription\": \"Due to a local festival, the school will remain closed next Monday. Classes will resume on Tuesday.\",\n  \"instituteId\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"createdBy\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"createdByRole\": \"institute_admin\",\n  \"audience\": {\n    \"type\": \"all\"\n  },\n  \"category\": \"announcement\",\n  \"isPinned\": true,\n  \"publishDate\": \"2025-02-06\"\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Sports Day Announcement",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "Annual sports day will be held on 25th March.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "fullDescription",
+                      "value": "All students and teachers are requested to participate in the annual sports day event.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "instituteId",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "60d5ec49f1b2c72b8c8e4def",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdByRole",
+                      "value": "institute_admin",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[type]",
+                      "value": "all",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "events",
+                      "type": "text"
+                    },
+                    {
+                      "key": "isPinned",
+                      "value": "true",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file"
+                    }
+                  ]
                 },
                 "url": "http://localhost:4000/sms/notices"
               }
@@ -2649,10 +3307,65 @@
               "name": "Create Notice - Specific Classes",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"Mathematics Exam Postponed\",\n  \"content\": \"The math exam scheduled for Friday is postponed to Monday\",\n  \"fullDescription\": \"Due to unforeseen circumstances, the mathematics examination has been rescheduled from Friday to Monday next week.\",\n  \"instituteId\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"createdBy\": \"60d5ec49f1b2c72b8c8e4f1d\",\n  \"createdByRole\": \"teacher\",\n  \"audience\": {\n    \"type\": \"specific-classes\",\n    \"classIds\": [\"60d5ec49f1b2c72b8c8e4f1e\"],\n    \"sectionIds\": [\"60d5ec49f1b2c72b8c8e4f1f\"]\n  },\n  \"category\": \"urgent\",\n  \"isPinned\": false\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Test Schedule - Class 10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "Mid-term examination schedule",
+                      "type": "text"
+                    },
+                    {
+                      "key": "fullDescription",
+                      "value": "Mid-term examinations for Class 10 will begin from 15th April.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "instituteId",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "60d5ec49f1b2c72b8c8e4def",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdByRole",
+                      "value": "teacher",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[type]",
+                      "value": "specific-classes",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[classIds][0]",
+                      "value": "60d5ec49f1b2c72b8c8e4c10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[sectionIds][0]",
+                      "value": "60d5ec49f1b2c72b8c8e4s10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "academic",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file"
+                    }
+                  ]
                 },
                 "url": "http://localhost:4000/sms/notices"
               }
@@ -2661,111 +3374,330 @@
               "name": "Create Notice - Specific Students",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"Parent-Teacher Meeting\",\n  \"content\": \"Parent-teacher meeting scheduled for selected students\",\n  \"fullDescription\": \"A special parent-teacher meeting has been arranged to discuss the academic progress of selected students.\",\n  \"instituteId\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"createdBy\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"createdByRole\": \"institute_admin\",\n  \"audience\": {\n    \"type\": \"specific-users\",\n    \"studentIds\": [\"60d5ec49f1b2c72b8c8e4f20\", \"60d5ec49f1b2c72b8c8e4f21\"]\n  },\n  \"category\": \"academic\",\n  \"isPinned\": false\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Fee Reminder",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "Pending fee payment reminder",
+                      "type": "text"
+                    },
+                    {
+                      "key": "fullDescription",
+                      "value": "Your fee payment is pending. Please clear dues by end of month.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "instituteId",
+                      "value": "60d5ec49f1b2c72b8c8e4f10",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "60d5ec49f1b2c72b8c8e4def",
+                      "type": "text"
+                    },
+                    {
+                      "key": "createdByRole",
+                      "value": "institute_admin",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[type]",
+                      "value": "specific-users",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[studentIds][0]",
+                      "value": "60d5ec49f1b2c72b8c8e4st1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "audience[studentIds][1]",
+                      "value": "60d5ec49f1b2c72b8c8e4st2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "urgent",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file"
+                    }
+                  ]
                 },
                 "url": "http://localhost:4000/sms/notices"
               }
             },
             {
-              "name": "Create Notice - Teachers Only",
-              "request": {
-                "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"Staff Meeting Tomorrow\",\n  \"content\": \"All teaching staff must attend tomorrow's meeting\",\n  \"fullDescription\": \"An important staff meeting has been scheduled for tomorrow at 4 PM in the conference hall. Attendance is mandatory.\",\n  \"instituteId\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"createdBy\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"createdByRole\": \"institute_admin\",\n  \"audience\": {\n    \"type\": \"teachers\"\n  },\n  \"category\": \"events\",\n  \"isPinned\": true\n}"
-                },
-                "url": "http://localhost:4000/sms/notices"
-              }
-            },
-            {
-              "name": "Get All Notices",
+              "name": "Get All Notices (Exclude Expired)",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/notices"
-              }
-            },
-            {
-              "name": "Get Notices with Filters",
-              "request": {
-                "method": "GET",
+                "header": [],
                 "url": {
-                  "raw": "http://localhost:4000/sms/notices?instituteId=60d5ec49f1b2c72b8c8e4f1b&status=published&category=urgent",
+                  "raw": "http://localhost:4000/sms/notices?instituteId=60d5ec49f1b2c72b8c8e4f10&status=published",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices"],
                   "query": [
-                    {"key": "instituteId", "value": "60d5ec49f1b2c72b8c8e4f1b"},
-                    {"key": "status", "value": "published"},
-                    {"key": "category", "value": "urgent"}
+                    {
+                      "key": "instituteId",
+                      "value": "60d5ec49f1b2c72b8c8e4f10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "published"
+                    },
+                    {
+                      "key": "category",
+                      "value": "academic",
+                      "disabled": true
+                    },
+                    {
+                      "key": "createdByRole",
+                      "value": "teacher",
+                      "disabled": true
+                    }
                   ]
                 }
               }
             },
             {
-              "name": "Get Notice by ID",
+              "name": "Get Expired Notices Only",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/notices/:id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/expired?instituteId=60d5ec49f1b2c72b8c8e4f10",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", "expired"],
+                  "query": [
+                    {
+                      "key": "instituteId",
+                      "value": "60d5ec49f1b2c72b8c8e4f10"
+                    },
+                    {
+                      "key": "category",
+                      "value": "events",
+                      "disabled": true
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Notice By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4n01"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Get Notices for Student",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/notices/student/:student_id/institute/:institute_id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/student/:student_id/institute/:institute_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", "student", ":student_id", "institute", ":institute_id"],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "60d5ec49f1b2c72b8c8e4st1"
+                    },
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Get Notices for Teacher",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/notices/teacher/:teacher_id/institute/:institute_id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/teacher/:teacher_id/institute/:institute_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", "teacher", ":teacher_id", "institute", ":institute_id"],
+                  "variable": [
+                    {
+                      "key": "teacher_id",
+                      "value": "60d5ec49f1b2c72b8c8e4def"
+                    },
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Get Notices for Class",
               "request": {
                 "method": "GET",
+                "header": [],
                 "url": {
-                  "raw": "http://localhost:4000/sms/notices/class/:class_id/institute/:institute_id?section_id=60d5ec49f1b2c72b8c8e4f1f",
+                  "raw": "http://localhost:4000/sms/notices/class/:class_id/institute/:institute_id?section_id=60d5ec49f1b2c72b8c8e4s10",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", "class", ":class_id", "institute", ":institute_id"],
                   "query": [
-                    {"key": "section_id", "value": "60d5ec49f1b2c72b8c8e4f1f"}
+                    {
+                      "key": "section_id",
+                      "value": "60d5ec49f1b2c72b8c8e4s10",
+                      "description": "Optional"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "class_id",
+                      "value": "60d5ec49f1b2c72b8c8e4c10"
+                    },
+                    {
+                      "key": "institute_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f10"
+                    }
                   ]
                 }
               }
             },
             {
-              "name": "Update Notice",
+              "name": "Update Notice (with new file)",
               "request": {
                 "method": "PUT",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [],
                 "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"title\": \"Updated Notice Title\",\n  \"isPinned\": true,\n  \"category\": \"urgent\"\n}"
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "Updated Notice Title",
+                      "type": "text"
+                    },
+                    {
+                      "key": "content",
+                      "value": "Updated content",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "urgent",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "description": "Optional - replaces old file"
+                    }
+                  ]
                 },
-                "url": "http://localhost:4000/sms/notices/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4n01"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Publish Notice",
               "request": {
                 "method": "PATCH",
-                "url": "http://localhost:4000/sms/notices/:id/publish"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/:id/publish",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", ":id", "publish"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4n01"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Archive Notice",
               "request": {
                 "method": "PATCH",
-                "url": "http://localhost:4000/sms/notices/:id/archive"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/:id/archive",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", ":id", "archive"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4n01"
+                    }
+                  ]
+                }
               }
             },
             {
               "name": "Delete Notice",
               "request": {
                 "method": "DELETE",
-                "url": "http://localhost:4000/sms/notices/:id"
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/notices/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "notices", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4n01"
+                    }
+                  ]
+                }
               }
             }
           ]
