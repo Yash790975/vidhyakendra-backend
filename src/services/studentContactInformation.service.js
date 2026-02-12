@@ -1,7 +1,7 @@
 const StudentContactInformation = require("../models/studentContactInformation.model");
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
-const { sendOTPEmail } = require("./email.service");
+const { sendOTPEmail } = require("./email.service"); 
 
 // ============= CONTACT INFORMATION =============
     

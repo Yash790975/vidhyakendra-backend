@@ -43,7 +43,7 @@ const noticesSchema = new mongoose.Schema(
         type: String,
         required: true,
         enum: [
-          "all",
+          "all",  
           "teachers",
           "students",
           "specific-classes",

@@ -39,7 +39,7 @@ const homeworkAssignmentsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "TeachersMaster",
       required: true,
-      description: "Teacher ID",
+      description: "Teacher ID", 
     },
     assigned_date: {
       type: Date,

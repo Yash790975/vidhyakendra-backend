@@ -97,6 +97,7 @@ const getAssignmentsByTeacherId = async (teacherId, academicYear = null) => {
   }
 
   const assignments = await ClassTeacherAssignments.find(query)
+    .populate("teacher_id", "full_name teacher_code")
     .populate("class_id", "class_name class_type academic_year")
     .populate("section_id", "section_name")
     .populate("subject_id", "subject_name subject_code")
@@ -114,6 +115,7 @@ const getAssignmentsByClassId = async (classId, academicYear = null) => {
 
   const assignments = await ClassTeacherAssignments.find(query)
     .populate("teacher_id", "full_name teacher_code")
+    .populate("class_id", "class_name class_type academic_year")
     .populate("section_id", "section_name")
     .populate("subject_id", "subject_name subject_code")
     .sort({ role: 1, createdAt: -1 });

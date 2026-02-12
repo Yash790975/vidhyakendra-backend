@@ -6,7 +6,7 @@ const studentsMasterSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "institutes_master",
       required: true,
-    },
+    }, 
     student_code: {
       type: String,
       required: true,

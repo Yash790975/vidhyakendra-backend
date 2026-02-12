@@ -3,7 +3,7 @@ const Joi = require('joi');
 
 const createSubjectValidation = Joi.object({
   institute_id: Joi.string().required().messages({
-    'string.empty': 'Institute ID is required', 
+    'string.empty': 'Institute ID is required',  
     'any.required': 'Institute ID is required' 
   }),
   subject_name: Joi.string().min(2).max(100).required().messages({

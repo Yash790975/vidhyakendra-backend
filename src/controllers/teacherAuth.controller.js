@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const teacherAuthService = require('../services/teacherAuth.service');
 const {
   createAuthValidation,  
-  updateAuthValidation,
+  updateAuthValidation,    
   verifyLoginValidation,
   requestOTPValidation,
   verifyOTPValidation, 

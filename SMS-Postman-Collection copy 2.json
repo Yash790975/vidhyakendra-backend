@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Homework Assignments API",
-    "description": "Complete API collection for managing homework assignments with file attachments",
+    "name": "Homework & Exams Management API",
+    "description": "Complete API collection for Homework Assignments, Homework Submissions, Exams Master, Exam Schedules, and Student Exam Results with file upload support",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -9,106 +9,98 @@
       "name": "Homework Assignments",
       "item": [
         {
-          "name": "Create Homework Assignment (with attachments)",
-          "request": {
+          "name": "Create Assignment (with files)",
+            "request": {
             "method": "POST",
             "header": [],
             "body": {
-              "mode": "formdata",
-              "formdata": [
+            "mode": "formdata",
+            "formdata": [
                 {
                   "key": "institute_id",
-                  "value": "60d5ec49f1b2c72b8c8e4abc",
-                  "type": "text",
-                  "description": "Required - Institute MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4f10",
+                  "type": "text"
                 },
                 {
                   "key": "title",
-                  "value": "Mathematics Chapter 5 - Trigonometry",
-                  "type": "text",
-                  "description": "Required"
+                  "value": "Math Assignment - Chapter 5",
+                  "type": "text"
                 },
                 {
                   "key": "description",
-                  "value": "Complete all exercises from chapter 5 on trigonometric ratios and identities",
-                  "type": "text",
-                  "description": "Optional"
+                  "value": "Solve all problems from Chapter 5 - Algebra",
+                  "type": "text"
                 },
                 {
                   "key": "subject_id",
-                  "value": "60d5ec49f1b2c72b8c8e4def",
-                  "type": "text",
-                  "description": "Required - Subject MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4s01",
+                  "type": "text"
                 },
                 {
                   "key": "class_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f10",
-                  "type": "text",
-                  "description": "Required - Class MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4c10",
+                  "type": "text"
                 },
                 {
                   "key": "section_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f11",
+                  "value": "60d5ec49f1b2c72b8c8e4sec",
                   "type": "text",
-                  "description": "Optional - Section MongoDB ObjectId"
+                  "description": "Optional"
                 },
                 {
                   "key": "batch_id",
                   "value": "",
                   "type": "text",
-                  "description": "Optional - Batch MongoDB ObjectId"
+                  "description": "Optional",
+                  "disabled": true
                 },
                 {
                   "key": "assigned_by",
-                  "value": "60d5ec49f1b2c72b8c8e4f12",
+                  "value": "60d5ec49f1b2c72b8c8e4t01",
                   "type": "text",
-                  "description": "Required - Teacher MongoDB ObjectId"
+                  "description": "Teacher ID"
                 },
                 {
                   "key": "assigned_date",
                   "value": "2025-02-10",
-                  "type": "text",
-                  "description": "Required - Date format: YYYY-MM-DD"
+                  "type": "text"
                 },
                 {
                   "key": "due_date",
                   "value": "2025-02-17",
-                  "type": "text",
-                  "description": "Required - Date format: YYYY-MM-DD"
+                  "type": "text"
                 },
                 {
                   "key": "total_marks",
-                  "value": "50",
-                  "type": "text",
-                  "description": "Optional - Total marks for the assignment"
+                  "value": "100",
+                  "type": "text"
                 },
                 {
                   "key": "instructions",
-                  "value": "Submit handwritten solutions. Show all steps clearly. Use graph paper for diagrams.",
-                  "type": "text",
-                  "description": "Optional - Special instructions"
+                  "value": "Show all steps. Neat handwriting required.",
+                  "type": "text"
                 },
                 {
                   "key": "priority",
                   "value": "high",
                   "type": "text",
-                  "description": "Optional - low, medium, or high"
+                  "description": "low, medium, high"
                 },
                 {
                   "key": "status",
                   "value": "active",
                   "type": "text",
-                  "description": "Optional - active, closed, or archived (default: active)"
+                  "description": "active, closed, archived"
                 },
                 {
                   "key": "attachments",
                   "type": "file",
-                  "description": "Optional - Upload up to 10 files (PDF, images, documents)"
+                  "description": "Question paper PDF"
                 },
                 {
                   "key": "attachments",
                   "type": "file",
-                  "description": "Optional - Second attachment file"
+                  "description": "Reference material (up to 10 files)"
                 }
               ]
             },
@@ -116,12 +108,26 @@
           }
         },
         {
-          "name": "Get All Homework Assignments (with filters)",
+          "name": "Get All Assignments",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/sms/homework-assignments?institute_id=60d5ec49f1b2c72b8c8e4abc&status=active&priority=high",
+              "raw": "http://localhost:4000/sms/homework-assignments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-assignments"]
+            }
+          }
+        },
+        {
+          "name": "Get All Assignments (with filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-assignments?institute_id=60d5ec49f1b2c72b8c8e4f10&status=active",
               "protocol": "http",
               "host": ["localhost"],
               "port": "4000",
@@ -129,55 +135,43 @@
               "query": [
                 {
                   "key": "institute_id",
-                  "value": "60d5ec49f1b2c72b8c8e4abc",
-                  "description": "Optional filter"
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                },
+                {
+                  "key": "class_id",
+                  "value": "60d5ec49f1b2c72b8c8e4c10",
+                  "disabled": true
+                },
+                {
+                  "key": "section_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "subject_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "assigned_by",
+                  "value": "",
+                  "disabled": true
                 },
                 {
                   "key": "status",
-                  "value": "active",
-                  "description": "Optional filter - active, closed, or archived"
+                  "value": "active"
                 },
                 {
                   "key": "priority",
                   "value": "high",
-                  "description": "Optional filter - low, medium, or high"
-                },
-                {
-                  "key": "class_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f10",
-                  "disabled": true,
-                  "description": "Optional filter"
-                },
-                {
-                  "key": "section_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f11",
-                  "disabled": true,
-                  "description": "Optional filter"
-                },
-                {
-                  "key": "batch_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f13",
-                  "disabled": true,
-                  "description": "Optional filter"
-                },
-                {
-                  "key": "subject_id",
-                  "value": "60d5ec49f1b2c72b8c8e4def",
-                  "disabled": true,
-                  "description": "Optional filter"
-                },
-                {
-                  "key": "assigned_by",
-                  "value": "60d5ec49f1b2c72b8c8e4f12",
-                  "disabled": true,
-                  "description": "Optional filter - Teacher ID"
+                  "disabled": true
                 }
               ]
             }
           }
         },
         {
-          "name": "Get Homework Assignment By ID",
+          "name": "Get Assignment By ID",
           "request": {
             "method": "GET",
             "header": [],
@@ -190,20 +184,19 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "60d5ec49f1b2c72b8c8e4f1b",
-                  "description": "Homework Assignment MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4h01"
                 }
               ]
             }
           }
         },
         {
-          "name": "Get Homework Assignments By Class",
+          "name": "Get Assignments by Class",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:4000/sms/homework-assignments/class/:class_id?section_id=60d5ec49f1b2c72b8c8e4f11",
+              "raw": "http://localhost:4000/sms/homework-assignments/class/:class_id?section_id=60d5ec49f1b2c72b8c8e4sec",
               "protocol": "http",
               "host": ["localhost"],
               "port": "4000",
@@ -211,28 +204,27 @@
               "query": [
                 {
                   "key": "section_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f11",
-                  "description": "Optional - Filter by section"
+                  "value": "60d5ec49f1b2c72b8c8e4sec",
+                  "description": "Optional"
                 },
                 {
                   "key": "batch_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f13",
-                  "disabled": true,
-                  "description": "Optional - Filter by batch"
+                  "value": "",
+                  "description": "Optional",
+                  "disabled": true
                 }
               ],
               "variable": [
                 {
                   "key": "class_id",
-                  "value": "60d5ec49f1b2c72b8c8e4f10",
-                  "description": "Class MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4c10"
                 }
               ]
             }
           }
         },
         {
-          "name": "Update Homework Assignment (add more attachments)",
+          "name": "Update Assignment (add more files)",
           "request": {
             "method": "PUT",
             "header": [],
@@ -241,50 +233,28 @@
               "formdata": [
                 {
                   "key": "title",
-                  "value": "Mathematics Chapter 5 & 6 - Trigonometry and Statistics",
-                  "type": "text",
-                  "description": "Optional - Update title"
-                },
-                {
-                  "key": "description",
-                  "value": "Complete exercises from chapters 5 and 6",
-                  "type": "text",
-                  "description": "Optional - Update description"
+                  "value": "Updated Assignment Title",
+                  "type": "text"
                 },
                 {
                   "key": "due_date",
                   "value": "2025-02-20",
-                  "type": "text",
-                  "description": "Optional - Extend due date"
-                },
-                {
-                  "key": "total_marks",
-                  "value": "75",
-                  "type": "text",
-                  "description": "Optional - Update total marks"
-                },
-                {
-                  "key": "instructions",
-                  "value": "Updated instructions: Include statistical analysis",
-                  "type": "text",
-                  "description": "Optional - Update instructions"
+                  "type": "text"
                 },
                 {
                   "key": "priority",
                   "value": "urgent",
-                  "type": "text",
-                  "description": "Optional - Update priority"
-                },
-                {
-                  "key": "status",
-                  "value": "active",
-                  "type": "text",
-                  "description": "Optional - active, closed, or archived"
+                  "type": "text"
                 },
                 {
                   "key": "attachments",
                   "type": "file",
-                  "description": "Optional - Add more attachments (appends to existing files)"
+                  "description": "Add more files (optional)"
+                },
+                {
+                  "key": "attachments",
+                  "type": "file",
+                  "description": "Additional file"
                 }
               ]
             },
@@ -297,8 +267,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "60d5ec49f1b2c72b8c8e4f1b",
-                  "description": "Homework Assignment MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4h01"
                 }
               ]
             }
@@ -316,7 +285,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"attachment_url\": \"/uploads/homework_assignments/filename.pdf\"\n}"
+              "raw": "{\n  \"attachment_url\": \"/uploads/homework_assignments/math_assignment_1675890123456_12345.pdf\"\n}"
             },
             "url": {
               "raw": "http://localhost:4000/sms/homework-assignments/:id/attachment",
@@ -327,15 +296,14 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "60d5ec49f1b2c72b8c8e4f1b",
-                  "description": "Homework Assignment MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4h01"
                 }
               ]
             }
           }
         },
         {
-          "name": "Delete Homework Assignment",
+          "name": "Delete Assignment",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -348,8 +316,739 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "60d5ec49f1b2c72b8c8e4f1b",
-                  "description": "Homework Assignment MongoDB ObjectId"
+                  "value": "60d5ec49f1b2c72b8c8e4h01"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Homework Submissions",
+      "item": [
+        {
+          "name": "Create Submission (with files)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "homework_id",
+                  "value": "60d5ec49f1b2c72b8c8e4h01",
+                  "type": "text"
+                },
+                {
+                  "key": "student_id",
+                  "value": "60d5ec49f1b2c72b8c8e4st1",
+                  "type": "text"
+                },
+                {
+                  "key": "submission_text",
+                  "value": "I have completed all the problems. Please find my solutions attached.",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "submitted",
+                  "type": "text",
+                  "description": "pending, submitted, evaluated, late_submission"
+                },
+                {
+                  "key": "attachments",
+                  "type": "file",
+                  "description": "Solution PDF"
+                },
+                {
+                  "key": "attachments",
+                  "type": "file",
+                  "description": "Additional files (up to 10)"
+                }
+              ]
+            },
+            "url": "http://localhost:4000/sms/homework-submissions"
+          }
+        },
+        {
+          "name": "Get All Submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions"]
+            }
+          }
+        },
+        {
+          "name": "Get All Submissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions?homework_id=60d5ec49f1b2c72b8c8e4h01",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions"],
+              "query": [
+                {
+                  "key": "homework_id",
+                  "value": "60d5ec49f1b2c72b8c8e4h01"
+                },
+                {
+                  "key": "student_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "submitted",
+                  "disabled": true
+                },
+                {
+                  "key": "is_late",
+                  "value": "false",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Submission By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4hs1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Submission (add more files)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "submission_text",
+                  "value": "Updated submission text with corrections",
+                  "type": "text"
+                },
+                {
+                  "key": "attachments",
+                  "type": "file",
+                  "description": "Additional file (optional)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4hs1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Evaluate Submission",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"marks_obtained\": 85,\n  \"feedback\": \"Excellent work! All solutions are correct. Minor improvement needed in presentation.\",\n  \"evaluated_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions/:id/evaluate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions", ":id", "evaluate"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4hs1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Single Attachment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"attachment_url\": \"/uploads/homework_submissions/student123_submission_1675890123456_12345.pdf\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions/:id/attachment",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions", ":id", "attachment"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4hs1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Submission",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/homework-submissions/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "homework-submissions", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4hs1"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exams Master",
+      "item": [
+        {
+          "name": "Create Exam",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"exam_name\": \"Mid-Term Examination 2025\",\n  \"exam_code\": \"MTE-2025-01\",\n  \"exam_type\": \"half_yearly\",\n  \"academic_year\": \"2024-2025\",\n  \"term\": \"Term 2\",\n  \"start_date\": \"2025-03-01\",\n  \"end_date\": \"2025-03-15\",\n  \"description\": \"Mid-term examination for all classes\",\n  \"instructions\": \"Students must bring admit card and valid ID. No electronic devices allowed.\",\n  \"status\": \"draft\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4adm\",\n  \"created_by_role\": \"institute_admin\"\n}"
+            },
+            "url": "http://localhost:4000/sms/exams-master"
+          }
+        },
+        {
+          "name": "Get All Exams",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exams-master",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exams-master"]
+            }
+          }
+        },
+        {
+          "name": "Get All Exams (with filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exams-master?institute_id=60d5ec49f1b2c72b8c8e4f10&academic_year=2024-2025",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exams-master"],
+              "query": [
+                {
+                  "key": "institute_id",
+                  "value": "60d5ec49f1b2c72b8c8e4f10"
+                },
+                {
+                  "key": "exam_type",
+                  "value": "half_yearly",
+                  "disabled": true
+                },
+                {
+                  "key": "academic_year",
+                  "value": "2024-2025"
+                },
+                {
+                  "key": "status",
+                  "value": "scheduled",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Exam By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exams-master/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exams-master", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4ex1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Exam",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exam_name\": \"Updated Mid-Term Examination 2025\",\n  \"start_date\": \"2025-03-05\",\n  \"end_date\": \"2025-03-20\",\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/exams-master/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exams-master", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4ex1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Exam",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exams-master/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exams-master", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4ex1"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exam Schedules",
+      "item": [
+        {
+          "name": "Create Exam Schedule",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exam_id\": \"60d5ec49f1b2c72b8c8e4ex1\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null,\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"exam_date\": \"2025-03-05\",\n  \"start_time\": \"09:00\",\n  \"end_time\": \"12:00\",\n  \"duration_minutes\": 180,\n  \"room_number\": \"Room 101\",\n  \"total_marks\": 100,\n  \"pass_marks\": 40,\n  \"theory_marks\": 70,\n  \"practical_marks\": 30,\n  \"invigilator_id\": \"60d5ec49f1b2c72b8c8e4t01\",\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": "http://localhost:4000/sms/exam-schedules"
+          }
+        },
+        {
+          "name": "Get All Exam Schedules",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exam-schedules",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exam-schedules"]
+            }
+          }
+        },
+        {
+          "name": "Get All Exam Schedules (with filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exam-schedules?exam_id=60d5ec49f1b2c72b8c8e4ex1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exam-schedules"],
+              "query": [
+                {
+                  "key": "exam_id",
+                  "value": "60d5ec49f1b2c72b8c8e4ex1"
+                },
+                {
+                  "key": "class_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "section_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "subject_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "scheduled",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Exam Schedule By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exam-schedules/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exam-schedules", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4sch"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Schedules by Exam ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exam-schedules/exam/:exam_id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exam-schedules", "exam", ":exam_id"],
+              "variable": [
+                {
+                  "key": "exam_id",
+                  "value": "60d5ec49f1b2c72b8c8e4ex1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Exam Schedule",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exam_date\": \"2025-03-06\",\n  \"start_time\": \"10:00\",\n  \"end_time\": \"13:00\",\n  \"room_number\": \"Room 102\",\n  \"status\": \"ongoing\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/exam-schedules/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exam-schedules", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4sch"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Exam Schedule",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/exam-schedules/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "exam-schedules", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4sch"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student Exam Results",
+      "item": [
+        {
+          "name": "Create Student Result",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exam_schedule_id\": \"60d5ec49f1b2c72b8c8e4sch\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"theory_marks_obtained\": 62,\n  \"practical_marks_obtained\": 28,\n  \"total_marks_obtained\": 90,\n  \"total_marks\": 100,\n  \"percentage\": 90,\n  \"grade\": \"A+\",\n  \"rank\": 2,\n  \"remarks\": \"Excellent performance\",\n  \"is_absent\": false,\n  \"is_pass\": true,\n  \"evaluated_by\": \"60d5ec49f1b2c72b8c8e4t01\",\n  \"evaluated_by_role\": \"teacher\"\n}"
+            },
+            "url": "http://localhost:4000/sms/student-exam-results"
+          }
+        },
+        {
+          "name": "Create Result - Student Absent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exam_schedule_id\": \"60d5ec49f1b2c72b8c8e4sch\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st2\",\n  \"is_absent\": true,\n  \"remarks\": \"Student was absent\",\n  \"evaluated_by\": \"60d5ec49f1b2c72b8c8e4t01\",\n  \"evaluated_by_role\": \"teacher\"\n}"
+            },
+            "url": "http://localhost:4000/sms/student-exam-results"
+          }
+        },
+        {
+          "name": "Get All Results",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results"]
+            }
+          }
+        },
+        {
+          "name": "Get All Results (with filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results?exam_schedule_id=60d5ec49f1b2c72b8c8e4sch",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results"],
+              "query": [
+                {
+                  "key": "exam_schedule_id",
+                  "value": "60d5ec49f1b2c72b8c8e4sch"
+                },
+                {
+                  "key": "student_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "is_absent",
+                  "value": "false",
+                  "disabled": true
+                },
+                {
+                  "key": "is_pass",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Result By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4res"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Results by Student ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results/student/:student_id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results", "student", ":student_id"],
+              "variable": [
+                {
+                  "key": "student_id",
+                  "value": "60d5ec49f1b2c72b8c8e4st1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Results by Exam Schedule",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results/exam-schedule/:exam_schedule_id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results", "exam-schedule", ":exam_schedule_id"],
+              "variable": [
+                {
+                  "key": "exam_schedule_id",
+                  "value": "60d5ec49f1b2c72b8c8e4sch"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Student Result",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theory_marks_obtained\": 65,\n  \"practical_marks_obtained\": 29,\n  \"total_marks_obtained\": 94,\n  \"percentage\": 94,\n  \"grade\": \"A+\",\n  \"rank\": 1,\n  \"remarks\": \"Outstanding performance - First rank!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4res"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Student Result",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/sms/student-exam-results/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["sms", "student-exam-results", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60d5ec49f1b2c72b8c8e4res"
                 }
               ]
             }

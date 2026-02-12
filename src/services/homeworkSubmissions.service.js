@@ -61,6 +61,7 @@ const getAllHomeworkSubmissions = async (filters = {}) => {
     .populate({
       path: "homework_id",
       populate: [
+        { path: "institute_id", select: "institute_name institute_code"},
         { path: "subject_id", select: "subject_name" },
         { path: "class_id", select: "class_name" },
         { path: "assigned_by", select: "full_name" },
@@ -78,6 +79,8 @@ const getHomeworkSubmissionById = async (submissionId) => {
     .populate({
       path: "homework_id",
       populate: [
+        
+        { path: "institute_id", select: "institute_name institute_code"},
         { path: "subject_id", select: "subject_name" },
         { path: "class_id", select: "class_name" },
         { path: "assigned_by", select: "full_name" },
@@ -119,6 +122,7 @@ const updateHomeworkSubmission = async (submissionId, updateData, newFiles = [])
     .populate({
       path: "homework_id",
       populate: [
+        { path: "institute_id", select: "institute_name institute_code"},
         { path: "subject_id", select: "subject_name" },
         { path: "class_id", select: "class_name" },
       ],
@@ -145,6 +149,7 @@ const evaluateHomeworkSubmission = async (submissionId, evaluationData) => {
     .populate({
       path: "homework_id",
       populate: [
+        { path: "institute_id", select: "institute_name institute_code"},
         { path: "subject_id", select: "subject_name" },
         { path: "class_id", select: "class_name" },
       ],

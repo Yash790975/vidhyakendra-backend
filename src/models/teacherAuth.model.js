@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const teacherAuthSchema = new mongoose.Schema({  
-  teacher_id: {
+  teacher_id: {    
     type: mongoose.Schema.Types.ObjectId,
     // ref: 'teachers_master', 
         ref: "TeachersMaster",  

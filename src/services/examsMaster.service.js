@@ -8,7 +8,7 @@ const createExam = async (examData) => {
   const createdByModel =
     examData.created_by_role === "institute_admin"
       ? "institute_admins"
-      : "TeachersMaster";
+      : "TeachersMaster";             
 
   const exam = new ExamsMaster({
     institute_id: new mongoose.Types.ObjectId(examData.institute_id),

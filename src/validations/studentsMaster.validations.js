@@ -3,7 +3,7 @@ const Joi = require("joi");
 // Students Master Validation
 const createStudentValidation = Joi.object({
   institute_id: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/)
+    .pattern(/^[0-9a-fA-F]{24}$/) 
     .required()
     .messages({
       "string.pattern.base": "Invalid institute_id format",

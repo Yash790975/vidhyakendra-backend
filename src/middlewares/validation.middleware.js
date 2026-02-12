@@ -10,7 +10,7 @@ console.log("Error : ",error);
       apiResponse({
         success: false,
         isException: true,
-        statusCode: 400,
+        statusCode: 400, 
         result: null,
         message
       })

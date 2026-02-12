@@ -7,7 +7,7 @@ const studentExamResultsSchema = new mongoose.Schema(
       ref: "ExamSchedules",
       required: true,
     },
-    student_id: {
+    student_id: {    
       type: mongoose.Schema.Types.ObjectId,
       ref: "StudentsMaster",
       required: true,
@@ -76,5 +76,29 @@ const studentExamResultsSchema = new mongoose.Schema(
 // Indexes
 studentExamResultsSchema.index({ exam_schedule_id: 1, student_id: 1 }, { unique: true });
 studentExamResultsSchema.index({ student_id: 1 });
+
+
+// Convert Decimal128 to Number in JSON response
+function decimalTransform(doc, ret) {
+  const decimalFields = [
+    "theory_marks_obtained",
+    "practical_marks_obtained",
+    "total_marks_obtained",
+    "percentage",
+  ];
+
+  decimalFields.forEach((field) => {
+    if (ret[field] != null && ret[field].toString) {
+      ret[field] = Number(ret[field].toString());
+    }
+  });
+
+  return ret;
+}
+
+studentExamResultsSchema.set("toJSON", { transform: decimalTransform });
+studentExamResultsSchema.set("toObject", { transform: decimalTransform });
+
+
 
 module.exports = mongoose.model("StudentExamResults", studentExamResultsSchema);

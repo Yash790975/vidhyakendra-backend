@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const teacherAuthController = require('../controllers/teacherAuth.controller');
    
-// Teacher Auth CRUD operations
+// Teacher Auth CRUD operations    
 router.post('/create', teacherAuthController.createTeacherAuth);
 router.get('/get-all', teacherAuthController.getAllTeacherAuths);
 router.get('/get/:id', teacherAuthController.getTeacherAuthById);

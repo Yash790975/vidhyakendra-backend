@@ -2,7 +2,7 @@
 const TeacherAuth = require('../models/teacherAuth.model');
 const Teacher = require('../models/teachersMaster.model'); 
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');  
+const crypto = require('crypto');     
 const nodemailer = require('nodemailer');
 const statusCode = require('../enums/statusCode');
 

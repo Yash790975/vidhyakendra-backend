@@ -12,6 +12,57 @@ const createExamSchedule = async (scheduleData) => {
     throw new CustomError("Exam not found", statusCode.NOT_FOUND);
   }
 
+  const examDate = scheduleData.exam_date;
+  const startTime = scheduleData.start_time;
+  const endTime = scheduleData.end_time;
+
+  // -------------------------------
+  // ✅ Common overlap condition
+  // -------------------------------
+  const timeOverlapCondition = {
+    exam_date: examDate,
+    start_time: { $lt: endTime },
+    end_time: { $gt: startTime },
+  };
+
+  // =====================================================
+  // ✅ 1. Prevent double schedule for same invigilator
+  // =====================================================
+  if (scheduleData.invigilator_id && startTime && endTime) {
+    const teacherConflict = await ExamSchedules.findOne({
+      invigilator_id: scheduleData.invigilator_id,
+      ...timeOverlapCondition,
+    });
+
+    if (teacherConflict) {
+      throw new CustomError(
+        "This teacher already has an exam scheduled at the same date and time",
+        statusCode.CONFLICT
+      );
+    }
+  }
+
+  // =====================================================
+  // ✅ 2. Prevent double schedule for same class/section
+  // =====================================================
+  if (scheduleData.class_id && startTime && endTime) {
+    const classSectionConflict = await ExamSchedules.findOne({
+      class_id: scheduleData.class_id,
+      section_id: scheduleData.section_id || null,
+      ...timeOverlapCondition,
+    });
+
+    if (classSectionConflict) {
+      throw new CustomError(
+        "This class/section already has an exam scheduled at the same date and time",
+        statusCode.CONFLICT
+      );
+    }
+  }
+
+  // -------------------------------
+  // ✅ Create Schedule
+  // -------------------------------
   const schedule = new ExamSchedules({
     exam_id: new mongoose.Types.ObjectId(scheduleData.exam_id),
     class_id: new mongoose.Types.ObjectId(scheduleData.class_id),
@@ -22,9 +73,9 @@ const createExamSchedule = async (scheduleData) => {
       ? new mongoose.Types.ObjectId(scheduleData.batch_id)
       : null,
     subject_id: new mongoose.Types.ObjectId(scheduleData.subject_id),
-    exam_date: scheduleData.exam_date,
-    start_time: scheduleData.start_time || null,
-    end_time: scheduleData.end_time || null,
+    exam_date: examDate,
+    start_time: startTime || null,
+    end_time: endTime || null,
     duration_minutes: scheduleData.duration_minutes || null,
     room_number: scheduleData.room_number || null,
     total_marks: scheduleData.total_marks,
@@ -40,6 +91,7 @@ const createExamSchedule = async (scheduleData) => {
   await schedule.save();
   return schedule;
 };
+
 
 const getAllExamSchedules = async (filters = {}) => {
   const query = {};

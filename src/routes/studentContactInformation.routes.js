@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const studentsController = require("../controllers/studentContactInformation.controller");
 
-// ============= CONTACT INFORMATION =============
+// ============= CONTACT INFORMATION ============= 
 router.post("/contact", studentsController.createContact);
 router.post("/contact/verify-otp", studentsController.verifyOTP);
 router.post("/contact/resend-otp", studentsController.resendOTP);
@@ -28,54 +28,3 @@ router.delete("/contact/:id", studentsController.deleteContact);
 module.exports = router;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const express = require("express");
-// const router = express.Router();
-// const studentsController = require("../controllers/studentContactInformation.controller");
-
-// // ============= CONTACT INFORMATION =============
-// router.post("/contact", studentsController.createContact);
-// router.post("/contact/verify-otp", studentsController.verifyOTP);
-// router.post("/contact/resend-otp", studentsController.resendOTP);
-// router.get("/contact/:student_id", studentsController.getContactByStudentId);
-// router.put("/contact/:student_id", studentsController.updateContact);
-// router.get("/contact", studentsController.getAllStudentsContacts);
-// router.delete("/contact/:student_id", studentsController.deleteContact);
-
-// module.exports = router; 

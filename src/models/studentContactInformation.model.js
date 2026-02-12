@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const studentContactInformationSchema = new mongoose.Schema(
   {
-    student_id: {
+    student_id: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: "StudentsMaster",
       required: true,
@@ -66,93 +66,3 @@ module.exports = mongoose.model(
 );
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const mongoose = require("mongoose");
-
-// const studentContactInformationSchema = new mongoose.Schema(
-//   {
-//     student_id: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "StudentsMaster",
-//       required: true,
-//       unique: true,   
-//     },
-//     mobile: {
-//       type: String,
-//       required: true,
-//     },
-//     email: {
-//       type: String,
-//       default: null,
-//     },
-//     alternate_mobile: {
-//       type: String,
-//       default: null,
-//     },
-//     email_verified: {
-//       type: Boolean,
-//       default: false,
-//     },
-//     mobile_verified: {
-//       type: Boolean,
-//       default: false,
-//     },
-//     // OTP fields for verification
-//     otp: {
-//       type: String,
-//     },
-//     otp_expires_at: {
-//       type: Date,
-//     },
-//   },
-//   {
-//     timestamps: true,
-//     collection: "student_contact_information",
-//   }
-// );
-
-// studentContactInformationSchema.index({ student_id: 1 });
-// studentContactInformationSchema.index({ email: 1 });
-// studentContactInformationSchema.index({ mobile: 1 });
-
-// module.exports = mongoose.model(
-//   "StudentContactInformation",
-//   studentContactInformationSchema
-// );

@@ -8,11 +8,56 @@ const statusCode = require("../enums/statusCode");
 
 const createNotice = async (noticeData, fileUrl = null) => {
   // Set the correct model reference based on role
-  const createdByModel =  
+  const createdByModel =
     noticeData.createdByRole === "institute_admin"
       ? "institute_admins"
-      : "TeachersMaster"; 
-   
+      : "TeachersMaster";
+
+  // ✅ Role-based audience validation
+  const adminAllowedAudience = [
+    "all",
+    "teachers",
+    "students",
+    "specific-classes",
+    "specific-users",
+  ];
+
+  const teacherAllowedAudience = [
+    "students",
+    "specific-classes",
+    "specific-users",
+  ];
+
+  const selectedAudienceType = noticeData?.audience?.type;
+
+  if (!selectedAudienceType) {
+    throw new CustomError(
+      "Audience type is required",
+      statusCode.BAD_REQUEST
+    );
+  }
+
+  if (
+    noticeData.createdByRole === "institute_admin" &&
+    !adminAllowedAudience.includes(selectedAudienceType)
+  ) {
+    throw new CustomError(
+      "Institute admin can create notice only for allowed audience types",
+      statusCode.BAD_REQUEST
+    );
+  }
+
+  if (
+    noticeData.createdByRole === "teacher" &&
+    !teacherAllowedAudience.includes(selectedAudienceType)
+  ) {
+    throw new CustomError(
+      "Teachers can create notice only for students, specific-classes, and specific-users",
+      statusCode.BAD_REQUEST
+    );
+  }
+
+  // ✅ Create Notice
   const notice = new Notices({
     title: noticeData.title,
     content: noticeData.content,
@@ -26,36 +71,26 @@ const createNotice = async (noticeData, fileUrl = null) => {
       type: noticeData.audience.type,
       classIds:
         noticeData.audience.classIds && noticeData.audience.classIds.length > 0
-          ? noticeData.audience.classIds.map((id) =>
-              new mongoose.Types.ObjectId(id)
-            )
+          ? noticeData.audience.classIds.map((id) => new mongoose.Types.ObjectId(id))
           : null,
       sectionIds:
         noticeData.audience.sectionIds &&
         noticeData.audience.sectionIds.length > 0
-          ? noticeData.audience.sectionIds.map((id) =>
-              new mongoose.Types.ObjectId(id)
-            )
+          ? noticeData.audience.sectionIds.map((id) => new mongoose.Types.ObjectId(id))
           : null,
       batchIds:
         noticeData.audience.batchIds && noticeData.audience.batchIds.length > 0
-          ? noticeData.audience.batchIds.map((id) =>
-              new mongoose.Types.ObjectId(id)
-            )
+          ? noticeData.audience.batchIds.map((id) => new mongoose.Types.ObjectId(id))
           : null,
       studentIds:
         noticeData.audience.studentIds &&
         noticeData.audience.studentIds.length > 0
-          ? noticeData.audience.studentIds.map((id) =>
-              new mongoose.Types.ObjectId(id)
-            )
+          ? noticeData.audience.studentIds.map((id) => new mongoose.Types.ObjectId(id))
           : null,
       teacherIds:
         noticeData.audience.teacherIds &&
         noticeData.audience.teacherIds.length > 0
-          ? noticeData.audience.teacherIds.map((id) =>
-              new mongoose.Types.ObjectId(id)
-            )
+          ? noticeData.audience.teacherIds.map((id) => new mongoose.Types.ObjectId(id))
           : null,
     },
     category: noticeData.category,
@@ -68,6 +103,71 @@ const createNotice = async (noticeData, fileUrl = null) => {
   await notice.save();
   return notice;
 };
+
+
+
+// const createNotice = async (noticeData, fileUrl = null) => {
+//   // Set the correct model reference based on role
+//   const createdByModel =  
+//     noticeData.createdByRole === "institute_admin"
+//       ? "institute_admins"
+//       : "TeachersMaster";  
+   
+//   const notice = new Notices({
+//     title: noticeData.title,
+//     content: noticeData.content,
+//     fullDescription: noticeData.fullDescription,
+//     docUrl: fileUrl,
+//     instituteId: new mongoose.Types.ObjectId(noticeData.instituteId),
+//     createdBy: new mongoose.Types.ObjectId(noticeData.createdBy),
+//     createdByModel: createdByModel,
+//     createdByRole: noticeData.createdByRole,
+//     audience: {
+//       type: noticeData.audience.type,
+//       classIds:
+//         noticeData.audience.classIds && noticeData.audience.classIds.length > 0
+//           ? noticeData.audience.classIds.map((id) =>
+//               new mongoose.Types.ObjectId(id)
+//             )
+//           : null,
+//       sectionIds:
+//         noticeData.audience.sectionIds &&
+//         noticeData.audience.sectionIds.length > 0
+//           ? noticeData.audience.sectionIds.map((id) =>
+//               new mongoose.Types.ObjectId(id)
+//             )
+//           : null,
+//       batchIds:
+//         noticeData.audience.batchIds && noticeData.audience.batchIds.length > 0
+//           ? noticeData.audience.batchIds.map((id) =>
+//               new mongoose.Types.ObjectId(id)
+//             )
+//           : null,
+//       studentIds:
+//         noticeData.audience.studentIds &&
+//         noticeData.audience.studentIds.length > 0
+//           ? noticeData.audience.studentIds.map((id) =>
+//               new mongoose.Types.ObjectId(id)
+//             )
+//           : null,
+//       teacherIds:
+//         noticeData.audience.teacherIds &&
+//         noticeData.audience.teacherIds.length > 0
+//           ? noticeData.audience.teacherIds.map((id) =>
+//               new mongoose.Types.ObjectId(id)
+//             )
+//           : null,
+//     },
+//     category: noticeData.category,
+//     isPinned: noticeData.isPinned || false,
+//     publishDate: noticeData.publishDate || null,
+//     expiryDate: noticeData.expiryDate || null,
+//     status: "draft",
+//   });
+
+//   await notice.save();
+//   return notice;
+// };
 
 const getAllNotices = async (filters = {}) => {
   const query = { status: { $ne: "expired" } };
@@ -198,6 +298,46 @@ const updateNotice = async (noticeId, updateData, newFileUrl = null) => {
   if (!notice) {
     throw new CustomError("Notice not found", statusCode.NOT_FOUND);
   }
+
+    // ✅ Role-based audience validation (NEW)
+  if (updateData.audience && updateData.audience.type) {
+    const adminAllowedAudience = [
+      "all",
+      "teachers",
+      "students",
+      "specific-classes",
+      "specific-users",
+    ];
+
+    const teacherAllowedAudience = [
+      "students",
+      "specific-classes",
+      "specific-users",
+    ];
+
+    const selectedAudienceType = updateData.audience.type;
+
+    if (
+      notice.createdByRole === "institute_admin" &&
+      !adminAllowedAudience.includes(selectedAudienceType)
+    ) {
+      throw new CustomError(
+        "Institute admin cannot update to this audience type",
+        statusCode.BAD_REQUEST
+      );
+    }
+
+    if (
+      notice.createdByRole === "teacher" &&
+      !teacherAllowedAudience.includes(selectedAudienceType)
+    ) {
+      throw new CustomError(
+        "Teachers can update notice only for students, specific-classes, and specific-users",
+        statusCode.BAD_REQUEST
+      );
+    }
+  }
+
 
   // Delete old file if new file is uploaded
   if (newFileUrl && notice.docUrl) {
@@ -351,8 +491,6 @@ module.exports = {
   publishNotice,
   archiveNotice,
 };
-
-
 
 
 

@@ -109,6 +109,15 @@ app.use("/sms/class-teacher-assignments", require("./routes/classTeacherAssignme
 
 
 app.use("/sms/homework-assignments", require("./routes/homeworkAssignments.routes"))
+app.use("/sms/homework-submissions", require("./routes/homeworkSubmissions.routes"))
+app.use("/sms/exams-master", require("./routes/examsMaster.routes.js"))
+app.use("/sms/exam-schedules", require("./routes/examSchedules.routes.js"))
+app.use("/sms/student-exam-results", require("./routes/studentExamResults.routes.js"))
+
+
+
+
+
 
 // app.use(notFound);   
 

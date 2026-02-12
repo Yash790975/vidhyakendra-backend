@@ -2,7 +2,7 @@ const StudentsMaster = require("../models/studentsMaster.model");
 const StudentContactInformation = require("../models/studentContactInformation.model");
 const Institute = require("../models/institutesMaster.model");
 const mongoose = require("mongoose");
-
+  
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
 
