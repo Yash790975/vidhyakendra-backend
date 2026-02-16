@@ -93,7 +93,7 @@ const getAssignmentById = async (assignmentId) => {
 const getAssignmentsByTeacherId = async (teacherId, academicYear = null) => {
   const query = { teacher_id: teacherId };
   if (academicYear) {
-    query.academic_year = academicYear;
+    query.academic_year = academicYear; 
   }
 
   const assignments = await ClassTeacherAssignments.find(query)

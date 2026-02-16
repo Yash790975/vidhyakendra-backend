@@ -37,7 +37,7 @@ const studentAttendanceSchema = new mongoose.Schema({
     ref: 'teacher_auth',
     required: true
   }
-}, {
+}, {    
   timestamps: true
 });
 

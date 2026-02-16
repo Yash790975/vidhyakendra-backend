@@ -1,6 +1,6 @@
 const StudentAcademicMapping = require("../models/studentAcademicMapping.model");
 const mongoose = require("mongoose");
-
+ 
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
 

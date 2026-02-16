@@ -1195,7 +1195,7 @@
                 }
               }
             }
-          ]
+          ] 
         },
         {
           "name": "Exams Master",
@@ -7984,7 +7984,7 @@
             }
           ]
         }
-
+ 
       ]
     },
     {
@@ -8426,7 +8426,7 @@
             }
           ]
         },
-        {
+        { 
           "name": "Class Teacher Assignments",
           "item": [
             {

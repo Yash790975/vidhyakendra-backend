@@ -22,7 +22,7 @@ const homeworkSubmissionsSchema = new mongoose.Schema(
     },
     attachment_urls: {
       type: [String],
-      default: null,
+      default: null, 
     },
     marks_obtained: {
       type: mongoose.Schema.Types.Decimal128,
@@ -57,6 +57,31 @@ const homeworkSubmissionsSchema = new mongoose.Schema(
     collection: "homework_submissions",
   }
 );
+
+
+
+
+
+/* ----------------------------------
+   ✅ Decimal128 → Number conversion
+----------------------------------- */
+
+homeworkSubmissionsSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    if (ret.marks_obtained) {
+      ret.marks_obtained = Number(ret.marks_obtained.toString());
+    }
+    return ret;
+  }
+});
+
+homeworkSubmissionsSchema.set('toObject', {
+  virtuals: true
+});
+
+
+
 
 // Indexes
 homeworkSubmissionsSchema.index({ homework_id: 1, student_id: 1 }, { unique: true });
