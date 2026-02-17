@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const studentStatusHistorySchema = new mongoose.Schema({
   student_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, 
     // ref: 'students_master', 
     ref: 'StudentsMaster', 
     required: true 

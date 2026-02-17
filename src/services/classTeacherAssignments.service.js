@@ -87,7 +87,7 @@ const getAssignmentById = async (assignmentId) => {
   }
 
   return assignment;
-};
+}; 
 
 // Get all assignments for a specific teacher
 const getAssignmentsByTeacherId = async (teacherId, academicYear = null) => {
@@ -235,6 +235,61 @@ const endAssignment = async (assignmentId, endDate = null) => {
     .populate("subject_id", "subject_name subject_code");
 };
 
+
+const getClassTeacherByClassId = async (classId, sectionId = null, academicYear = null) => {
+  const query = {
+    class_id: classId,
+    role: "class_teacher",
+    status: "active",
+  };
+
+  if (academicYear) query.academic_year = academicYear;
+
+  // Case 1: section_id provided → return class teacher of that specific section only
+  if (sectionId) {
+    query.section_id = sectionId;
+
+    const assignment = await ClassTeacherAssignments.findOne(query)
+      .populate("teacher_id", "full_name teacher_code")
+      .populate("class_id", "class_name class_type academic_year")
+      .populate("section_id", "section_name");
+
+    if (!assignment) {
+      throw new CustomError(
+        "No active class teacher found for this section",
+        statusCode.NOT_FOUND
+      );
+    }
+
+    return { type: "section", data: assignment };
+  }
+
+  // Case 2: No section_id → fetch all active class teacher assignments for this class
+  const allAssignments = await ClassTeacherAssignments.find(query)
+    .populate("teacher_id", "full_name teacher_code")
+    .populate("class_id", "class_name class_type academic_year")
+    .populate("section_id", "section_name")
+    .sort({ createdAt: -1 });
+
+  if (!allAssignments.length) {
+    throw new CustomError(
+      "No active class teacher found for this class",
+      statusCode.NOT_FOUND
+    );
+  }
+
+  // Check if all assignments have no section (direct class-level assignment)
+  const isDirectAssignment = allAssignments.every((a) => !a.section_id);
+
+  if (isDirectAssignment) {
+    // Class has no sections → return single direct class teacher
+    return { type: "class", data: allAssignments[0] };
+  }
+
+  // Class has sections → return all section-wise class teachers as array
+  return { type: "sections", data: allAssignments };
+};
+
 module.exports = {
   createAssignment,
   getAllAssignments,
@@ -246,4 +301,5 @@ module.exports = {
   updateAssignment,
   deleteAssignment, 
   endAssignment,
+  getClassTeacherByClassId
 }; 

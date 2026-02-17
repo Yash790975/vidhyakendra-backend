@@ -2,7 +2,7 @@
 const statusCode = require("../enums/statusCode");
 const {
   createAssignmentValidation,
-  updateAssignmentValidation,
+  updateAssignmentValidation, 
 } = require("../validations/classTeacherAssignments.validations");
 
 // ============= CLASS TEACHER ASSIGNMENTS =============
@@ -294,12 +294,46 @@ const endAssignment = async (req, res) => {
   }
 };
 
+const getClassTeacherByClassId = async (req, res) => {
+  try {
+    const { class_id } = req.params;
+    const { academic_year, section_id } = req.query;
+
+    const result = await assignmentsService.getClassTeacherByClassId(
+      class_id,
+      section_id || null,
+      academic_year || null
+    );
+
+    res.status(statusCode.OK).json({
+      success: true,
+      isException: false,
+      statusCode: statusCode.OK,
+      result: result.data,
+      meta: { type: result.type },
+      message:
+        result.type === "sections"
+          ? "Section-wise class teachers retrieved successfully"
+          : "Class teacher retrieved successfully",
+    });
+  } catch (err) {
+    res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result: {},
+      message: err.message || "Failed to retrieve class teacher",
+    });
+  }
+};
+
 module.exports = {
   createAssignment,
   getAllAssignments,
   getAssignmentById,
   getAssignmentsByTeacherId,
   getAssignmentsByClassId,
+  getClassTeacherByClassId,
   getAssignmentsByRole,
   getSubjectTeachers,
   updateAssignment,
