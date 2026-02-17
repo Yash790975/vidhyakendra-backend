@@ -6,11 +6,11 @@ const classesController = require("../controllers/classesMaster.controller");
 router.post("/", classesController.createClass);
 router.get("/", classesController.getAllClasses);
 router.get("/:id", classesController.getClassById);
-router.put("/:id", classesController.updateClass);
+router.put("/:id", classesController.updateClass);     
 router.delete("/:id", classesController.deleteClass); 
 router.get(
   "/institute/:institute_id/year/:academic_year",
-  classesController.getClassesByInstituteAndYear
+  classesController.getClassesByInstituteAndYear 
 );
 
 module.exports = router;

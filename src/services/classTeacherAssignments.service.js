@@ -92,8 +92,8 @@ const getAssignmentById = async (assignmentId) => {
 // Get all assignments for a specific teacher
 const getAssignmentsByTeacherId = async (teacherId, academicYear = null) => {
   const query = { teacher_id: teacherId };
-  if (academicYear) {
-    query.academic_year = academicYear; 
+  if (academicYear) { 
+    query.academic_year = academicYear;         
   }
 
   const assignments = await ClassTeacherAssignments.find(query)
@@ -244,6 +244,6 @@ module.exports = {
   getAssignmentsByRole,
   getSubjectTeachers,
   updateAssignment,
-  deleteAssignment,
+  deleteAssignment, 
   endAssignment,
-};
+}; 

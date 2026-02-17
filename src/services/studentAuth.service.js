@@ -215,7 +215,7 @@ const getStudentAuthById = async (id) => {
   
   const studentAuth = await StudentAuth.findById(id)
     // .populate('student_id')
-    .populate({
+    .populate({ 
       path: 'student_id',
       populate: {
         path: 'institute_id',

@@ -6113,7 +6113,7 @@
                 "url": "http://localhost:4000/sms/students/code/SBVPHS-SCH-STD-001"
               }
             },
-            {
+            { 
               "name": "Update Student",
               "request": {
                 "method": "PUT",
@@ -6135,6 +6135,35 @@
               "request": {
                 "method": "DELETE",
                 "url": "http://localhost:4000/sms/students/:id"
+              }
+            },
+            {
+              "name": "Get Class Teacher by Student ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/students/:studentId/class-teacher?academic_year=2025-26",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "students", ":studentId", "class-teacher"],
+                  "query": [
+                    {
+                      "key": "academic_year",
+                      "value": "2025-26",
+                      "description": "Optional: Filter by specific academic year"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "studentId",
+                      "value": "697c903c0e4f5189a83bc82b",
+                      "description": "Student MongoDB ObjectId"
+                    }
+                  ]
+                },
+                "description": "Retrieve the class teacher assigned to a specific student based on their current class and section enrollment"
               }
             }
           ]
@@ -7984,7 +8013,7 @@
             }
           ]
         }
- 
+  
       ]
     },
     {
@@ -8425,7 +8454,7 @@
               }
             }
           ]
-        },
+        }, 
         { 
           "name": "Class Teacher Assignments",
           "item": [
