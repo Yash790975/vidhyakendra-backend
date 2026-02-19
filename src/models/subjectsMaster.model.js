@@ -1,11 +1,10 @@
-
 const mongoose = require('mongoose');
 
 const subjectsMasterSchema = new mongoose.Schema({
   institute_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'institutes_master',
-    required: true 
+    required: true
   },
   subject_name: {
     type: String,
@@ -14,6 +13,7 @@ const subjectsMasterSchema = new mongoose.Schema({
   },
   subject_code: {
     type: String,
+    default: null
   },
   subject_type: {
     type: String,
@@ -48,7 +48,7 @@ const subjectsMasterSchema = new mongoose.Schema({
 });
 
 // Indexes
-subjectsMasterSchema.index({ institute_id: 1 });
+subjectsMasterSchema.index({ institute_id: 1, subject_name: 1 }, { unique: true }); // unique compound index
 subjectsMasterSchema.index({ subject_type: 1 });
 subjectsMasterSchema.index({ status: 1 });
 subjectsMasterSchema.index({ subject_code: 1 });
@@ -88,43 +88,66 @@ module.exports = mongoose.model('subjects_master', subjectsMasterSchema);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const mongoose = require('mongoose');
 
 // const subjectsMasterSchema = new mongoose.Schema({
-//   institute_id: { 
-//     type: mongoose.Schema.Types.ObjectId, 
+//   institute_id: {   
+//     type: mongoose.Schema.Types.ObjectId,
 //     ref: 'institutes_master',
-//     required: true
+//     required: true 
 //   },
 //   subject_name: {
-//     type: String,   
-//     required: true,    
+//     type: String,
+//     required: true,
 //     trim: true
 //   },
-//   subject_code: {    
+//   subject_code: {
 //     type: String,
-//     // default: () => Math.floor(Math.random() * (99999 - 100 + 1)) + 100 // Random 3-5 digit number
 //   },
-//   subject_type: {       
+//   subject_type: {
 //     type: String,
-//     enum: ['school', 'coaching', 'both'],
+//     enum: ['school', 'coaching'],
 //     required: true
 //   },
-//   class_levels: [{
-//     type: String
-//   }],
-//   stream: {
-//     type: String,
-//     enum: ['science', 'commerce', 'arts', null],
+//   class_levels: {
+//     type: [String],
 //     default: null
 //   },
-//   exam_type: [{
-//     type: String
-//   }],
 //   description: {
 //     type: String,
 //     default: null
-//   },  
+//   },
 //   status: {
 //     type: String,
 //     enum: ['active', 'inactive', 'archived'],
@@ -144,8 +167,11 @@ module.exports = mongoose.model('subjects_master', subjectsMasterSchema);
 //   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 // });
 
+// // Indexes
 // subjectsMasterSchema.index({ institute_id: 1 });
 // subjectsMasterSchema.index({ subject_type: 1 });
 // subjectsMasterSchema.index({ status: 1 });
+// subjectsMasterSchema.index({ subject_code: 1 });
 
 // module.exports = mongoose.model('subjects_master', subjectsMasterSchema);
+

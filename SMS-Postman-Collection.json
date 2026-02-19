@@ -4402,7 +4402,7 @@
           ]
         }
       ]
-    },
+    }, 
     {
       "name": "Teacher Management Module",
       "item": [
@@ -5952,7 +5952,7 @@
         }
       ]
     },
-    {
+    { 
       "name": "Subjects Management",
       "item": [
         {
@@ -5962,84 +5962,329 @@
               "name": "Create Subject",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"school\",\n  \"class_levels\": [\"10\", \"11\", \"12\"],\n  \"description\": \"Mathematics for secondary classes\",\n  \"status\": \"active\"\n}"
                 },
-                "url": "http://localhost:4000/sms/subjects-master/subject"
+                "url": "http://localhost:4000/sms/subjects-master/subject",
+                "description": "Creates a new subject under an institute. subject_type must match the institute type (school or coaching). subject_code is auto-generated (e.g. MATH123)."
               }
-            }, 
+            },
             {
               "name": "Get All Subjects",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject"
+                "url": "http://localhost:4000/sms/subjects-master/subject",
+                "description": "Returns all subjects sorted by subject_name ascending."
               }
             },
             {
               "name": "Get Subject By ID",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "subjects_master _id" }
+                  ]
+                },
+                "description": "Returns a single subject by its MongoDB _id."
               }
             },
             {
               "name": "Get Subjects By Institute ID",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "institute", ":institute_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects belonging to a specific institute."
               }
             },
             {
               "name": "Get Subjects By Type",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/type/:type",
-                "description": "type can be: school or coaching"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/type/:type",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "type", ":type"],
+                  "variable": [
+                    { "key": "type", "value": "school", "description": "Allowed values: school | coaching" }
+                  ]
+                },
+                "description": "Filter subjects by type. Allowed values: school, coaching."
               }
             },
             {
               "name": "Get Subjects By Status",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/status/:status",
-                "description": "status can be: active, inactive or archived"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/status/:status",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "status", ":status"],
+                  "variable": [
+                    { "key": "status", "value": "active", "description": "Allowed values: active | inactive | archived" }
+                  ]
+                },
+                "description": "Filter subjects by status. Allowed values: active, inactive, archived."
               }
             },
             {
               "name": "Get Subjects By Class Level",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/class-level/:class_level",
-                "description": "Example: class_level = 10, 11, 12"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/class-level/:class_level",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "class-level", ":class_level"],
+                  "variable": [
+                    { "key": "class_level", "value": "10", "description": "Example: 10, 11, 12" }
+                  ]
+                },
+                "description": "Returns subjects that include the given class level in their class_levels array."
               }
             },
             {
               "name": "Get Subjects By Institute And Type",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id/type/:type",
-                "description": "Get subjects filtered by both institute_id and type (school/coaching)"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id/type/:type",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "institute", ":institute_id", "type", ":type"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
+                    { "key": "type", "value": "school", "description": "Allowed values: school | coaching" }
+                  ]
+                },
+                "description": "Filter subjects by both institute and type (school or coaching)."
               }
             },
             {
               "name": "Update Subject",
               "request": {
                 "method": "PUT",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"subject_name\": \"Advanced Mathematics\",\n  \"class_levels\": [\"11\", \"12\"],\n  \"description\": \"Advanced mathematics for senior classes\"\n}"
+                  "raw": "{\n  \"subject_name\": \"Advanced Mathematics\",\n  \"subject_type\": \"school\",\n  \"class_levels\": [\"11\", \"12\"],\n  \"description\": \"Advanced mathematics for senior classes\",\n  \"status\": \"active\"\n}"
                 },
-                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "subjects_master _id" }
+                  ]
+                },
+                "description": "Updates allowed fields of a subject. At least one field is required. Note: if subject_name is changed and another subject with the same name already exists for the same institute, a 409 Conflict is returned."
               }
             },
             {
               "name": "Delete Subject",
               "request": {
                 "method": "DELETE",
-                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "subjects_master _id" }
+                  ]
+                },
+                "description": "Permanently deletes a subject by ID."
+              }
+            }
+          ]
+        },
+        {
+          "name": "Subjects By Class",
+          "item": [
+            {
+              "name": "Create Subject By Class",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": \"60a7f9b8e4b0f83d6c8e9f3c\",\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"theory\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Assigns a subject to a class (and optionally a section).\n\nBusiness logic:\n1. Checks if the subject already exists in subjects_master for this institute (case-insensitive match).\n2. If NOT found → auto-creates it in subjects_master with a generated code (e.g. MATH123).\n3. Builds a class-wise subject_code: <subject_code>-<class_level><section> e.g. MATH-1A or MATH-1.\n4. Saves the record in subjects_by_class.\n\nNote: section_id is optional — omit or pass null if the class has no sections.\nDuplicate assignment (same institute + class + section + subject) returns 409 Conflict."
+              }
+            },
+            {
+              "name": "Create Subject By Class (No Section)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": null,\n  \"subject_name\": \"Science\",\n  \"subject_type\": \"practical\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Same as Create Subject By Class but without a section. Generated code example: SCIE-1."
+              }
+            },
+            {
+              "name": "Get All Subjects By Class",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Returns all subjects_by_class records sorted by created_at descending."
+              }
+            },
+            {
+              "name": "Get Subject By Class Record ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
+                  ]
+                },
+                "description": "Returns a single subjects_by_class record by its MongoDB _id."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects assigned to any class under a specific institute."
+              }
+            },
+            {
+              "name": "Get Subjects By Class ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/class/:class_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "class", ":class_id"],
+                  "variable": [
+                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects assigned to a specific class."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute And Class",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id/class/:class_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "class", ":class_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
+                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects assigned to a specific class under a specific institute."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute, Class And Section",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id/class/:class_id/section/:section_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "class", ":class_id", "section", ":section_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
+                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" },
+                    { "key": "section_id", "value": "60a7f9b8e4b0f83d6c8e9f3c", "description": "classes_sections_master _id" }
+                  ]
+                },
+                "description": "Returns subjects for a specific institute + class + section combination. Most granular filter."
+              }
+            },
+            {
+              "name": "Get Subjects By Status",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/status/:status",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "status", ":status"],
+                  "variable": [
+                    { "key": "status", "value": "active", "description": "Allowed values: active | inactive" }
+                  ]
+                },
+                "description": "Filter subjects_by_class records by status. Allowed values: active, inactive."
+              }
+            },
+            {
+              "name": "Get Subjects By Subject Type",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/type/:type",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "type", ":type"],
+                  "variable": [
+                    { "key": "type", "value": "theory", "description": "Allowed values: theory | practical | both" }
+                  ]
+                },
+                "description": "Filter subjects_by_class records by subject_type. Allowed values: theory, practical, both."
+              }
+            },
+            {
+              "name": "Update Subject By Class",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_type\": \"both\",\n  \"status\": \"inactive\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
+                  ]
+                },
+                "description": "Updates subject_type and/or status of a subjects_by_class record. At least one field is required.\n\nAllowed fields:\n- subject_type: theory | practical | both\n- status: active | inactive"
+              }
+            },
+            {
+              "name": "Delete Subject By Class",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
+                  ]
+                },
+                "description": "Permanently deletes a subjects_by_class record by ID. Does NOT delete the parent subjects_master record."
               }
             }
           ]
@@ -8098,7 +8343,7 @@
           ]
         },
         {
-          "name": "Class Sections",
+          "name": "Class Sections",  
           "item": [
             {
               "name": "Create Section",
