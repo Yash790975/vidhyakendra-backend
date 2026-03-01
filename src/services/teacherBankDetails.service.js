@@ -8,7 +8,7 @@ const statusCode = require("../enums/statusCode");
 const createBankDetails = async (bankData) => {
 
   const existingBankDetails = await TeacherBankDetails.findOne({
-    teacher_id: bankData.teacher_id
+    teacher_id: bankData.teacher_id    
   });   
 
   if (existingBankDetails) {
@@ -43,7 +43,7 @@ const updateBankDetails = async (bankId, updateData) => {
 
 const getAllBankDetails = async () => {
   const bankDetails = await TeacherBankDetails.find()
-  .populate("teacher_id", "full_name teacher_code");
+  .populate("teacher_id", "full_name teacher_code");   
   return bankDetails;
 };
 

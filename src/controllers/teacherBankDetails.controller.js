@@ -8,7 +8,7 @@ const {
 
   
 // ============= BANK DETAILS =============
-
+    
 const createBankDetails = async (req, res) => {  
   try {
     const { error, value } = createBankDetailsValidation.validate(req.body);

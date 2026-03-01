@@ -6,14 +6,22 @@ const teacherBankDetailsSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
         ref: "TeachersMaster", 
 
-      required: true,
+      required: true, 
     },
-    account_holder_name: {
+    account_holder_name: {      
       type: String,
       required: true,
     },
-    bank_name: {
+    bank_name: {    
       type: String,
+    },
+    branch_name: {
+      type: String,
+    },  
+    account_type: {
+      type: String,
+      enum: ["savings", "current", "salary", "other"],
+      default: "savings",
     },
     account_number: {
       type: String,

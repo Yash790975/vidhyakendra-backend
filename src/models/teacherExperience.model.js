@@ -6,15 +6,19 @@ const teacherExperienceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
           ref: "TeachersMaster", 
 
-      required: true,
-    },
-    organization_name: {
+      required: true, 
+    }, 
+    organization_name: { 
       type: String,
-      required: true,
+      required: true, 
     },
     role: {
       type: String,
     },
+    responsibilities: {
+      type: String, 
+    },
+
     from_date: {
       type: Date,
     },

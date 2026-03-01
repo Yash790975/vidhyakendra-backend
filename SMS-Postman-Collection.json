@@ -4410,13 +4410,13 @@
           "name": "Teachers Master",
           "item": [
             {
-              "name": "Create Teacher",
-              "request": {
+              "name": "Create Teacher", 
+              "request": { 
                 "method": "POST",
                 "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n \"father_name\": \"James Doe\",\n  \"mother_name\": \"Mary Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
                 },
                 "url": "http://localhost:4000/sms/teachers"
               }
@@ -4914,13 +4914,13 @@
           "name": "Teachers Experience",
           "item": [
             {
-              "name": "Create Experience",
+              "name": "Create Experience", 
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"organization_name\": \"XYZ School\",\n  \"role\": \"Mathematics Teacher\",\n  \"from_date\": \"2018-06-01\",\n  \"to_date\": \"2023-12-31\",\n  \"is_current\": false\n}"
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"organization_name\": \"XYZ School\",\n  \"role\": \"Mathematics Teacher\",\n \"responsibilities\": \"Teaching Mathematics to students\",\n  \"from_date\": \"2018-06-01\",\n  \"to_date\": \"2023-12-31\",\n  \"is_current\": false\n}"
                 },
                 "url": "http://localhost:4000/sms/teacher-experience/experience"
               }
@@ -4972,7 +4972,7 @@
             }
           ]
         },
-        {
+        { 
           "name": "Teachers Bank Details",
           "item": [
             {
@@ -4984,7 +4984,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"account_holder_name\": \"John Doe\",\n  \"bank_name\": \"HDFC Bank\",\n  \"account_number\": \"1234567890\",\n  \"ifsc_code\": \"HDFC0001234\",\n  \"upi_id\": \"johndoe@paytm\",\n  \"is_primary\": true\n}"
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"account_holder_name\": \"John Doe\",\n  \"bank_name\": \"HDFC Bank\", \n  \"branch_name\": \"Mumbai Branch\",\n \"account_type\": \"savings\",\n  \"account_number\": \"1234567890\",\n  \"ifsc_code\": \"HDFC0001234\",\n  \"upi_id\": \"johndoe@paytm\",\n  \"is_primary\": true\n}"
                 },
                 "url": "http://localhost:4000/sms/teacher-bank-details/bank-details"
               }
