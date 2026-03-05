@@ -82,7 +82,11 @@ app.use('/sms/teacher-salary-structure', require('./routes/teacherSalaryStructur
 app.use('/sms/teacher-salary-transactions', require('./routes/teacherSalaryTransactions.routes'));
 app.use('/sms/teacher-attendance', require('./routes/teacherAttendance.routes'));
 app.use('/sms/teacher-leaves', require('./routes/teacherLeaves.routes'));
+
+
+//Subjects Managment
 app.use('/sms/subjects-master', require('./routes/subjectsMaster.routes'));
+app.use('/sms/subjects-by-class', require('./routes/subjectsByClass.routes.js'));
 // app.use('/sms/teacher-subjects', require('./routes/teacherSubjects.routes'));
 
 
@@ -115,8 +119,11 @@ app.use("/sms/exam-schedules", require("./routes/examSchedules.routes.js"))
 app.use("/sms/student-exam-results", require("./routes/studentExamResults.routes.js"))
 
 
-
-
+// Fee Management Routes
+app.use("/sms/fee-structures", require("./routes/feeStructure.routes"));
+app.use("/sms/fee-terms", require("./routes/feeTerm.routes"));
+app.use("/sms/student-fees", require("./routes/studentFee.routes"));
+app.use("/sms/fee-receipts", require("./routes/feeReceipt.routes"));
 
 
 // app.use(notFound);   

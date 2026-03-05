@@ -151,7 +151,7 @@ const updateContact = async (req, res) => {
       isException: false,
       statusCode: statusCode.OK,
       result: contact,
-      message: "Contact information updated successfully",
+      message: "Contact information updated successfully and OTP resent if email or mobile changed for verification",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({

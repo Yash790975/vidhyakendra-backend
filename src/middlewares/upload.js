@@ -10,7 +10,7 @@ const generateUniqueFilename = (originalName, prefix, index = null) => {
 
 
 
-  return `${baseName}_${randomNum}${ext}`;
+  return `${baseName}_${randomNum}${ext}`; 
 };
 
 // ✅ Custom image filter: only jpg, jpeg, png

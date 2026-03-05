@@ -7,7 +7,7 @@
 --   stream: "science",
 --   description: "Core mathematics subject for class 10",
 --   status: "active",
---   created_at: new Date()
+--   created_at: new Date() 
 -- });   
     
 

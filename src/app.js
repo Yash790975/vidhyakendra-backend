@@ -119,8 +119,11 @@ app.use("/sms/exam-schedules", require("./routes/examSchedules.routes.js"))
 app.use("/sms/student-exam-results", require("./routes/studentExamResults.routes.js"))
 
 
-
-
+// Fee Management Routes
+app.use("/sms/fee-structures", require("./routes/feeStructure.routes"));
+app.use("/sms/fee-terms", require("./routes/feeTerm.routes"));
+app.use("/sms/student-fees", require("./routes/studentFee.routes"));
+app.use("/sms/fee-receipts", require("./routes/feeReceipt.routes"));
 
 
 // app.use(notFound);   

@@ -8,14 +8,15 @@ const createExperienceValidation = Joi.object({
     .required(),
   organization_name: Joi.string().required(),
   role: Joi.string().optional(),
+  responsibilities: Joi.string().optional(),
   from_date: Joi.date().optional(),
   to_date: Joi.date().optional().allow(null),
-  is_current: Joi.boolean().optional(),
+  is_current: Joi.boolean().optional(),     
 });
  
-
+  
 module.exports = {
-
+  
   createExperienceValidation,
   
 };

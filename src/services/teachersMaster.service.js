@@ -1,6 +1,6 @@
 const TeachersMaster = require("../models/teachersMaster.model"); 
 const TeacherContactInformation = require("../models/teacherContactInformation.model");
-const TeacherAddresses = require("../models/teacherAddresses.model");
+const TeacherAddresses = require("../models/teacherAddresses.model");    
 const TeacherIdentityDocuments = require("../models/teacherIdentityDocuments.model");
 const TeacherQualificationDetails = require("../models/teacherQualificationDetails.model");
 const TeacherExperience = require("../models/teacherExperience.model");     

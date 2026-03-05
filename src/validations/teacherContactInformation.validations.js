@@ -5,7 +5,7 @@ const createContactValidation = Joi.object({
   teacher_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)    
     .required(),
-  mobile: Joi.string()
+  mobile: Joi.string()       
     .pattern(/^[0-9]{10}$/)
     .required()
     .messages({
@@ -16,6 +16,10 @@ const createContactValidation = Joi.object({
     .pattern(/^[0-9]{10}$/)
     .optional()
     .allow(""),
+  whatsapp_number: Joi.string()
+    .pattern(/^[0-9]{10}$/)
+    .optional()
+    .allow(""),  
 });
 
 const verifyOTPValidation = Joi.object({

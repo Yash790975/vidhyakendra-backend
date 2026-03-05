@@ -14,7 +14,7 @@ router.get("/identity-document/teacher/:teacher_id", teachersController.getIdent
 router.post( 
   "/identity-document",
   uploadIdentityDocument.single("file"),
-  teachersController.createIdentityDocument
+  teachersController.createIdentityDocument  
 );
 
 // Update identity document

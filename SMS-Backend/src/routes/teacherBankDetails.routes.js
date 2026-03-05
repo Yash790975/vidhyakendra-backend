@@ -13,4 +13,4 @@ router.put("/bank-details/:id", teachersController.updateBankDetails);
 router.delete("/bank-details/:id", teachersController.deleteBankDetails);
 
 
-module.exports = router;  
+module.exports = router;      

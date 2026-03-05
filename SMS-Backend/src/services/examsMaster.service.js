@@ -42,7 +42,7 @@ const getAllExams = async (filters = {}) => {
 
   const exams = await ExamsMaster.find(query)
     .populate("institute_id", "institute_name institute_code")
-    .populate("created_by")
+    .populate("created_by") 
     .sort({ start_date: -1, createdAt: -1 });
 
   return exams;

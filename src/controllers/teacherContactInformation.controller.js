@@ -5,7 +5,7 @@ const {
   verifyOTPValidation
 } = require("../validations/teacherContactInformation.validations");
 
- 
+      
 
 // ============= CONTACT INFORMATION =============
 

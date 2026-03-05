@@ -8,7 +8,11 @@ const createBankDetailsValidation = Joi.object({
     .required(),
   account_holder_name: Joi.string().required(),
   bank_name: Joi.string().optional(),
-  account_number: Joi.string().required(),
+  branch_name: Joi.string().optional(),
+  account_number: Joi.string().required(),    
+  account_type: Joi.string()
+    .valid("savings", "current", "salary", "other")
+    .optional(),
   ifsc_code: Joi.string()
     .pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)
     .required()

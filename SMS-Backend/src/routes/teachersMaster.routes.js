@@ -3,7 +3,7 @@ const router = express.Router();
 const teachersController = require("../controllers/teachersMaster.controller"); 
 
 // ============= TEACHERS MASTER =============
-router.post("/", teachersController.createTeacher);
+router.post("/", teachersController.createTeacher);     
 router.get("/", teachersController.getAllTeachers);
 router.get("/teacher-with-all-details/:id", teachersController.getTeacherWithAllDetails);
 router.get("/:id", teachersController.getTeacherById);

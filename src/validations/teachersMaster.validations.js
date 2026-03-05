@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 // Teachers Master Validation
 const createTeacherValidation = Joi.object({
-  institute_id: Joi.string()
+  institute_id: Joi.string()   
     .pattern(/^[0-9a-fA-F]{24}$/) 
     .required()   
     .messages({    

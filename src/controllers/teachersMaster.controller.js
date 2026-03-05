@@ -4,7 +4,7 @@ const teachersService = require("../services/teachersMaster.service");
 const statusCode = require("../enums/statusCode");
 const {    
   createTeacherValidation, 
-  updateTeacherValidation,
+  updateTeacherValidation,  
 } = require("../validations/teachersMaster.validations"); 
     
 // ============= TEACHERS MASTER =============

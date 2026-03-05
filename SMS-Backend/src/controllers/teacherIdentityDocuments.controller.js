@@ -2,7 +2,7 @@ const teachersService = require("../services/teacherIdentityDocuments.service");
 const statusCode = require("../enums/statusCode");
 const {
   createIdentityDocValidation     
-} = require("../validations/teacherIdentityDocuments.validations"); 
+} = require("../validations/teacherIdentityDocuments.validations");   
 const path = require("path"); 
 const fs = require("fs");
 const { UPLOADS_ROOT } = require("../middlewares/upload");

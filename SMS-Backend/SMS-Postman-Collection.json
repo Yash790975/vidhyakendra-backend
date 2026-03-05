@@ -4402,7 +4402,7 @@
           ]
         }
       ]
-    },
+    }, 
     {
       "name": "Teacher Management Module",
       "item": [
@@ -4410,13 +4410,13 @@
           "name": "Teachers Master",
           "item": [
             {
-              "name": "Create Teacher",
-              "request": {
+              "name": "Create Teacher", 
+              "request": { 
                 "method": "POST",
                 "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n \"father_name\": \"James Doe\",\n  \"mother_name\": \"Mary Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
                 },
                 "url": "http://localhost:4000/sms/teachers"
               }
@@ -4495,7 +4495,7 @@
               }
             }
           ]
-        }, 
+        },  
         {
           "name": "Teachers Contact Information",
           "item": [
@@ -4909,18 +4909,18 @@
               }
             }
           ]
-        },
+        }, 
         {
           "name": "Teachers Experience",
           "item": [
             {
-              "name": "Create Experience",
+              "name": "Create Experience", 
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"organization_name\": \"XYZ School\",\n  \"role\": \"Mathematics Teacher\",\n  \"from_date\": \"2018-06-01\",\n  \"to_date\": \"2023-12-31\",\n  \"is_current\": false\n}"
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"organization_name\": \"XYZ School\",\n  \"role\": \"Mathematics Teacher\",\n \"responsibilities\": \"Teaching Mathematics to students\",\n  \"from_date\": \"2018-06-01\",\n  \"to_date\": \"2023-12-31\",\n  \"is_current\": false\n}"
                 },
                 "url": "http://localhost:4000/sms/teacher-experience/experience"
               }
@@ -4972,7 +4972,7 @@
             }
           ]
         },
-        {
+        { 
           "name": "Teachers Bank Details",
           "item": [
             {
@@ -4984,7 +4984,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"account_holder_name\": \"John Doe\",\n  \"bank_name\": \"HDFC Bank\",\n  \"account_number\": \"1234567890\",\n  \"ifsc_code\": \"HDFC0001234\",\n  \"upi_id\": \"johndoe@paytm\",\n  \"is_primary\": true\n}"
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"account_holder_name\": \"John Doe\",\n  \"bank_name\": \"HDFC Bank\", \n  \"branch_name\": \"Mumbai Branch\",\n \"account_type\": \"savings\",\n  \"account_number\": \"1234567890\",\n  \"ifsc_code\": \"HDFC0001234\",\n  \"upi_id\": \"johndoe@paytm\",\n  \"is_primary\": true\n}"
                 },
                 "url": "http://localhost:4000/sms/teacher-bank-details/bank-details"
               }
@@ -5952,7 +5952,7 @@
         }
       ]
     },
-    {
+    { 
       "name": "Subjects Management",
       "item": [
         {
@@ -5962,84 +5962,329 @@
               "name": "Create Subject",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"school\",\n  \"class_levels\": [\"10\", \"11\", \"12\"],\n  \"description\": \"Mathematics for secondary classes\",\n  \"status\": \"active\"\n}"
                 },
-                "url": "http://localhost:4000/sms/subjects-master/subject"
+                "url": "http://localhost:4000/sms/subjects-master/subject",
+                "description": "Creates a new subject under an institute. subject_type must match the institute type (school or coaching). subject_code is auto-generated (e.g. MATH123)."
               }
-            }, 
+            },
             {
               "name": "Get All Subjects",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject"
+                "url": "http://localhost:4000/sms/subjects-master/subject",
+                "description": "Returns all subjects sorted by subject_name ascending."
               }
             },
             {
               "name": "Get Subject By ID",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "subjects_master _id" }
+                  ]
+                },
+                "description": "Returns a single subject by its MongoDB _id."
               }
             },
             {
               "name": "Get Subjects By Institute ID",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "institute", ":institute_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects belonging to a specific institute."
               }
             },
             {
               "name": "Get Subjects By Type",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/type/:type",
-                "description": "type can be: school or coaching"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/type/:type",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "type", ":type"],
+                  "variable": [
+                    { "key": "type", "value": "school", "description": "Allowed values: school | coaching" }
+                  ]
+                },
+                "description": "Filter subjects by type. Allowed values: school, coaching."
               }
             },
             {
               "name": "Get Subjects By Status",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/status/:status",
-                "description": "status can be: active, inactive or archived"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/status/:status",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "status", ":status"],
+                  "variable": [
+                    { "key": "status", "value": "active", "description": "Allowed values: active | inactive | archived" }
+                  ]
+                },
+                "description": "Filter subjects by status. Allowed values: active, inactive, archived."
               }
             },
             {
               "name": "Get Subjects By Class Level",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/class-level/:class_level",
-                "description": "Example: class_level = 10, 11, 12"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/class-level/:class_level",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "class-level", ":class_level"],
+                  "variable": [
+                    { "key": "class_level", "value": "10", "description": "Example: 10, 11, 12" }
+                  ]
+                },
+                "description": "Returns subjects that include the given class level in their class_levels array."
               }
             },
             {
               "name": "Get Subjects By Institute And Type",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id/type/:type",
-                "description": "Get subjects filtered by both institute_id and type (school/coaching)"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/institute/:institute_id/type/:type",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", "institute", ":institute_id", "type", ":type"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
+                    { "key": "type", "value": "school", "description": "Allowed values: school | coaching" }
+                  ]
+                },
+                "description": "Filter subjects by both institute and type (school or coaching)."
               }
             },
             {
               "name": "Update Subject",
               "request": {
                 "method": "PUT",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"subject_name\": \"Advanced Mathematics\",\n  \"class_levels\": [\"11\", \"12\"],\n  \"description\": \"Advanced mathematics for senior classes\"\n}"
+                  "raw": "{\n  \"subject_name\": \"Advanced Mathematics\",\n  \"subject_type\": \"school\",\n  \"class_levels\": [\"11\", \"12\"],\n  \"description\": \"Advanced mathematics for senior classes\",\n  \"status\": \"active\"\n}"
                 },
-                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "subjects_master _id" }
+                  ]
+                },
+                "description": "Updates allowed fields of a subject. At least one field is required. Note: if subject_name is changed and another subject with the same name already exists for the same institute, a 409 Conflict is returned."
               }
             },
             {
               "name": "Delete Subject",
               "request": {
                 "method": "DELETE",
-                "url": "http://localhost:4000/sms/subjects-master/subject/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-master/subject/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-master", "subject", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "subjects_master _id" }
+                  ]
+                },
+                "description": "Permanently deletes a subject by ID."
+              }
+            }
+          ]
+        },
+        {
+          "name": "Subjects By Class",
+          "item": [
+            {
+              "name": "Create Subject By Class",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": \"60a7f9b8e4b0f83d6c8e9f3c\",\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"theory\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Assigns a subject to a class (and optionally a section).\n\nBusiness logic:\n1. Checks if the subject already exists in subjects_master for this institute (case-insensitive match).\n2. If NOT found → auto-creates it in subjects_master with a generated code (e.g. MATH123).\n3. Builds a class-wise subject_code: <subject_code>-<class_level><section> e.g. MATH-1A or MATH-1.\n4. Saves the record in subjects_by_class.\n\nNote: section_id is optional — omit or pass null if the class has no sections.\nDuplicate assignment (same institute + class + section + subject) returns 409 Conflict."
+              }
+            },
+            {
+              "name": "Create Subject By Class (No Section)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": null,\n  \"subject_name\": \"Science\",\n  \"subject_type\": \"practical\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Same as Create Subject By Class but without a section. Generated code example: SCIE-1."
+              }
+            },
+            {
+              "name": "Get All Subjects By Class",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Returns all subjects_by_class records sorted by created_at descending."
+              }
+            },
+            {
+              "name": "Get Subject By Class Record ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
+                  ]
+                },
+                "description": "Returns a single subjects_by_class record by its MongoDB _id."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects assigned to any class under a specific institute."
+              }
+            },
+            {
+              "name": "Get Subjects By Class ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/class/:class_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "class", ":class_id"],
+                  "variable": [
+                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects assigned to a specific class."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute And Class",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id/class/:class_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "class", ":class_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
+                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" }
+                  ]
+                },
+                "description": "Returns all subjects assigned to a specific class under a specific institute."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute, Class And Section",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id/class/:class_id/section/:section_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "class", ":class_id", "section", ":section_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
+                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" },
+                    { "key": "section_id", "value": "60a7f9b8e4b0f83d6c8e9f3c", "description": "classes_sections_master _id" }
+                  ]
+                },
+                "description": "Returns subjects for a specific institute + class + section combination. Most granular filter."
+              }
+            },
+            {
+              "name": "Get Subjects By Status",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/status/:status",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "status", ":status"],
+                  "variable": [
+                    { "key": "status", "value": "active", "description": "Allowed values: active | inactive" }
+                  ]
+                },
+                "description": "Filter subjects_by_class records by status. Allowed values: active, inactive."
+              }
+            },
+            {
+              "name": "Get Subjects By Subject Type",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/type/:type",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "type", ":type"],
+                  "variable": [
+                    { "key": "type", "value": "theory", "description": "Allowed values: theory | practical | both" }
+                  ]
+                },
+                "description": "Filter subjects_by_class records by subject_type. Allowed values: theory, practical, both."
+              }
+            },
+            {
+              "name": "Update Subject By Class",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_type\": \"both\",\n  \"status\": \"inactive\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
+                  ]
+                },
+                "description": "Updates subject_type and/or status of a subjects_by_class record. At least one field is required.\n\nAllowed fields:\n- subject_type: theory | practical | both\n- status: active | inactive"
+              }
+            },
+            {
+              "name": "Delete Subject By Class",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [
+                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
+                  ]
+                },
+                "description": "Permanently deletes a subjects_by_class record by ID. Does NOT delete the parent subjects_master record."
               }
             }
           ]
@@ -8029,7 +8274,7 @@
                 "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"class_name\": \"10th Grade\",\n  \"class_type\": \"school\",\n  \"class_teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"class_level\": \"10\",\n  \"academic_year\": \"2025-26\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"class_name\": \"10th Grade\",\n  \"class_type\": \"school\",\n \"class_capacity\": \"100\",\n  \"class_teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"class_level\": \"10\",\n  \"academic_year\": \"2025-26\"\n}"
                 },
                 "url": "http://localhost:4000/sms/classes"
               }
@@ -8098,7 +8343,7 @@
           ]
         },
         {
-          "name": "Class Sections",
+          "name": "Class Sections",  
           "item": [
             {
               "name": "Create Section",
@@ -8107,7 +8352,7 @@
                 "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"section_name\": \"A\",\n  \"class_teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"section_name\": \"A\",\n \"class_capacity\": \"100\",\n  \"class_teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
                 },
                 "url": "http://localhost:4000/sms/class-sections"
               }
@@ -8824,6 +9069,555 @@
                     {
                       "key": "id",
                       "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fee Management",
+      "item": [
+        {
+          "name": "Fee Structures",
+          "item": [
+            {
+              "name": "Create Fee Structure (Monthly School)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"total_annual_amount\": 41000,\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-structures/fee-structure"
+              }
+            },
+            {
+              "name": "Create Fee Structure (Quarterly School)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"total_annual_amount\": 37200,\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-structures/fee-structure"
+              }
+            },
+            {
+              "name": "Create Fee Structure (Annual School)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"total_annual_amount\": 60000,\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-structures/fee-structure"
+              }
+            },
+            {
+              "name": "Get All Fee Structures",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/fee-structures/fee-structure"
+              }
+            },
+            {
+              "name": "Get Fee Structure By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Fee Structures By Class ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure/class/:class_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure", "class", ":class_id"],
+                  "variable": [
+                    {
+                      "key": "class_id",
+                      "value": "200000000000000000000010"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Fee Structure",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3500,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"total_annual_amount\": 47000\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Fee Structure",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f1b"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Fee Terms",
+          "item": [
+            {
+              "name": "Create Fee Term",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"term_order\": 1,\n  \"name\": \"April\",\n  \"start_date\": \"2025-04-01\",\n  \"due_date\": \"2025-04-10\",\n  \"late_fee_amount\": 200,\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-terms/fee-term"
+              }
+            },
+            {
+              "name": "Create Fee Terms Bulk - 12 Months",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 1,  \"name\": \"April\",     \"start_date\": \"2025-04-01\", \"due_date\": \"2025-04-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 2,  \"name\": \"May\",       \"start_date\": \"2025-05-01\", \"due_date\": \"2025-05-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 3,  \"name\": \"June\",      \"start_date\": \"2025-06-01\", \"due_date\": \"2025-06-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 4,  \"name\": \"July\",      \"start_date\": \"2025-07-01\", \"due_date\": \"2025-07-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 5,  \"name\": \"August\",    \"start_date\": \"2025-08-01\", \"due_date\": \"2025-08-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 6,  \"name\": \"September\", \"start_date\": \"2025-09-01\", \"due_date\": \"2025-09-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 7,  \"name\": \"October\",   \"start_date\": \"2025-10-01\", \"due_date\": \"2025-10-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 8,  \"name\": \"November\",  \"start_date\": \"2025-11-01\", \"due_date\": \"2025-11-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 9,  \"name\": \"December\",  \"start_date\": \"2025-12-01\", \"due_date\": \"2025-12-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 10, \"name\": \"January\",   \"start_date\": \"2026-01-01\", \"due_date\": \"2026-01-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 11, \"name\": \"February\",  \"start_date\": \"2026-02-01\", \"due_date\": \"2026-02-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 12, \"name\": \"March\",     \"start_date\": \"2026-03-01\", \"due_date\": \"2026-03-10\", \"late_fee_amount\": 200, \"status\": \"active\" }\n]"
+                },
+                "url": "http://localhost:4000/sms/fee-terms/fee-term/bulk"
+              }
+            },
+            {
+              "name": "Create Fee Terms Bulk - 4 Quarters",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 1, \"name\": \"Term 1 (Apr-Jun)\", \"start_date\": \"2025-04-01\", \"due_date\": \"2025-04-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 2, \"name\": \"Term 2 (Jul-Sep)\", \"start_date\": \"2025-07-01\", \"due_date\": \"2025-07-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 3, \"name\": \"Term 3 (Oct-Dec)\", \"start_date\": \"2025-10-01\", \"due_date\": \"2025-10-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 4, \"name\": \"Term 4 (Jan-Mar)\", \"start_date\": \"2026-01-01\", \"due_date\": \"2026-01-15\", \"late_fee_amount\": 500, \"status\": \"active\" }\n]"
+                },
+                "url": "http://localhost:4000/sms/fee-terms/fee-term/bulk"
+              }
+            },
+            {
+              "name": "Get All Fee Terms",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/fee-terms/fee-term"
+              }
+            },
+            {
+              "name": "Get Fee Term By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-terms/fee-term/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-terms", "fee-term", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f2c"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Fee Terms By Institute And Year",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-terms/fee-term/institute/:institute_id/year/:academic_year",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-terms", "fee-term", "institute", ":institute_id", "year", ":academic_year"],
+                  "variable": [
+                    {
+                      "key": "institute_id",
+                      "value": "100000000000000000000001"
+                    },
+                    {
+                      "key": "academic_year",
+                      "value": "2025-2026"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Fee Term",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"due_date\": \"2025-04-15\",\n  \"late_fee_amount\": 300\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-terms/fee-term/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-terms", "fee-term", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f2c"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Fee Term",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-terms/fee-term/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-terms", "fee-term", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f2c"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Student Fees",
+          "item": [
+            {
+              "name": "Generate Student Fee For Term",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-2026\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-fees/student-fee/generate"
+              }
+            },
+            {
+              "name": "Create Student Fee (Manual)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-2026\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"fee_snapshot\": [\n    { \"name\": \"Tuition Fee\", \"amount\": 3000, \"frequency\": \"monthly\" },\n    { \"name\": \"Admission Fee\", \"amount\": 5000, \"frequency\": \"one_time\" }\n  ],\n  \"total_amount\": 8000,\n  \"paid_amount\": 0,\n  \"due_amount\": 8000,\n  \"due_date\": \"2025-04-10\",\n  \"status\": \"pending\",\n  \"is_late_fee_applied\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/student-fees/student-fee"
+              }
+            },
+            {
+              "name": "Get All Student Fees",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/student-fees/student-fee"
+              }
+            },
+            {
+              "name": "Get Student Fee By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f3d"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Student Fees By Student ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee/student/:student_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee", "student", ":student_id"],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "300000000000000000000001"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Update Student Fee",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"overdue\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f3d"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Apply Late Fee",
+              "request": {
+                "method": "PATCH",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"late_fee_amount\": 200\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee/:id/apply-late-fee",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee", ":id", "apply-late-fee"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f3d"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Student Fee",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f3d"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Fee Receipts",
+          "item": [
+            {
+              "name": "Create Fee Receipt - UPI (Full Payment)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"student_fee_id\": \"60d5ec49f1b2c72b8c8e4f3d\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"amount_paid\": 8000,\n  \"payment_method\": \"upi\",\n  \"transaction_id\": \"UPI12345XYZ\",\n  \"payment_date\": \"2025-04-05\",\n  \"collected_by\": null,\n  \"remarks\": \"Full payment for April\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-receipts/fee-receipt"
+              }
+            },
+            {
+              "name": "Create Fee Receipt - Cash (Partial Payment)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"student_fee_id\": \"60d5ec49f1b2c72b8c8e4f3d\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"amount_paid\": 3000,\n  \"payment_method\": \"cash\",\n  \"transaction_id\": null,\n  \"payment_date\": \"2025-04-05\",\n  \"collected_by\": \"60d5ec49f1b2c72b8c8e4abc\",\n  \"remarks\": \"Partial payment - remaining 5000 due\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-receipts/fee-receipt"
+              }
+            },
+            {
+              "name": "Create Fee Receipt - Card",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"student_fee_id\": \"60d5ec49f1b2c72b8c8e4f3d\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"amount_paid\": 5000,\n  \"payment_method\": \"card\",\n  \"transaction_id\": \"CARD-TXN-99887\",\n  \"payment_date\": \"2025-04-10\",\n  \"collected_by\": null,\n  \"remarks\": null\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-receipts/fee-receipt"
+              }
+            },
+            {
+              "name": "Get All Fee Receipts",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:4000/sms/fee-receipts/fee-receipt"
+              }
+            },
+            {
+              "name": "Get Fee Receipt By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-receipts/fee-receipt/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-receipts", "fee-receipt", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f4e"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Fee Receipts By Student ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-receipts/fee-receipt/student/:student_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-receipts", "fee-receipt", "student", ":student_id"],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "300000000000000000000001"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Fee Receipts By Student Fee ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-receipts/fee-receipt/student-fee/:student_fee_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-receipts", "fee-receipt", "student-fee", ":student_fee_id"],
+                  "variable": [
+                    {
+                      "key": "student_fee_id",
+                      "value": "60d5ec49f1b2c72b8c8e4f3d"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Fee Receipt",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-receipts/fee-receipt/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-receipts", "fee-receipt", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "60d5ec49f1b2c72b8c8e4f4e"
                     }
                   ]
                 }
