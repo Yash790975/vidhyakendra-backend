@@ -4410,43 +4410,13 @@
           "name": "Teachers Master",
           "item": [
             {
-              "name": "Create Teacher (with Photo)",
-              "request": {
+              "name": "Create Teacher", 
+              "request": { 
                 "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    { "key": "institute_id",    "value": "60d5ec49f1b2c72b8c8e4f1a", "type": "text" },
-                    { "key": "teacher_type",    "value": "school",                   "type": "text" },
-                    { "key": "full_name",       "value": "John Doe",                 "type": "text" },
-                    { "key": "father_name",     "value": "James Doe",                "type": "text" },
-                    { "key": "mother_name",     "value": "Mary Doe",                 "type": "text" },
-                    { "key": "gender",          "value": "male",                     "type": "text" },
-                    { "key": "date_of_birth",   "value": "1990-05-15",               "type": "text" },
-                    { "key": "marital_status",  "value": "married",                  "type": "text" },
-                    { "key": "spouse_name",     "value": "Jane Doe",                 "type": "text" },
-                    { "key": "employment_type", "value": "full_time",                "type": "text" },
-                    { "key": "joining_date",    "value": "2024-01-01",               "type": "text" },
-                    { "key": "blood_group",     "value": "O+",                       "type": "text" },
-                    {
-                      "key": "upload_photo",
-                      "type": "file",
-                      "description": "Optional - .jpg, .jpeg, .png, .webp, .gif | max 5MB"
-                    }
-                  ]
-                },
-                "url": "http://localhost:4000/sms/teachers"
-              }
-            },
-            {
-              "name": "Create Teacher (without Photo)",
-              "request": {
-                "method": "POST",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n  \"father_name\": \"James Doe\",\n  \"mother_name\": \"Mary Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"teacher_type\": \"school\",\n  \"full_name\": \"John Doe\",\n \"father_name\": \"James Doe\",\n  \"mother_name\": \"Mary Doe\",\n  \"gender\": \"male\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"marital_status\": \"married\",\n  \"spouse_name\": \"Jane Doe\",\n  \"employment_type\": \"full_time\",\n  \"joining_date\": \"2024-01-01\",\n  \"blood_group\": \"O+\"\n}"
                 },
                 "url": "http://localhost:4000/sms/teachers"
               }
@@ -4455,7 +4425,6 @@
               "name": "Get Teacher With All Details",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": "http://localhost:4000/sms/teachers/teacher-with-all-details/696e0a40715f041b7764a616"
               }
             },
@@ -4463,7 +4432,6 @@
               "name": "Get All Teachers",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": "http://localhost:4000/sms/teachers"
               }
             },
@@ -4471,14 +4439,12 @@
               "name": "Get Teachers with Filters",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/teachers?institute_id=60d5ec49f1b2c72b8c8e4f1a&teacher_type=school&status=active",
                   "query": [
-                    { "key": "institute_id",    "value": "60d5ec49f1b2c72b8c8e4f1a" },
-                    { "key": "teacher_type",    "value": "school" },
-                    { "key": "status",          "value": "active" },
-                    { "key": "employment_type", "value": "full_time", "disabled": true }
+                    {"key": "institute_id", "value": "60d5ec49f1b2c72b8c8e4f1a"},
+                    {"key": "teacher_type", "value": "school"},
+                    {"key": "status", "value": "active"}
                   ]
                 }
               }
@@ -4487,7 +4453,6 @@
               "name": "Get Teacher by ID",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": "http://localhost:4000/sms/teachers/696e0a40715f041b7764a616"
               }
             },
@@ -4495,42 +4460,14 @@
               "name": "Get Teacher by Code",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": "http://localhost:4000/sms/teachers/code/BA-CCH-TCH-001"
               }
             },
             {
-              "name": "Update Teacher (with New Photo)",
+              "name": "Update Teacher",
               "request": {
                 "method": "PUT",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    { "key": "full_name",       "value": "John Updated Doe", "type": "text" },
-                    { "key": "employment_type", "value": "part_time",        "type": "text" },
-                    { "key": "status",          "value": "active",           "type": "text" },
-                    {
-                      "key": "upload_photo",
-                      "type": "file",
-                      "description": "Optional - replaces existing photo; old file is deleted automatically"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "http://localhost:4000/sms/teachers/696e0a40715f041b7764a616",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "teachers", "696e0a40715f041b7764a616"]
-                }
-              }
-            },
-            {
-              "name": "Update Teacher (without Photo)",
-              "request": {
-                "method": "PUT",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"full_name\": \"John Updated Doe\",\n  \"employment_type\": \"part_time\",\n  \"status\": \"active\"\n}"
@@ -4542,10 +4479,10 @@
               "name": "Update Teacher With All Details",
               "request": {
                 "method": "PUT",
-                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "header": [{"key": "Content-Type", "value": "application/json"}],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"teacher\": {\n    \"full_name\": \"John Updated Doe\",\n    \"blood_group\": \"A+\",\n    \"marital_status\": \"married\",\n    \"spouse_name\": \"Jane Updated Doe\"\n  },\n  \"contact_information\": [\n    {\n      \"_id\": \"696e0ab9715f041b7764a619\",\n      \"mobile\": \"9999999999\",\n      \"email\": \"updated@gmail.com\",\n      \"alternate_mobile\": \"8888888888\",\n      \"whatsapp_number\": \"7777777777\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"_id\": \"696e0b21715f041b7764a620\",\n      \"address_type\": \"current\",\n      \"address\": \"456 New Street\",\n      \"city\": \"Delhi\",\n      \"state\": \"Delhi\",\n      \"pincode\": \"110001\"\n    }\n  ],\n  \"emergency_contacts\": [\n    {\n      \"_id\": \"696e21ef62c81750bf6d6cdd\",\n      \"name\": \"Jane Updated Doe\",\n      \"relation\": \"Spouse\",\n      \"mobile\": \"7777777777\"\n    }\n  ]\n}"
+                  "raw": "{\n  \"teacher\": {\n    \"full_name\": \"John Updated Doe\",\n    \"blood_group\": \"A+\",\n    \"marital_status\": \"married\",\n    \"spouse_name\": \"Jane Updated Doe\"\n  },\n  \"contact_information\": [\n    {\n      \"_id\": \"696e0ab9715f041b7764a619\",\n      \"mobile\": \"9999999999\",\n      \"email\": \"updated@gmail.com\", \n      \"alternate_mobile\": \"8888888888\",\n      \"whatsapp_number\": \"7777777777\"\n    }\n  ],\n  \"addresses\": [\n    {\n      \"_id\": \"696e0b21715f041b7764a620\",\n      \"address_type\": \"current\",\n      \"address\": \"456 New Street\",\n      \"city\": \"Delhi\",\n      \"state\": \"Delhi\",\n      \"pincode\": \"110001\"\n    }\n  ],\n  \"emergency_contacts\": [\n    {\n      \"_id\": \"696e21ef62c81750bf6d6cdd\",\n      \"name\": \"Jane Updated Doe\",\n      \"relation\": \"Spouse\",\n      \"mobile\": \"7777777777\"\n    }\n  ]\n}"
                 },
                 "url": "http://localhost:4000/sms/teachers/update-with-all-details/696e0a40715f041b7764a616"
               }
@@ -4554,7 +4491,6 @@
               "name": "Delete Teacher",
               "request": {
                 "method": "DELETE",
-                "header": [],
                 "url": "http://localhost:4000/sms/teachers/696e0a40715f041b7764a616"
               }
             }
