@@ -44,11 +44,43 @@ const deleteTeacherPhotoFile = (photoUrl) => {
 // ============= TEACHER CODE GENERATOR =============
 
 // Generate teacher code: <INSTITUTE_ACRONYM>-<TEACHER_TYPE>-TCH-<RUNNING_NUMBER>
+// const generateTeacherCode = async (instituteId, teacherType) => {
+//   const institute = await Institute.findById(instituteId);
+
+//   if (!institute) {
+//     throw new CustomError("Institute not found for teacher code generation", statusCode.NOT_FOUND);
+//   }
+
+//   const instituteName = institute.institute_name;
+
+//   const words = instituteName
+//     .toUpperCase()
+//     .replace(/[^A-Z\s]/g, "")
+//     .split(/\s+/)
+//     .filter(Boolean);
+
+//   const acronym = words.map(w => w[0]).join("");
+
+//   const count = await TeachersMaster.countDocuments({
+//     institute_id: instituteId,
+//     teacher_type: teacherType,
+//   });
+
+//   const runningNumber = String(count + 1).padStart(3, "0");
+
+//   const typeCode = teacherType === "school" ? "SCH" : "CCH";
+//   return `${acronym}-${typeCode}-TCH-${runningNumber}`;
+// };
+
+
 const generateTeacherCode = async (instituteId, teacherType) => {
   const institute = await Institute.findById(instituteId);
 
   if (!institute) {
-    throw new CustomError("Institute not found for teacher code generation", statusCode.NOT_FOUND);
+    throw new CustomError(
+      "Institute not found for teacher code generation",
+      statusCode.NOT_FOUND
+    );
   }
 
   const instituteName = institute.institute_name;
@@ -59,21 +91,92 @@ const generateTeacherCode = async (instituteId, teacherType) => {
     .split(/\s+/)
     .filter(Boolean);
 
-  const acronym = words.map(w => w[0]).join("");
-
-  const count = await TeachersMaster.countDocuments({
-    institute_id: instituteId,
-    teacher_type: teacherType,
-  });
-
-  const runningNumber = String(count + 1).padStart(3, "0");
+  const acronym = words.map((w) => w[0]).join("");
 
   const typeCode = teacherType === "school" ? "SCH" : "CCH";
-  return `${acronym}-${typeCode}-TCH-${runningNumber}`;
+
+  const prefix = `${acronym}-${typeCode}-TCH-`;
+
+  // Find last teacher
+  const lastTeacher = await TeachersMaster.findOne({
+    institute_id: instituteId,
+    teacher_type: teacherType,
+    teacher_code: { $regex: `^${prefix}` },
+  }).sort({ teacher_code: -1 });
+
+  let nextNumber = 1;
+
+  if (lastTeacher) {
+    const lastCode = lastTeacher.teacher_code;
+    const lastNumber = parseInt(lastCode.split("-").pop());
+    nextNumber = lastNumber + 1;
+  }
+
+  const runningNumber = String(nextNumber).padStart(3, "0");
+
+  return `${prefix}${runningNumber}`;
 };
 
 
 // ============= TEACHER CRUD =============
+
+// const createTeacher = async (teacherData, photoUrl = null) => {
+//   const institute = await Institute.findById(
+//     teacherData.institute_id,
+//     { institute_type: 1 }
+//   );
+
+//   if (!institute) {
+//     throw new CustomError("Institute not found", statusCode.NOT_FOUND);
+//   }
+
+//   if (institute.institute_type !== teacherData.teacher_type) {
+//     throw new CustomError(
+//       `Teacher type must be '${institute.institute_type}' for this institute`,
+//       statusCode.BAD_REQUEST
+//     );
+//   }
+
+//   const teacherCode = await generateTeacherCode(
+//     teacherData.institute_id,
+//     teacherData.teacher_type
+//   );
+
+//   const teacher = new TeachersMaster({
+//     institute_id: new mongoose.Types.ObjectId(teacherData.institute_id),
+
+//     teacher_code: teacherCode,
+//     teacher_type: teacherData.teacher_type,
+
+//     full_name: teacherData.full_name,
+//     father_name: teacherData.father_name || null,
+//     mother_name: teacherData.mother_name || null,
+//     gender: teacherData.gender,
+
+//     date_of_birth: new Date(teacherData.date_of_birth),
+
+//     marital_status: teacherData.marital_status || null,
+//     spouse_name: teacherData.spouse_name || null,
+
+//     employment_type: teacherData.employment_type,
+//     joining_date: teacherData.joining_date
+//       ? new Date(teacherData.joining_date)
+//       : null,
+
+//     blood_group: teacherData.blood_group || null,
+
+//     upload_photo_url: photoUrl || null,
+
+//     status: "active",
+//     created_at: new Date(),
+//     updated_at: new Date(),
+//   });
+
+//   await teacher.save();
+//   return teacher;
+// };
+
+
 
 const createTeacher = async (teacherData, photoUrl = null) => {
   const institute = await Institute.findById(
@@ -114,6 +217,7 @@ const createTeacher = async (teacherData, photoUrl = null) => {
     spouse_name: teacherData.spouse_name || null,
 
     employment_type: teacherData.employment_type,
+
     joining_date: teacherData.joining_date
       ? new Date(teacherData.joining_date)
       : null,
@@ -127,8 +231,21 @@ const createTeacher = async (teacherData, photoUrl = null) => {
     updated_at: new Date(),
   });
 
-  await teacher.save();
-  return teacher;
+  try {
+    await teacher.save();
+    return teacher;
+  } catch (error) {
+
+    // Handle duplicate key error
+    if (error.code === 11000) {
+      throw new CustomError(
+        "Teacher already exists with the same teacher code for this institute.",
+        statusCode.BAD_REQUEST
+      );
+    }
+
+    throw error;
+  }
 };
 
 
@@ -413,6 +530,499 @@ module.exports = {
   updateTeacher,
   deleteTeacher,
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const TeachersMaster = require("../models/teachersMaster.model"); 
+// const TeacherContactInformation = require("../models/teacherContactInformation.model");
+// const TeacherAddresses = require("../models/teacherAddresses.model");       
+// const TeacherIdentityDocuments = require("../models/teacherIdentityDocuments.model");
+// const TeacherQualificationDetails = require("../models/teacherQualificationDetails.model");
+// const TeacherExperience = require("../models/teacherExperience.model");     
+// const TeacherBankDetails = require("../models/teacherBankDetails.model");
+// const TeacherEmergencyContacts = require("../models/teacherEmergencyContacts.model"); 
+// const TeacherAuth = require("../models/teacherAuth.model");
+// const TeacherSalaryStructure = require("../models/teacherSalaryStructure.model");
+// const TeacherSalaryTransactions = require("../models/teacherSalaryTransactions.model");
+// const TeacherAttendance = require("../models/teacherAttendance.model");
+// const TeacherLeaves = require("../models/teacherLeaves.model");
+// const ClassSubjectSchedule = require("../models/classSubjectSchedule.model");
+// const Institute = require("../models/institutesMaster.model");
+ 
+// const CustomError = require("../exceptions/CustomError");
+// const statusCode = require("../enums/statusCode");
+// const fs = require("fs");
+// const path = require("path");  
+// const mongoose = require("mongoose");
+
+
+// // ============= FILE HELPERS =============
+
+// const deleteTeacherPhotoFile = (photoUrl) => {
+//   if (!photoUrl) return;
+//   try {
+//     const UPLOADS_ROOT = require("../middlewares/upload").UPLOADS_ROOT;
+//     const filePath = path.join(
+//       UPLOADS_ROOT,
+//       "teacher_photos",
+//       path.basename(photoUrl)
+//     );
+//     if (fs.existsSync(filePath)) {
+//       fs.unlinkSync(filePath);
+//     }
+//   } catch (fileError) {
+//     console.error(`Failed to delete teacher photo: ${photoUrl}`, fileError);
+//   }
+// };
+
+
+// // ============= TEACHER CODE GENERATOR =============
+
+// // Generate teacher code: <INSTITUTE_ACRONYM>-<TEACHER_TYPE>-TCH-<RUNNING_NUMBER>
+// const generateTeacherCode = async (instituteId, teacherType) => {
+//   const institute = await Institute.findById(instituteId);
+
+//   if (!institute) {
+//     throw new CustomError("Institute not found for teacher code generation", statusCode.NOT_FOUND);
+//   }
+
+//   const instituteName = institute.institute_name;
+
+//   const words = instituteName
+//     .toUpperCase()
+//     .replace(/[^A-Z\s]/g, "")
+//     .split(/\s+/)
+//     .filter(Boolean);
+
+//   const acronym = words.map(w => w[0]).join("");
+
+//   const count = await TeachersMaster.countDocuments({
+//     institute_id: instituteId,
+//     teacher_type: teacherType,
+//   });
+
+//   const runningNumber = String(count + 1).padStart(3, "0");
+
+//   const typeCode = teacherType === "school" ? "SCH" : "CCH";
+//   return `${acronym}-${typeCode}-TCH-${runningNumber}`;
+// };
+
+
+// // ============= TEACHER CRUD =============
+
+// const createTeacher = async (teacherData, photoUrl = null) => {
+//   const institute = await Institute.findById(
+//     teacherData.institute_id,
+//     { institute_type: 1 }
+//   );
+
+//   if (!institute) {
+//     throw new CustomError("Institute not found", statusCode.NOT_FOUND);
+//   }
+
+//   if (institute.institute_type !== teacherData.teacher_type) {
+//     throw new CustomError(
+//       `Teacher type must be '${institute.institute_type}' for this institute`,
+//       statusCode.BAD_REQUEST
+//     );
+//   }
+
+//   const teacherCode = await generateTeacherCode(
+//     teacherData.institute_id,
+//     teacherData.teacher_type
+//   );
+
+//   const teacher = new TeachersMaster({
+//     institute_id: new mongoose.Types.ObjectId(teacherData.institute_id),
+
+//     teacher_code: teacherCode,
+//     teacher_type: teacherData.teacher_type,
+
+//     full_name: teacherData.full_name,
+//     father_name: teacherData.father_name || null,
+//     mother_name: teacherData.mother_name || null,
+//     gender: teacherData.gender,
+
+//     date_of_birth: new Date(teacherData.date_of_birth),
+
+//     marital_status: teacherData.marital_status || null,
+//     spouse_name: teacherData.spouse_name || null,
+
+//     employment_type: teacherData.employment_type,
+//     joining_date: teacherData.joining_date
+//       ? new Date(teacherData.joining_date)
+//       : null,
+
+//     blood_group: teacherData.blood_group || null,
+
+//     upload_photo_url: photoUrl || null,
+
+//     status: "active",
+//     created_at: new Date(),
+//     updated_at: new Date(),
+//   });
+
+//   await teacher.save();
+//   return teacher;
+// };
+
+
+// const getAllTeachers = async (filters = {}) => {
+//   const query = {};
+
+//   if (filters.institute_id) query.institute_id = filters.institute_id;
+//   if (filters.teacher_type) query.teacher_type = filters.teacher_type;
+//   if (filters.status) query.status = filters.status;
+//   if (filters.employment_type) query.employment_type = filters.employment_type;
+
+//   const teachers = await TeachersMaster.find(query) 
+//     .populate("institute_id", "institute_name institute_code institute_type")
+//     .sort({ createdAt: -1 });
+
+//   return teachers;
+// };
+
+// const getTeacherById = async (teacherId) => {
+//   const teacher = await TeachersMaster.findById(teacherId).populate(
+//     "institute_id",
+//     "institute_name institute_code institute_type"
+//   );
+
+//   if (!teacher) {
+//     throw new CustomError("Teacher not found", statusCode.NOT_FOUND);
+//   }
+
+//   return teacher;
+// };
+
+// const getTeacherByCode = async (teacherCode) => {
+//   const teacher = await TeachersMaster.findOne({
+//     teacher_code: teacherCode,
+//   }).populate("institute_id", "institute_name institute_code institute_type");
+
+//   if (!teacher) {
+//     throw new CustomError("Teacher not found", statusCode.NOT_FOUND);
+//   }
+
+//   return teacher;
+// };
+
+// const updateTeacher = async (teacherId, updateData, newPhotoUrl = null) => {
+//   const teacher = await TeachersMaster.findById(teacherId);
+
+//   if (!teacher) {
+//     throw new CustomError("Teacher not found", statusCode.NOT_FOUND);
+//   }
+
+//   if (updateData.status === "archived" && teacher.status !== "archived") {
+//     updateData.archived_at = new Date();
+//   }
+
+//   // Handle photo replacement: delete old file if a new one is uploaded
+//   if (newPhotoUrl && teacher.upload_photo_url) {
+//     deleteTeacherPhotoFile(teacher.upload_photo_url);
+//   }
+
+//   if (newPhotoUrl) {
+//     updateData.upload_photo_url = newPhotoUrl;
+//   }
+
+//   Object.keys(updateData).forEach((key) => {
+//     if (updateData[key] !== undefined) {
+//       teacher[key] = updateData[key];
+//     }
+//   });
+
+//   await teacher.save();
+//   return await TeachersMaster.findById(teacherId).populate(
+//     "institute_id",
+//     "institute_name institute_code institute_type"
+//   );
+// };
+
+// const deleteTeacher = async (teacherId) => {
+//   const teacher = await TeachersMaster.findById(teacherId);
+
+//   if (!teacher) {
+//     throw new CustomError("Teacher not found", statusCode.NOT_FOUND);
+//   }
+
+//   // Delete teacher profile photo
+//   if (teacher.upload_photo_url) {
+//     deleteTeacherPhotoFile(teacher.upload_photo_url);
+//   }
+
+//   // Delete associated identity document files
+//   const identityDocuments = await TeacherIdentityDocuments.find({ teacher_id: teacherId });
+
+//   if (identityDocuments && identityDocuments.length > 0) {
+//     const UPLOADS_ROOT = require("../middlewares/upload").UPLOADS_ROOT;
+    
+//     identityDocuments.forEach((document) => {
+//       if (document.file_url) {
+//         const filePath = path.join(
+//           UPLOADS_ROOT,
+//           "teacher_identity_documents",
+//           path.basename(document.file_url)
+//         );
+
+//         if (fs.existsSync(filePath)) {
+//           try {
+//             fs.unlinkSync(filePath);
+//           } catch (fileError) {
+//             console.error(`Failed to delete file: ${filePath}`, fileError);
+//           }
+//         }
+//       }
+//     });
+//   }
+
+//   await Promise.all([
+//     TeacherContactInformation.deleteMany({ teacher_id: teacherId }),
+//     TeacherAddresses.deleteMany({ teacher_id: teacherId }),
+//     TeacherIdentityDocuments.deleteMany({ teacher_id: teacherId }),
+//     TeacherQualificationDetails.deleteMany({ teacher_id: teacherId }),
+//     TeacherExperience.deleteMany({ teacher_id: teacherId }),
+//     TeacherBankDetails.deleteMany({ teacher_id: teacherId }),
+//     TeacherEmergencyContacts.deleteMany({ teacher_id: teacherId }),
+//     TeacherAuth.deleteMany({ teacher_id: teacherId }),
+//     TeacherSalaryStructure.deleteMany({ teacher_id: teacherId }),
+//     TeacherSalaryTransactions.deleteMany({ teacher_id: teacherId }),
+//     TeacherAttendance.deleteMany({ teacher_id: teacherId }),
+//     TeacherLeaves.deleteMany({ teacher_id: teacherId }), 
+//     ClassSubjectSchedule.deleteMany({ teacher_id: teacherId }),
+//   ]);
+ 
+//   await TeachersMaster.findByIdAndDelete(teacherId);
+//   return teacher;
+// };
+
+
+// // ============= TEACHER WITH ALL DETAILS =============
+
+// const getTeacherWithAllDetails = async (teacherId) => {
+//   const teacher = await TeachersMaster.findById(teacherId).populate(
+//     "institute_id",
+//     "institute_name institute_code institute_type"
+//   );
+
+//   if (!teacher) {
+//     throw new CustomError("Teacher not found", statusCode.NOT_FOUND);
+//   }
+
+//   const [
+//     contactInfo,
+//     addresses,
+//     identityDocuments,
+//     qualifications,
+//     experience,
+//     bankDetails,
+//     emergencyContacts,
+//     salaryStructure,
+//     salaryTransactions,
+//     attendance,
+//     leaves,
+//     classSubjectSchedule,
+//   ] = await Promise.all([
+//     TeacherContactInformation.find({ teacher_id: teacherId }),
+//     TeacherAddresses.find({ teacher_id: teacherId }),
+//     TeacherIdentityDocuments.find({ teacher_id: teacherId }),
+//     TeacherQualificationDetails.find({ teacher_id: teacherId }),
+//     TeacherExperience.find({ teacher_id: teacherId }),
+//     TeacherBankDetails.find({ teacher_id: teacherId }),
+//     TeacherEmergencyContacts.find({ teacher_id: teacherId }),
+//     TeacherSalaryStructure.find({ teacher_id: teacherId }),
+//     TeacherSalaryTransactions.find({ teacher_id: teacherId }).sort({ transaction_date: -1 }),
+//     TeacherAttendance.find({ teacher_id: teacherId }).sort({ attendance_date: -1 }),
+//     TeacherLeaves.find({ teacher_id: teacherId }).sort({ start_date: -1 }),
+//     ClassSubjectSchedule.find({ teacher_id: teacherId }).populate("class_id section_id subject_id"),
+//   ]);
+
+//   return {
+//     teacher: teacher.toObject(),
+//     contact_information: contactInfo,
+//     addresses: addresses,
+//     identity_documents: identityDocuments,
+//     qualifications: qualifications,
+//     experience: experience,
+//     bank_details: bankDetails,
+//     emergency_contacts: emergencyContacts,
+//     salary_structure: salaryStructure,
+//     salary_transactions: salaryTransactions,
+//     attendance: attendance,
+//     leaves: leaves,
+//     class_subject_schedule: classSubjectSchedule,
+//   };
+// };
+
+
+// const updateTeacherWithAllDetails = async (teacherId, updateData) => {
+//   const teacher = await TeachersMaster.findById(teacherId);
+//   if (!teacher) {
+//     throw new CustomError("Teacher not found", statusCode.NOT_FOUND);
+//   }
+
+//   if (updateData.teacher) {
+//     if (updateData.teacher.status === "archived" && teacher.status !== "archived") {
+//       updateData.teacher.archived_at = new Date();
+//     }
+
+//     Object.keys(updateData.teacher).forEach((key) => {
+//       if (updateData.teacher[key] !== undefined && key !== '_id' && key !== 'teacher_code') {
+//         teacher[key] = updateData.teacher[key];
+//       }
+//     });
+
+//     teacher.updated_at = new Date();
+//     await teacher.save();
+//   }
+
+//   if (updateData.contact_information && Array.isArray(updateData.contact_information)) {
+//     for (const contact of updateData.contact_information) {
+//       if (contact._id) {
+//         const { _id, teacher_id, createdAt, __v, ...contactUpdateData } = contact;
+//         await TeacherContactInformation.findByIdAndUpdate(
+//           contact._id,
+//           { ...contactUpdateData, updatedAt: new Date() },
+//           { new: true, runValidators: true }
+//         );
+//       } else {
+//         const { _id, ...newContactData } = contact;
+//         await TeacherContactInformation.create({
+//           ...newContactData,
+//           teacher_id: teacherId,
+//         });
+//       }
+//     }
+//   }
+
+//   if (updateData.addresses && Array.isArray(updateData.addresses)) {
+//     for (const address of updateData.addresses) {
+//       if (address._id) {
+//         const { _id, teacher_id, createdAt, __v, ...addressUpdateData } = address;
+//         await TeacherAddresses.findByIdAndUpdate(
+//           address._id,
+//           { ...addressUpdateData, updatedAt: new Date() },
+//           { new: true, runValidators: true }
+//         );
+//       } else {
+//         const { _id, ...newAddressData } = address;
+//         await TeacherAddresses.create({
+//           ...newAddressData,
+//           teacher_id: teacherId,
+//         });
+//       }
+//     }
+//   }
+
+//   if (updateData.emergency_contacts && Array.isArray(updateData.emergency_contacts)) {
+//     for (const contact of updateData.emergency_contacts) {
+//       if (contact._id) {
+//         const { _id, teacher_id, createdAt, __v, ...contactUpdateData } = contact;
+//         await TeacherEmergencyContacts.findByIdAndUpdate(
+//           contact._id,
+//           { ...contactUpdateData, updatedAt: new Date() },
+//           { new: true, runValidators: true }
+//         );
+//       } else {
+//         const { _id, ...newContactData } = contact;
+//         await TeacherEmergencyContacts.create({
+//           ...newContactData,
+//           teacher_id: teacherId,
+//         });
+//       }
+//     }
+//   }
+
+//   return await getTeacherWithAllDetails(teacherId);
+// }; 
+
+
+// module.exports = { 
+//   createTeacher,
+//   getAllTeachers,
+//   getTeacherById,
+//   getTeacherByCode,
+//   getTeacherWithAllDetails,
+//   updateTeacherWithAllDetails, 
+//   updateTeacher,
+//   deleteTeacher,
+// };
 
 
 

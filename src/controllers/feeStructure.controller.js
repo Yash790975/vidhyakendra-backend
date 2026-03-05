@@ -3,7 +3,7 @@ const statusCode = require("../enums/statusCode");
 const {
   createFeeStructureValidation,
   updateFeeStructureValidation,
-} = require("../validations/feeStructure.validations");
+} = require("../validations/feeStructure.validations");   
 
 const createFeeStructure = async (req, res) => {
   try {

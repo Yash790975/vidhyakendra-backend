@@ -9155,7 +9155,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"total_annual_amount\": 41000,\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
@@ -9167,7 +9167,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"total_annual_amount\": 37200,\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
@@ -9179,7 +9179,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"total_annual_amount\": 60000,\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
