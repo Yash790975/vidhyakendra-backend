@@ -3,7 +3,7 @@ const {
   createAttendanceValidation,
   bulkCreateAttendanceValidation,
   updateAttendanceValidation
-} = require('../validations/studentAttendance.validation');
+} = require('../validations/studentAttendance.validation'); 
 const statusCode = require('../enums/statusCode');
 const apiResponse = require('../utils/apiResponse');
 

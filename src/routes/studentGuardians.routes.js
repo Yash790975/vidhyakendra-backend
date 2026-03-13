@@ -11,4 +11,4 @@ router.get("/student/:student_id/primary", guardianController.getPrimaryGuardian
 router.put("/:id", guardianController.updateGuardian);
 router.delete("/:id", guardianController.deleteGuardian);
 
-module.exports = router;
+module.exports = router; 

@@ -7,7 +7,7 @@ const {
 
 const createGuardian = async (req, res) => {
   try {
-    const { error, value } = createGuardianValidation.validate(req.body);
+    const { error, value } = createGuardianValidation.validate(req.body); 
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
         success: false,

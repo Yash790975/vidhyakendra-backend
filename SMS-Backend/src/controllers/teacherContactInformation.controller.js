@@ -5,7 +5,7 @@ const {
   verifyOTPValidation
 } = require("../validations/teacherContactInformation.validations");
 
- 
+      
 
 // ============= CONTACT INFORMATION =============
 
@@ -151,7 +151,7 @@ const updateContact = async (req, res) => {
       isException: false,
       statusCode: statusCode.OK,
       result: contact,
-      message: "Contact information updated successfully and OTP resent if email or mobile changed for verification",
+      message: "Contact information updated successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({

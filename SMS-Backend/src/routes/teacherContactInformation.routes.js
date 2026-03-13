@@ -4,7 +4,7 @@ const teachersController = require("../controllers/teacherContactInformation.con
 
     
 // ============= CONTACT INFORMATION =============
-router.post("/contact", teachersController.createContact);
+router.post("/contact", teachersController.createContact);      
 router.post("/contact/verify-otp", teachersController.verifyOTP);
 router.post("/contact/resend-otp", teachersController.resendOTP);
 router.get("/contact/:teacher_id", teachersController.getContactByTeacherId);

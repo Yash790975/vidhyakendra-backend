@@ -5,7 +5,7 @@ const studentsController = require("../controllers/studentsMaster.controller");
 // ============= STUDENTS MASTER =============
 router.post("/", studentsController.createStudent);
 router.get("/", studentsController.getAllStudents);
-router.get("/:id", studentsController.getStudentById);
+router.get("/:id", studentsController.getStudentById); 
 router.get("/code/:code", studentsController.getStudentByCode);
 router.get("/:studentId/class-teacher", studentsController.getClassTeacherByStudentId);
 router.put("/:id", studentsController.updateStudent);
@@ -20,7 +20,7 @@ module.exports = router;
 
 
 
-
+ 
 
 
 

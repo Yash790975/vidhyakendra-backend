@@ -11,7 +11,7 @@ router.get("/fee-structure", feeStructureController.getAllFeeStructures);
 router.get(
   "/fee-structure/class/:class_id",
   feeStructureController.getFeeStructuresByClass
-);
+);    
 
 // Get fee structure by ID
 router.get("/fee-structure/:id", feeStructureController.getFeeStructureById);

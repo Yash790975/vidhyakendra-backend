@@ -8,7 +8,7 @@ router.post('/attendance', studentAttendanceController.createAttendance);
 // Bulk create attendance
 router.post('/attendance/bulk', studentAttendanceController.bulkCreateAttendance);
 
-// Get all attendance
+// Get all attendance    
 router.get('/attendance', studentAttendanceController.getAllAttendance);
 
 // Get attendance by ID

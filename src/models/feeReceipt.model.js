@@ -77,4 +77,4 @@ feeReceiptSchema.index({ student_fee_id: 1 });
 feeReceiptSchema.index({ institute_id: 1 });
 feeReceiptSchema.index({ receipt_number: 1 }, { unique: true });
 
-module.exports = mongoose.model("FeeReceipt", feeReceiptSchema);
+module.exports = mongoose.model("FeeReceipt", feeReceiptSchema); 

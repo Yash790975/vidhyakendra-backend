@@ -1,7 +1,7 @@
 const FeeReceipt = require("../models/feeReceipt.model");
 const StudentFee = require("../models/studentFee.model");
 const CustomError = require("../exceptions/CustomError");
-const statusCode = require("../enums/statusCode");
+const statusCode = require("../enums/statusCode"); 
 const mongoose = require("mongoose");
 
 // ============= RECEIPT NUMBER GENERATOR ============= 

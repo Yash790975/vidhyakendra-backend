@@ -9,10 +9,10 @@ const { uploadHomeworkAssignment } = require("../middlewares/homeworkUploads.mid
 router.post(
   "/",
   uploadHomeworkAssignment.array("attachments", 10),
-  homeworkController.createHomeworkAssignment
+  homeworkController.createHomeworkAssignment 
 );
 
-// Get all homework assignments with filters
+// Get all homework assignments with filters 
 router.get("/", homeworkController.getAllHomeworkAssignments);
 
 // Get homework assignment by ID

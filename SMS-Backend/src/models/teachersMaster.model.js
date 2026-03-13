@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+    
 const teachersMasterSchema = new mongoose.Schema(
   {    
     institute_id: {
@@ -53,6 +53,10 @@ const teachersMasterSchema = new mongoose.Schema(
     },
     joining_date: {
       type: Date,
+    },
+    upload_photo_url: {
+      type: String,
+      default: null,
     },
     status: {
       type: String,
@@ -142,13 +146,14 @@ module.exports = mongoose.model("TeachersMaster", teachersMasterSchema);
 
 
 
-// const mongoose = require("mongoose");
 
+
+// const mongoose = require("mongoose");
+    
 // const teachersMasterSchema = new mongoose.Schema(
 //   {    
 //     institute_id: {
 //       type: mongoose.Schema.Types.ObjectId, 
-//       // ref: "Institute",     
 //       ref: "institutes_master",  
 //       required: true,  
 //     },      
@@ -165,7 +170,15 @@ module.exports = mongoose.model("TeachersMaster", teachersMasterSchema);
 //     full_name: {
 //       type: String,
 //       required: true,
-//     }, 
+//     },
+//     father_name: {
+//       type: String,
+//       default: null,
+//     },
+//     mother_name: {
+//       type: String,
+//       default: null,
+//     },
 //     gender: {
 //       type: String,
 //       required: true,

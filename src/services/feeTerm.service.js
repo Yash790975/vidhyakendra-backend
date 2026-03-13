@@ -1,7 +1,7 @@
 const FeeTerm = require("../models/feeTerm.model");
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
-
+ 
 const createFeeTerm = async (data) => {
   const existing = await FeeTerm.findOne({
     institute_id: data.institute_id,

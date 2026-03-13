@@ -2,7 +2,7 @@ const studentFeeService = require("../services/studentFee.service");
 const statusCode = require("../enums/statusCode");
 const {
   createStudentFeeValidation,
-  updateStudentFeeValidation,
+  updateStudentFeeValidation, 
   applyLateFeeValidation,
 } = require("../validations/studentFee.validations");
 

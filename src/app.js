@@ -126,6 +126,12 @@ app.use("/sms/student-fees", require("./routes/studentFee.routes"));
 app.use("/sms/fee-receipts", require("./routes/feeReceipt.routes"));
 
 
+//test
+app.use("/sms/assessments",         require("./routes/assessments.routes"));
+app.use("/sms/assessment-questions", require("./routes/assessmentQuestions.routes"));
+app.use("/sms/assessment-attempts",  require("./routes/assessmentAttempts.routes"));
+app.use("/sms/assessment-answers",   require("./routes/assessmentAnswers.routes"));
+
 // app.use(notFound);   
 
 // app.use(errorHandler);   

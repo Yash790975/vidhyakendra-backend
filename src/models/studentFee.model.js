@@ -43,8 +43,8 @@ const studentFeeSchema = new mongoose.Schema(
     fee_structure_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "FeeStructure",
-      required: true,
-    },
+      required: true, 
+    }, 
     fee_snapshot: {
       type: [feeSnapshotItemSchema],
       required: true,

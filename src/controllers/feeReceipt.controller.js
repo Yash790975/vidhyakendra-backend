@@ -2,7 +2,7 @@ const feeReceiptService = require("../services/feeReceipt.service");
 const statusCode = require("../enums/statusCode");
 const {
   createFeeReceiptValidation,
-} = require("../validations/feeReceipt.validations");
+} = require("../validations/feeReceipt.validations"); 
 
 const createFeeReceipt = async (req, res) => {
   try {

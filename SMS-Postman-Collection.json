@@ -1697,6 +1697,428 @@
               }
             }
           ]
+        },
+        {
+          "name": "Assessments",
+          "item": [
+            {
+              "name": "Create Assessment",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"title\": \"Chapter 3 Quiz\",\n  \"description\": \"Algebra Test\",\n  \"assessment_type\": \"mixed\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null,\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"academic_year\": \"2025-26\",\n  \"total_marks\": 20,\n  \"pass_marks\": 8,\n  \"duration_minutes\": 15,\n  \"available_from\": \"2026-03-20T10:00:00Z\",\n  \"available_until\": \"2026-03-20T12:00:00Z\",\n  \"max_attempts\": 1,\n  \"show_result_immediately\": true,\n  \"show_answer_key\": true,\n  \"status\": \"published\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments"
+              }
+            },
+            {
+              "name": "Get All Assessments",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments"]
+                }
+              }
+            },
+            {
+              "name": "Get All Assessments (with filters)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments?institute_id=60d5ec49f1b2c72b8c8e4f10&status=published&available_now=true",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments"],
+                  "query": [
+                    { "key": "institute_id", "value": "60d5ec49f1b2c72b8c8e4f10" },
+                    { "key": "class_id", "value": "60d5ec49f1b2c72b8c8e4c10", "disabled": true },
+                    { "key": "section_id", "value": "", "disabled": true },
+                    { "key": "subject_id", "value": "", "disabled": true },
+                    { "key": "created_by", "value": "", "disabled": true },
+                    { "key": "status", "value": "published" },
+                    { "key": "assessment_type", "value": "mixed", "disabled": true },
+                    { "key": "academic_year", "value": "2025-26", "disabled": true },
+                    { "key": "available_now", "value": "true", "description": "Filter tests within active availability window" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Assessment By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
+                }
+              }
+            },
+            {
+              "name": "Get Assessment Analytics (Teacher Dashboard)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/:id/analytics",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", ":id", "analytics"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
+                }
+              }
+            },
+            {
+              "name": "Update Assessment",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated Quiz Title\",\n  \"status\": \"published\",\n  \"duration_minutes\": 30,\n  \"pass_marks\": 10,\n  \"available_until\": \"2026-03-21T12:00:00Z\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
+                }
+              }
+            },
+            {
+              "name": "Delete Assessment",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Assessment Questions",
+          "item": [
+            {
+              "name": "Add MCQ Question",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"question_text\": \"What is 2 + 2?\",\n  \"question_type\": \"mcq\",\n  \"options\": [\n    { \"option_id\": \"A\", \"option_text\": \"2\" },\n    { \"option_id\": \"B\", \"option_text\": \"3\" },\n    { \"option_id\": \"C\", \"option_text\": \"4\" },\n    { \"option_id\": \"D\", \"option_text\": \"5\" }\n  ],\n  \"correct_options\": [\"C\"],\n  \"marks\": 2,\n  \"hint\": null,\n  \"explanation\": \"2 + 2 = 4 by basic arithmetic\",\n  \"order\": 1\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments/questions"
+              }
+            },
+            {
+              "name": "Add Short Answer Question",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"question_text\": \"What is the capital of India?\",\n  \"question_type\": \"short_answer\",\n  \"correct_answer_text\": \"New Delhi\",\n  \"marks\": 5,\n  \"hint\": \"It is in northern India\",\n  \"explanation\": \"New Delhi is the capital of India since 1911\",\n  \"order\": 2\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments/questions"
+              }
+            },
+            {
+              "name": "Get Questions by Assessment",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/:assessment_id/questions",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", ":assessment_id", "questions"],
+                  "variable": [{ "key": "assessment_id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
+                }
+              }
+            },
+            {
+              "name": "Get Question By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/questions/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "questions", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4q01" }]
+                }
+              }
+            },
+            {
+              "name": "Update Question",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"question_text\": \"What is 3 + 3?\",\n  \"correct_options\": [\"D\"],\n  \"marks\": 3,\n  \"order\": 1\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/questions/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "questions", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4q01" }]
+                }
+              }
+            },
+            {
+              "name": "Delete Question",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/questions/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "questions", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4q01" }]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Assessment Attempts",
+          "item": [
+            {
+              "name": "Start Attempt (Student)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments/attempts/start"
+              }
+            },
+            {
+              "name": "Submit Attempt",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"time_taken_seconds\": 720\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/attempts/:id/submit",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "attempts", ":id", "submit"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
+                }
+              }
+            },
+            {
+              "name": "Mark Attempt Evaluated (Teacher)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluated_by\": \"60d5ec49f1b2c72b8c8e4t01\",\n  \"remarks\": \"Good effort, short answers need improvement\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/attempts/:id/evaluate",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "attempts", ":id", "evaluate"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
+                }
+              }
+            },
+            {
+              "name": "Get Attempt By ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/attempts/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "attempts", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
+                }
+              }
+            },
+            {
+              "name": "Get Attempts by Assessment (Teacher View)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/:assessment_id/attempts?status=submitted",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", ":assessment_id", "attempts"],
+                  "query": [
+                    { "key": "status", "value": "submitted" },
+                    { "key": "student_id", "value": "", "disabled": true },
+                    { "key": "section_id", "value": "", "disabled": true },
+                    { "key": "batch_id", "value": "", "disabled": true }
+                  ],
+                  "variable": [{ "key": "assessment_id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
+                }
+              }
+            },
+            {
+              "name": "Get Attempts by Student",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/attempts/student/:student_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "attempts", "student", ":student_id"],
+                  "query": [
+                    { "key": "status", "value": "submitted", "disabled": true },
+                    { "key": "assessment_id", "value": "", "disabled": true }
+                  ],
+                  "variable": [{ "key": "student_id", "value": "60d5ec49f1b2c72b8c8e4st1" }]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Assessment Answers",
+          "item": [
+            {
+              "name": "Save MCQ Answer",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"attempt_id\": \"60d5ec49f1b2c72b8c8e4at1\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"question_id\": \"60d5ec49f1b2c72b8c8e4q01\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"selected_options\": [\"C\"],\n  \"is_skipped\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments/answers"
+              }
+            },
+            {
+              "name": "Save Short Answer",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"attempt_id\": \"60d5ec49f1b2c72b8c8e4at1\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"question_id\": \"60d5ec49f1b2c72b8c8e4q02\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"answer_text\": \"New Delhi\",\n  \"is_skipped\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments/answers"
+              }
+            },
+            {
+              "name": "Save Skipped Answer",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"attempt_id\": \"60d5ec49f1b2c72b8c8e4at1\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"question_id\": \"60d5ec49f1b2c72b8c8e4q03\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"is_skipped\": true\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments/answers"
+              }
+            },
+            {
+              "name": "Get Answers by Attempt",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/attempts/:attempt_id/answers",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "attempts", ":attempt_id", "answers"],
+                  "variable": [{ "key": "attempt_id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
+                }
+              }
+            },
+            {
+              "name": "Evaluate Short Answer (Teacher)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_marks\": 4,\n  \"teacher_feedback\": \"Good answer, but mention the year it became capital\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/assessments/answers/:id/evaluate",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "assessments", "answers", ":id", "evaluate"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4ans1" }]
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -6373,7 +6795,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"student_type\": \"school\",\n  \"full_name\": \"Alice Johnson\",\n  \"gender\": \"female\",\n  \"date_of_birth\": \"2010-03-20\",\n  \"blood_group\": \"A+\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f1a\",\n  \"student_type\": \"school\",\n  \"full_name\": \"Alice Johnson\",\n  \"gender\": \"female\",\n  \"date_of_birth\": \"2010-03-20\",\n  \"blood_group\": \"A+\",\n  \"religion\": \"Hindu\",\n  \"caste\": \"General\",\n  \"category\": \"OBC\",\n  \"nationality\": \"Indian\"\n}"
                 },
                 "url": "http://localhost:4000/sms/students"
               }
@@ -6422,7 +6844,7 @@
                 "url": "http://localhost:4000/sms/students/code/SBVPHS-SCH-STD-001"
               }
             },
-            { 
+            {
               "name": "Update Student",
               "request": {
                 "method": "PUT",
@@ -6434,7 +6856,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"full_name\": \"Alice Updated Johnson\",\n  \"blood_group\": \"A+\",\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"full_name\": \"Alice Updated Johnson\",\n  \"blood_group\": \"A+\",\n  \"religion\": \"Hindu\",\n  \"caste\": \"General\",\n  \"category\": \"OBC\",\n  \"nationality\": \"Indian\",\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/students/:id"
               }
@@ -6725,10 +7147,10 @@
               "name": "Create Guardian - Father (Primary)",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"name\": \"Rajesh Kumar\",\n  \"relation\": \"father\",\n  \"mobile\": \"9876543210\",\n  \"email\": \"rajesh@example.com\",\n  \"occupation\": \"Engineer\",\n  \"is_primary\": true\n}"
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"name\": \"Rajesh Kumar\",\n  \"relation\": \"father\",\n  \"mobile\": \"9876543210\",\n  \"email\": \"rajesh@example.com\",\n  \"occupation\": \"Engineer\",\n  \"annual_income\": 800000,\n  \"is_primary\": true\n}"
                 },
                 "url": "http://localhost:4000/sms/student-guardians"
               }
@@ -6737,10 +7159,10 @@
               "name": "Create Guardian - Mother",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"name\": \"Sunita Kumar\",\n  \"relation\": \"mother\",\n  \"mobile\": \"9876543211\",\n  \"email\": \"sunita@example.com\",\n  \"occupation\": \"Teacher\",\n  \"is_primary\": false\n}"
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"name\": \"Sunita Kumar\",\n  \"relation\": \"mother\",\n  \"mobile\": \"9876543211\",\n  \"email\": \"sunita@example.com\",\n  \"occupation\": \"Teacher\",\n  \"annual_income\": 500000,\n  \"is_primary\": false\n}"
                 },
                 "url": "http://localhost:4000/sms/student-guardians"
               }
@@ -6749,10 +7171,10 @@
               "name": "Create Guardian - Other",
               "request": {
                 "method": "POST",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"name\": \"Amit Sharma\",\n  \"relation\": \"grandfather\",\n  \"mobile\": \"9876543212\",\n  \"is_primary\": false\n}"
+                  "raw": "{\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"name\": \"Amit Sharma\",\n  \"relation\": \"grandfather\",\n  \"mobile\": \"9876543212\",\n  \"annual_income\": null,\n  \"is_primary\": false\n}"
                 },
                 "url": "http://localhost:4000/sms/student-guardians"
               }
@@ -6789,10 +7211,10 @@
               "name": "Update Guardian",
               "request": {
                 "method": "PUT",
-                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"mobile\": \"9999999999\",\n  \"email\": \"newemail@example.com\",\n  \"is_primary\": true\n}"
+                  "raw": "{\n  \"mobile\": \"9999999999\",\n  \"email\": \"newemail@example.com\",\n  \"annual_income\": 950000,\n  \"is_primary\": true\n}"
                 },
                 "url": "http://localhost:4000/sms/student-guardians/:id"
               }
@@ -6805,7 +7227,7 @@
               }
             }
           ]
-        },
+        },  
         {
           "name": "Student Identity Documents",
           "item": [
@@ -9155,7 +9577,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
@@ -9167,7 +9589,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
@@ -9179,7 +9601,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
@@ -9288,7 +9710,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-2026\",\n  \"term_order\": 1,\n  \"name\": \"April\",\n  \"start_date\": \"2025-04-01\",\n  \"due_date\": \"2025-04-10\",\n  \"late_fee_amount\": 200,\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"term_order\": 1,\n  \"name\": \"April\",\n  \"start_date\": \"2025-04-01\",\n  \"due_date\": \"2025-04-10\",\n  \"late_fee_amount\": 200,\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-terms/fee-term"
               }
@@ -9300,7 +9722,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 1,  \"name\": \"April\",     \"start_date\": \"2025-04-01\", \"due_date\": \"2025-04-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 2,  \"name\": \"May\",       \"start_date\": \"2025-05-01\", \"due_date\": \"2025-05-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 3,  \"name\": \"June\",      \"start_date\": \"2025-06-01\", \"due_date\": \"2025-06-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 4,  \"name\": \"July\",      \"start_date\": \"2025-07-01\", \"due_date\": \"2025-07-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 5,  \"name\": \"August\",    \"start_date\": \"2025-08-01\", \"due_date\": \"2025-08-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 6,  \"name\": \"September\", \"start_date\": \"2025-09-01\", \"due_date\": \"2025-09-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 7,  \"name\": \"October\",   \"start_date\": \"2025-10-01\", \"due_date\": \"2025-10-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 8,  \"name\": \"November\",  \"start_date\": \"2025-11-01\", \"due_date\": \"2025-11-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 9,  \"name\": \"December\",  \"start_date\": \"2025-12-01\", \"due_date\": \"2025-12-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 10, \"name\": \"January\",   \"start_date\": \"2026-01-01\", \"due_date\": \"2026-01-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 11, \"name\": \"February\",  \"start_date\": \"2026-02-01\", \"due_date\": \"2026-02-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 12, \"name\": \"March\",     \"start_date\": \"2026-03-01\", \"due_date\": \"2026-03-10\", \"late_fee_amount\": 200, \"status\": \"active\" }\n]"
+                  "raw": "[\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 1,  \"name\": \"April\",     \"start_date\": \"2025-04-01\", \"due_date\": \"2025-04-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 2,  \"name\": \"May\",       \"start_date\": \"2025-05-01\", \"due_date\": \"2025-05-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 3,  \"name\": \"June\",      \"start_date\": \"2025-06-01\", \"due_date\": \"2025-06-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 4,  \"name\": \"July\",      \"start_date\": \"2025-07-01\", \"due_date\": \"2025-07-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 5,  \"name\": \"August\",    \"start_date\": \"2025-08-01\", \"due_date\": \"2025-08-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 6,  \"name\": \"September\", \"start_date\": \"2025-09-01\", \"due_date\": \"2025-09-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 7,  \"name\": \"October\",   \"start_date\": \"2025-10-01\", \"due_date\": \"2025-10-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 8,  \"name\": \"November\",  \"start_date\": \"2025-11-01\", \"due_date\": \"2025-11-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 9,  \"name\": \"December\",  \"start_date\": \"2025-12-01\", \"due_date\": \"2025-12-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 10, \"name\": \"January\",   \"start_date\": \"2026-01-01\", \"due_date\": \"2026-01-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 11, \"name\": \"February\",  \"start_date\": \"2026-02-01\", \"due_date\": \"2026-02-10\", \"late_fee_amount\": 200, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 12, \"name\": \"March\",     \"start_date\": \"2026-03-01\", \"due_date\": \"2026-03-10\", \"late_fee_amount\": 200, \"status\": \"active\" }\n]"
                 },
                 "url": "http://localhost:4000/sms/fee-terms/fee-term/bulk"
               }
@@ -9312,7 +9734,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 1, \"name\": \"Term 1 (Apr-Jun)\", \"start_date\": \"2025-04-01\", \"due_date\": \"2025-04-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 2, \"name\": \"Term 2 (Jul-Sep)\", \"start_date\": \"2025-07-01\", \"due_date\": \"2025-07-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 3, \"name\": \"Term 3 (Oct-Dec)\", \"start_date\": \"2025-10-01\", \"due_date\": \"2025-10-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-2026\", \"term_order\": 4, \"name\": \"Term 4 (Jan-Mar)\", \"start_date\": \"2026-01-01\", \"due_date\": \"2026-01-15\", \"late_fee_amount\": 500, \"status\": \"active\" }\n]"
+                  "raw": "[\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 1, \"name\": \"Term 1 (Apr-Jun)\", \"start_date\": \"2025-04-01\", \"due_date\": \"2025-04-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 2, \"name\": \"Term 2 (Jul-Sep)\", \"start_date\": \"2025-07-01\", \"due_date\": \"2025-07-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 3, \"name\": \"Term 3 (Oct-Dec)\", \"start_date\": \"2025-10-01\", \"due_date\": \"2025-10-15\", \"late_fee_amount\": 500, \"status\": \"active\" },\n  { \"institute_id\": \"100000000000000000000001\", \"academic_year\": \"2025-26\", \"term_order\": 4, \"name\": \"Term 4 (Jan-Mar)\", \"start_date\": \"2026-01-01\", \"due_date\": \"2026-01-15\", \"late_fee_amount\": 500, \"status\": \"active\" }\n]"
                 },
                 "url": "http://localhost:4000/sms/fee-terms/fee-term/bulk"
               }
@@ -9363,7 +9785,7 @@
                     },
                     {
                       "key": "academic_year",
-                      "value": "2025-2026"
+                      "value": "2025-26"
                     }
                   ]
                 }
@@ -9425,7 +9847,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-2026\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
                 },
                 "url": "http://localhost:4000/sms/student-fees/student-fee/generate"
               }
@@ -9437,7 +9859,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-2026\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"fee_snapshot\": [\n    { \"name\": \"Tuition Fee\", \"amount\": 3000, \"frequency\": \"monthly\" },\n    { \"name\": \"Admission Fee\", \"amount\": 5000, \"frequency\": \"one_time\" }\n  ],\n  \"total_amount\": 8000,\n  \"paid_amount\": 0,\n  \"due_amount\": 8000,\n  \"due_date\": \"2025-04-10\",\n  \"status\": \"pending\",\n  \"is_late_fee_applied\": false\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"fee_snapshot\": [\n    { \"name\": \"Tuition Fee\", \"amount\": 3000, \"frequency\": \"monthly\" },\n    { \"name\": \"Admission Fee\", \"amount\": 5000, \"frequency\": \"one_time\" }\n  ],\n  \"total_amount\": 8000,\n  \"paid_amount\": 0,\n  \"due_amount\": 8000,\n  \"due_date\": \"2025-04-10\",\n  \"status\": \"pending\",\n  \"is_late_fee_applied\": false\n}"
                 },
                 "url": "http://localhost:4000/sms/student-fees/student-fee"
               }

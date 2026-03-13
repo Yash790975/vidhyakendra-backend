@@ -35,7 +35,7 @@ const feeTermSchema = new mongoose.Schema(
       type: String,
       enum: ["active", "inactive"],
       default: "active",
-    },
+    }, 
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },

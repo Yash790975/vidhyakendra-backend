@@ -5,7 +5,7 @@ const teacherContactInformationSchema = new mongoose.Schema(
     teacher_id: {
       type: mongoose.Schema.Types.ObjectId,
       // ref: "teachers_master", 
-      ref: "TeachersMaster",  
+      ref: "TeachersMaster",     
       required: true,
       unique: true,
     },
@@ -16,14 +16,17 @@ const teacherContactInformationSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-    },
+    },  
     alternate_mobile: {
       type: String,
+    },
+    whatsapp_number: {
+      type: String, 
     },
     email_verified: {
       type: Boolean,
       default: false,
-    },
+    },    
     mobile_verified: {
       type: Boolean,
       default: false,

@@ -3,8 +3,8 @@ const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");   
 const mongoose = require("mongoose");
 
-
-
+ 
+ 
 const createFeeStructure = async (data) => {
   const existing = await FeeStructure.findOne({
     institute_id: data.institute_id,
@@ -50,44 +50,6 @@ const updateFeeStructure = async (id, updateData) => {
 };
 
 
-// const createFeeStructure = async (data) => {
-//   // Check for duplicate (same institute + class + section + academic_year + active)
-//   const existing = await FeeStructure.findOne({ 
-//     institute_id: data.institute_id,
-//     class_id: data.class_id,
-//     section_id: data.section_id || null,
-//     academic_year: data.academic_year || null,
-//     status: "active",
-//   });
-
-//   if (existing) {
-//     throw new CustomError(
-//       "An active fee structure already exists for this class/section and academic year",
-//       statusCode.CONFLICT
-//     );
-//   }
-
-//   const feeStructure = new FeeStructure(data);
-//   await feeStructure.save();
-//   return feeStructure;
-// };
-
-// const updateFeeStructure = async (id, updateData) => {
-//   const feeStructure = await FeeStructure.findById(id);
-
-//   if (!feeStructure) {
-//     throw new CustomError("Fee structure not found", statusCode.NOT_FOUND);
-//   }
-
-//   Object.keys(updateData).forEach((key) => {
-//     if (updateData[key] !== undefined) {
-//       feeStructure[key] = updateData[key];
-//     }
-//   });
-
-//   await feeStructure.save();
-//   return feeStructure;
-// };
 
 const getAllFeeStructures = async (filters = {}) => {
   const query = {};

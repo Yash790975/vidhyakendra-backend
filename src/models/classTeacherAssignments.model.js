@@ -4,7 +4,7 @@ const classTeacherAssignmentsSchema = new mongoose.Schema(
   {
     teacher_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "TeachersMaster",
+      ref: "TeachersMaster", 
       required: true,
     }, 
     class_id: {
