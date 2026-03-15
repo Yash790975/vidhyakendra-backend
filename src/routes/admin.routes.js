@@ -4,7 +4,7 @@ const adminController = require("../controllers/admin.controller");
 const { 
   addAdmin, 
   updateAdmin, 
-  getAdminById,        
+  getAdminById,     
   removeAdmin, 
   verifyLogin, 
   requestOTP, 

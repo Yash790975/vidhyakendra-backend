@@ -10,7 +10,7 @@ const InstituteMaster = require("../models/institutesMaster.model");
 const createClass = async (classData) => {
   const institute = await InstituteMaster.findById(classData.institute_id, {
     institute_type: 1,
-  });
+  });  
 
   if (!institute) {
     throw new CustomError("Institute not found", statusCode.NOT_FOUND);

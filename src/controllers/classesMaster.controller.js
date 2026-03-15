@@ -5,11 +5,11 @@ const {
   updateClassValidation,
 } = require("../validations/classesMaster.validations");
 
-const createClass = async (req, res) => {
+const createClass = async (req, res) => { 
   try {
     const { error, value } = createClassValidation.validate(req.body);
     if (error) {
-      return res.status(statusCode.BAD_REQUEST).json({
+      return res.status(statusCode.BAD_REQUEST).json({  
         success: false,
         isException: false,
         statusCode: statusCode.BAD_REQUEST,

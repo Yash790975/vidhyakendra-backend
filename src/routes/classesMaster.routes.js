@@ -3,7 +3,7 @@ const router = express.Router();
 const classesController = require("../controllers/classesMaster.controller");
 
 // ============= CLASSES MASTER =============
-router.post("/", classesController.createClass);
+router.post("/", classesController.createClass);  
 router.get("/", classesController.getAllClasses);
 router.get("/:id", classesController.getClassById);
 router.put("/:id", classesController.updateClass);     
