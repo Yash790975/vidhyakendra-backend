@@ -169,12 +169,12 @@ const generateTeacherCode = async (instituteId, teacherType) => {
 
 //     status: "active",
 //     created_at: new Date(),
-//     updated_at: new Date(),
+//     updated_at: new Date(), 
 //   });
 
 //   await teacher.save();
 //   return teacher;
-// };
+// };  
 
 
 
@@ -226,7 +226,7 @@ const createTeacher = async (teacherData, photoUrl = null) => {
 
     upload_photo_url: photoUrl || null,
 
-    status: "active",
+    status: "onboarding", 
     created_at: new Date(),
     updated_at: new Date(),
   });

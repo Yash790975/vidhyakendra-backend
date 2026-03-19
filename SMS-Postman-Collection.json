@@ -1710,7 +1710,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"title\": \"Chapter 3 Quiz\",\n  \"description\": \"Algebra Test\",\n  \"assessment_type\": \"mixed\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null,\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"academic_year\": \"2025-26\",\n  \"total_marks\": 20,\n  \"pass_marks\": 8,\n  \"duration_minutes\": 15,\n  \"available_from\": \"2026-03-20T10:00:00Z\",\n  \"available_until\": \"2026-03-20T12:00:00Z\",\n  \"max_attempts\": 1,\n  \"show_result_immediately\": true,\n  \"show_answer_key\": true,\n  \"status\": \"published\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"title\": \"Chapter 3 Quiz\",\n  \"description\": \"Algebra Test\",\n  \"assessment_type\": \"mixed\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null,\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"academic_year\": \"2025-26\",\n  \"pass_marks\": 8,\n  \"duration_minutes\": 15,\n  \"available_from\": \"2026-03-20T10:00:00Z\",\n  \"available_until\": \"2026-03-20T12:00:00Z\",\n  \"max_attempts\": 1,\n  \"show_result_immediately\": true,\n  \"show_answer_key\": true,\n  \"status\": \"published\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
                 },
                 "url": "http://localhost:4000/sms/assessments"
               }

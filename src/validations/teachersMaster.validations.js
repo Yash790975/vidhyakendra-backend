@@ -63,11 +63,11 @@ const updateTeacherValidation = Joi.object({
     .optional(),
   spouse_name: Joi.string().optional().allow(null, ""),
   employment_type: Joi.string()
-    .valid("full_time", "part_time", "contract", "visiting")
+    .valid("full_time", "part_time", "contract", "visiting") 
     .optional(),
   joining_date: Joi.date().optional(),
   status: Joi.string()
-    .valid("active", "inactive", "blocked", "archived")
+    .valid("active", "inactive", "blocked", "archived", "onboarding")
     .optional(),
   blood_group: Joi.string().optional().allow(null, ""),
 });

@@ -55,14 +55,14 @@ const teachersMasterSchema = new mongoose.Schema(
       type: Date,
     },
     upload_photo_url: {
-      type: String,
+      type: String, 
       default: null,
     },
     status: {
       type: String,
       required: true,
-      enum: ["active", "inactive", "blocked", "archived"],
-      default: "active",
+      enum: ["active", "inactive", "blocked", "archived", "onboarding"],
+      default: "onboarding",
     },
     archived_at: {
       type: Date,

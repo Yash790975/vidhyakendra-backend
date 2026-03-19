@@ -238,7 +238,7 @@ const updateTeacherWithAllDetails = async (req, res) => {
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success: false, 
       isException: err.exception || true,
       statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
       result: {},
