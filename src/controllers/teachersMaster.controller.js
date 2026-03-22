@@ -245,7 +245,7 @@ const updateTeacherWithAllDetails = async (req, res) => {
       message: err.message || "Failed to update teacher details",
     });
   }
-};
+}; 
 
 module.exports = {
   createTeacher,

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
-
+ 
 const createExamSchedule = async (scheduleData) => {
   // Verify exam exists
   const exam = await ExamsMaster.findById(scheduleData.exam_id);

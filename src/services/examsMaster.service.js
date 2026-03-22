@@ -1,7 +1,7 @@
 const ExamsMaster = require("../models/examsMaster.model");
 const mongoose = require("mongoose");
 
-const CustomError = require("../exceptions/CustomError");
+const CustomError = require("../exceptions/CustomError"); 
 const statusCode = require("../enums/statusCode");
 
 const createExam = async (examData) => {

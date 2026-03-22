@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const teacherExperienceSchema = new mongoose.Schema(
-  {
+  { 
     teacher_id: {
       type: mongoose.Schema.Types.ObjectId,
           ref: "TeachersMaster", 

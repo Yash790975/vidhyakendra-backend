@@ -3,7 +3,7 @@ const statusCode = require("../enums/statusCode");
 const {
   createExamValidation,
   updateExamValidation,
-} = require("../validations/examsMaster.validations");
+} = require("../validations/examsMaster.validations"); 
 
 const createExam = async (req, res) => {
   try {

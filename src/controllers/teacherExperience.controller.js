@@ -2,7 +2,7 @@
 const teachersService = require("../services/teacherExperience.service");
 const statusCode = require("../enums/statusCode");
 const {
-  createExperienceValidation
+  createExperienceValidation 
 } = require("../validations/teacherExperience.validations");    
 
 

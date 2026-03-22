@@ -1715,7 +1715,7 @@
                 "url": "http://localhost:4000/sms/assessments"
               }
             },
-            {
+            { 
               "name": "Get All Assessments",
               "request": {
                 "method": "GET",
@@ -9202,7 +9202,7 @@
         }, 
         {
           "name": "Class Teacher Assignments",
-          "item": [
+          "item": [ 
             {
               "name": "Create Assignment - Class Teacher",
               "request": {

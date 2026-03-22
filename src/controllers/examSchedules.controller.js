@@ -1,7 +1,7 @@
 const scheduleService = require("../services/examSchedules.service");
 const statusCode = require("../enums/statusCode");
 const {
-  createExamScheduleValidation,
+  createExamScheduleValidation, 
   updateExamScheduleValidation,
 } = require("../validations/examSchedules.validations");
 
