@@ -1,9 +1,9 @@
 // validations/instituteAdmin.validation.js
-const Joi = require('joi');
+const Joi = require('joi'); 
 
 const createAdminValidation = Joi.object({
   institute_id: Joi.string().required().messages({
-    'string.empty': 'Institute ID is required',
+    'string.empty': 'Institute ID is required', 
     'any.required': 'Institute ID is required'
   }),
   name: Joi.string().min(2).max(100).required().messages({

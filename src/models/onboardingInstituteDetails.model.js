@@ -9,7 +9,7 @@ const onboardingInstituteDetailsSchema = new mongoose.Schema(
       required: [true, 'Onboarding basic info ID is required'],
       unique: true,
     },
-    school_board: {
+    school_board: { 
       type: String,
       trim: true,
       enum: {

@@ -81,7 +81,7 @@ const verifyOTP = async (email, otp) => {
     throw new CustomError("Invalid OTP", statusCode.BAD_REQUEST);
   }
 
-  // ✅ Verification success
+  //  Verification success
   contact.email_verified = true;
   contact.mobile_verified = true;
   contact.otp = undefined;

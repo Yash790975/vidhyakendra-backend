@@ -3,10 +3,14 @@ const mongoose = require('mongoose');
 const coachingTeacherDetailSchema = new mongoose.Schema({
   teacher_id: {
     type: mongoose.Schema.Types.ObjectId,
-    // ref: 'teachers',
-    ref: "TeachersMaster", 
+    ref: "TeachersMaster",
     required: true,
     unique: true
+  },
+  institute_id: {                                           
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "institutes_master", 
+    required: true, 
   },
   role: {
     type: String,
@@ -26,22 +30,19 @@ const coachingTeacherDetailSchema = new mongoose.Schema({
     type: String,
     enum: ['fixed', 'percentage', null],
     default: null
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
   }
 }, {
   timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
-// Indexes for faster queries
+// Indexes
 coachingTeacherDetailSchema.index({ teacher_id: 1 });
+coachingTeacherDetailSchema.index({ institute_id: 1 });   
 coachingTeacherDetailSchema.index({ role: 1 });
 coachingTeacherDetailSchema.index({ batch_ids: 1 });
+
+// Compound indexes
+coachingTeacherDetailSchema.index({ institute_id: 1, role: 1 });      
+coachingTeacherDetailSchema.index({ institute_id: 1, teacher_id: 1 }); 
 
 module.exports = mongoose.model('coaching_teacher_details', coachingTeacherDetailSchema);

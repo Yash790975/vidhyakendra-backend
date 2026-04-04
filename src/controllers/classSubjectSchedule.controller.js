@@ -1,9 +1,9 @@
 const scheduleService = require("../services/classSubjectSchedule.service");
 const statusCode = require("../enums/statusCode");
-const {    
-  createScheduleValidation, 
+const {
+  createScheduleValidation,
   updateScheduleValidation,
-} = require("../validations/classSubjectSchedule.validations"); 
+} = require("../validations/classSubjectSchedule.validations");
 
 const createSchedule = async (req, res) => {
   try {
@@ -41,13 +41,14 @@ const createSchedule = async (req, res) => {
 const getAllSchedules = async (req, res) => {
   try {
     const filters = {
-      class_id: req.query.class_id,
-      section_id: req.query.section_id,
-      subject_id: req.query.subject_id,
-      teacher_id: req.query.teacher_id,
-      day_of_week: req.query.day_of_week,
-      status: req.query.status,
-      academic_year: req.query.academic_year, // ✅ NEW
+      class_id:      req.query.class_id,
+      section_id:    req.query.section_id,
+      batch_id:      req.query.batch_id,        //  NEW
+      subject_id:    req.query.subject_id,
+      teacher_id:    req.query.teacher_id,
+      day_of_week:   req.query.day_of_week,
+      academic_year: req.query.academic_year,
+      status:        req.query.status,
     };
 
     const schedules = await scheduleService.getAllSchedules(filters);
@@ -69,8 +70,6 @@ const getAllSchedules = async (req, res) => {
     });
   }
 };
- 
-
 
 const getScheduleById = async (req, res) => {
   try {
@@ -94,45 +93,17 @@ const getScheduleById = async (req, res) => {
   }
 };
 
-// const getScheduleByClassId = async (req, res) => {
-//   try {
-//     const { class_id } = req.params;
-//     const { section_id } = req.query;
-
-//     const schedules = await scheduleService.getScheduleByClassId(
-//       class_id,
-//       section_id
-//     );
-
-//     res.status(statusCode.OK).json({
-//       success: true,
-//       isException: false,
-//       statusCode: statusCode.OK,
-//       result: schedules,
-//       message: "Schedules retrieved successfully",
-//     });
-//   } catch (err) {
-//     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-//       success: false,
-//       isException: err.exception || true,
-//       statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-//       result: {},
-//       message: err.message || "Failed to retrieve schedules",
-//     });
-//   }
-// };
-
-
-
 const getScheduleByClassId = async (req, res) => {
   try {
     const { class_id } = req.params;
-    const { section_id, academic_year, status } = req.query; // ✅ extract all filters
+    const { section_id, batch_id, academic_year, status } = req.query; //  batch_id added
 
-    const schedules = await scheduleService.getScheduleByClassId(
-      class_id,
-      { section_id, academic_year, status } // ✅ pass as object
-    );
+    const schedules = await scheduleService.getScheduleByClassId(class_id, {
+      section_id,
+      batch_id,        //  NEW
+      academic_year,
+      status,
+    });
 
     res.status(statusCode.OK).json({
       success: true,
@@ -154,8 +125,12 @@ const getScheduleByClassId = async (req, res) => {
 
 const getScheduleByTeacherId = async (req, res) => {
   try {
+    const { teacher_id } = req.params;
+    const { academic_year, status } = req.query;
+
     const schedules = await scheduleService.getScheduleByTeacherId(
-      req.params.teacher_id
+      teacher_id,
+      { academic_year, status }
     );
 
     res.status(statusCode.OK).json({
@@ -176,6 +151,36 @@ const getScheduleByTeacherId = async (req, res) => {
   }
 };
 
+//  NEW
+const getScheduleByBatchId = async (req, res) => {
+  try {
+    const { batch_id } = req.params;
+    const { academic_year, status, day_of_week } = req.query;
+
+    const schedules = await scheduleService.getScheduleByBatchId(batch_id, {
+      academic_year,
+      status,
+      day_of_week,
+    });
+
+    res.status(statusCode.OK).json({
+      success: true,
+      isException: false,
+      statusCode: statusCode.OK,
+      result: schedules,
+      message: "Batch schedule retrieved successfully",
+    });
+  } catch (err) {
+    res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result: {},
+      message: err.message || "Failed to retrieve batch schedule",
+    });
+  }
+};
+
 const updateSchedule = async (req, res) => {
   try {
     const { error, value } = updateScheduleValidation.validate(req.body);
@@ -189,10 +194,7 @@ const updateSchedule = async (req, res) => {
       });
     }
 
-    const schedule = await scheduleService.updateSchedule(
-      req.params.id,
-      value
-    );
+    const schedule = await scheduleService.updateSchedule(req.params.id, value);
 
     res.status(statusCode.OK).json({
       success: true,
@@ -240,6 +242,7 @@ module.exports = {
   getScheduleById,
   getScheduleByClassId,
   getScheduleByTeacherId,
+  getScheduleByBatchId,   //  NEW
   updateSchedule,
   deleteSchedule,
 };

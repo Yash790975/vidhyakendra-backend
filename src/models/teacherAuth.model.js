@@ -6,7 +6,7 @@ const teacherAuthSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     // ref: 'teachers_master', 
         ref: "TeachersMaster",  
-    required: true,
+    required: true,   
     unique: true   
   },   
   email: {
@@ -14,7 +14,7 @@ const teacherAuthSchema = new mongoose.Schema({
     required: true,
     trim: true,   
     lowercase: true,
-    unique: true
+    unique: true 
   },
   mobile: {
     type: String,

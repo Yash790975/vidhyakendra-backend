@@ -1,8 +1,8 @@
  const assignmentsService = require("../services/classTeacherAssignments.service");
 const statusCode = require("../enums/statusCode");
-const {
+const { 
   createAssignmentValidation,
-  updateAssignmentValidation, 
+  updateAssignmentValidation,   
 } = require("../validations/classTeacherAssignments.validations");
 
 // ============= CLASS TEACHER ASSIGNMENTS =============
@@ -47,6 +47,7 @@ const getAllAssignments = async (req, res) => {
       class_id: req.query.class_id,
       section_id: req.query.section_id,
       subject_id: req.query.subject_id,
+      batch_id: req.query.batch_id, 
       role: req.query.role,
       academic_year: req.query.academic_year,
       status: req.query.status,
@@ -71,6 +72,37 @@ const getAllAssignments = async (req, res) => {
     });
   }
 };
+
+
+
+const getBatchInchargeByBatchId = async (req, res) => {
+  try {
+    const { batch_id } = req.params;
+    const { academic_year } = req.query;
+
+    const assignments = await assignmentsService.getBatchInchargeByBatchId(
+      batch_id,
+      academic_year || null
+    );
+
+    res.status(statusCode.OK).json({
+      success: true,
+      isException: false,
+      statusCode: statusCode.OK,
+      result: assignments,
+      message: "Batch incharge(s) retrieved successfully",
+    });
+  } catch (err) {
+    res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result: {},
+      message: err.message || "Failed to retrieve batch incharge",
+    });
+  }
+};
+
 
 const getAssignmentById = async (req, res) => {
   try {
@@ -327,6 +359,8 @@ const getClassTeacherByClassId = async (req, res) => {
   }
 };
 
+
+// Add to module.exports:
 module.exports = {
   createAssignment,
   getAllAssignments,
@@ -336,6 +370,7 @@ module.exports = {
   getClassTeacherByClassId,
   getAssignmentsByRole,
   getSubjectTeachers,
+  getBatchInchargeByBatchId,   
   updateAssignment,
   deleteAssignment,
   endAssignment,

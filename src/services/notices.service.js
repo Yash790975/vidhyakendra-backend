@@ -13,7 +13,7 @@ const createNotice = async (noticeData, fileUrl = null) => {
       ? "institute_admins"
       : "TeachersMaster";
 
-  // ✅ Role-based audience validation
+  //  Role-based audience validation
   const adminAllowedAudience = [
     "all",
     "teachers",
@@ -57,7 +57,7 @@ const createNotice = async (noticeData, fileUrl = null) => {
     );
   }
 
-  // ✅ Create Notice
+  //  Create Notice
   const notice = new Notices({
     title: noticeData.title,
     content: noticeData.content,
@@ -299,7 +299,7 @@ const updateNotice = async (noticeId, updateData, newFileUrl = null) => {
     throw new CustomError("Notice not found", statusCode.NOT_FOUND);
   }
 
-    // ✅ Role-based audience validation (NEW)
+    //  Role-based audience validation (NEW)
   if (updateData.audience && updateData.audience.type) {
     const adminAllowedAudience = [
       "all",

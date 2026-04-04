@@ -1,35 +1,25 @@
- 
 const InstitutesMaster = require('../models/institutesMaster.model');
 const InstituteBasicInformation = require('../models/instituteBasicInformation.model');
 const InstituteDetails = require('../models/instituteDetails.model');
 const InstituteSubscriptionTransactions = require('../models/instituteSubscriptionTransactions.model');
 const OnboardingBasicInformation = require('../models/onboardingBasicInformation.model');
-const OnboardingInstituteDetails = require('../models/onboardingInstituteDetails.model'); 
-const OnboardingTransaction = require('../models/onboardingInstituteApplicationTransaction.model');
+const OnboardingInstituteDetails = require('../models/onboardingInstituteDetails.model');
+const OnboardingTransaction = require('../models/onboardingInstituteApplicationTransaction.model'); 
 const { generateInstituteCode } = require('../utils/generateCodes');
-const mongoose = require('mongoose'); 
-
-// const activateInstitute = async (onboarding_basic_info_id, transaction_id) => { 
-  const activateInstitute = async (onboarding_basic_info_id, transaction_reference_id) => {
-
-  // const session = await mongoose.startSession(); 
-  // session.startTransaction();
+const mongoose = require('mongoose');  
  
+// ✅ Import createAdmin service directly (no HTTP call needed)
+const { createAdmin } = require('./instituteAdmin.service');
+
+const activateInstitute = async (onboarding_basic_info_id, transaction_reference_id) => {
   try {
-    const onboardingBasic = await OnboardingBasicInformation.findById(
-      onboarding_basic_info_id
-    );
+    const onboardingBasic = await OnboardingBasicInformation.findById(onboarding_basic_info_id);
     if (!onboardingBasic) {
       throw new Error('Onboarding basic information not found');
     }
 
-    const onboardingDetails = await OnboardingInstituteDetails.findOne({
-      onboarding_basic_info_id
-    });
+    const onboardingDetails = await OnboardingInstituteDetails.findOne({ onboarding_basic_info_id });
 
-    // const transaction = await OnboardingTransaction.findById(transaction_id).populate(  
-    //   'subscription_plan_variant_id'
-    // );
     const transaction = await OnboardingTransaction.findOne({
       reference_id: transaction_reference_id
     }).populate('subscription_plan_variant_id');
@@ -38,15 +28,13 @@ const mongoose = require('mongoose');
       throw new Error('Transaction not found');
     }
 
-    await OnboardingBasicInformation.findByIdAndUpdate(
-      onboarding_basic_info_id,
-      {
-        is_archived: true,
-        archived_at: new Date()
-      },
-      // { session }
-    );
+    // Archive the onboarding record
+    await OnboardingBasicInformation.findByIdAndUpdate(onboarding_basic_info_id, {
+      is_archived: true,
+      archived_at: new Date()
+    });
 
+    // Create institute master record
     const institute_code = generateInstituteCode();
     const instituteMaster = new InstitutesMaster({
       institute_code,
@@ -55,9 +43,9 @@ const mongoose = require('mongoose');
       application_reference_id: transaction.reference_id,
       status: 'active'
     });
-    // await instituteMaster.save({ session });
     await instituteMaster.save();
 
+    // Create institute basic info
     const instituteBasicInfo = new InstituteBasicInformation({
       institute_id: instituteMaster._id,
       owner_name: onboardingBasic.owner_name,
@@ -68,9 +56,9 @@ const mongoose = require('mongoose');
       email_verified: false,
       mobile_verified: onboardingBasic.mobile_number_verified || false
     });
-    // await instituteBasicInfo.save({ session });
     await instituteBasicInfo.save();
 
+    // Create institute details if available
     if (onboardingDetails) {
       const instituteDetails = new InstituteDetails({
         institute_id: instituteMaster._id,
@@ -81,18 +69,16 @@ const mongoose = require('mongoose');
         medium: onboardingDetails.medium,
         approx_students_range: onboardingDetails.approx_students_range
       });
-      // await instituteDetails.save({ session });
       await instituteDetails.save();
     }
 
+    // Create subscription transaction
     const planVariant = transaction.subscription_plan_variant_id;
     const durationMonths = planVariant.plan_master_id?.duration_months || 1;
 
     const subscription_start_date = new Date();
     const subscription_end_date = new Date();
-    subscription_end_date.setMonth(
-      subscription_end_date.getMonth() + durationMonths
-    );
+    subscription_end_date.setMonth(subscription_end_date.getMonth() + durationMonths);
 
     const subscriptionTransaction = new InstituteSubscriptionTransactions({
       institute_id: instituteMaster._id,
@@ -107,42 +93,73 @@ const mongoose = require('mongoose');
       subscription_end_date,
       is_active: true
     });
-    // await subscriptionTransaction.save({ session });
     await subscriptionTransaction.save();
 
-    // await OnboardingTransaction.findByIdAndUpdate(
-    //   transaction_id,
-    //   { application_status: 'account_activated' },
-    //   { session }
-    // );
+    // Update onboarding transaction status
     await OnboardingTransaction.findOneAndUpdate(
-  { reference_id: transaction_reference_id },
-  // { application_status: 'account_activated' },{ session }
-  { application_status: 'account_activated' }
-);
+      { reference_id: transaction_reference_id },
+      { application_status: 'account_activated' }
+    );
 
+    // ✅ Create admin credentials based on institute_type
+    const institute_type = instituteMaster.institute_type;
+    const adminBaseData = {
+      institute_id: instituteMaster._id.toString(),
+      name: onboardingBasic.owner_name,
+      email: onboardingBasic.email,
+      mobile: onboardingBasic.mobile,
+      status: 'active'
+    };
 
-    // await session.commitTransaction();
+    let createdAdmins = [];
+
+    if (institute_type === 'school') {
+      // Single admin for school
+      const schoolAdmin = await createAdmin({
+        ...adminBaseData,
+        admin_type: 'school'   // optional tag if your model supports it
+      });
+      createdAdmins.push({ type: 'school', admin: schoolAdmin });
+
+    } else if (institute_type === 'coaching') {
+      // Single admin for coaching
+      const coachingAdmin = await createAdmin({
+        ...adminBaseData,
+        admin_type: 'coaching'  // optional tag if your model supports it
+      });
+      createdAdmins.push({ type: 'coaching', admin: coachingAdmin });
+
+    } else if (institute_type === 'both') {
+      // ✅ Same original email for both — allowed since unique constraint is removed
+      const schoolAdmin = await createAdmin({
+        ...adminBaseData,
+        admin_type: 'school'
+      });
+      createdAdmins.push({ type: 'school', admin: schoolAdmin });
+
+      const coachingAdmin = await createAdmin({
+        ...adminBaseData,
+        admin_type: 'coaching'
+      });
+      createdAdmins.push({ type: 'coaching', admin: coachingAdmin });
+    }
 
     return {
       instituteMaster,
       instituteBasicInfo,
-      subscriptionTransaction
+      subscriptionTransaction,
+      admins: createdAdmins   // ✅ Return created admin info in response
     };
+
   } catch (error) {
-    // await session.abortTransaction();
     throw error;
-  } finally {
-    // session.endSession();
   }
 };
 
+// ... rest of your existing service functions remain unchanged
 const createInstituteMaster = async (instituteData) => {
   const institute_code = generateInstituteCode();
-  const institute = new InstitutesMaster({
-    ...instituteData,
-    institute_code
-  });
+  const institute = new InstitutesMaster({ ...instituteData, institute_code });
   return await institute.save();
 };
 
@@ -174,7 +191,7 @@ const updateInstitute = async (id, updateData) => {
 };
 
 const deleteInstitute = async (id) => {
-  return await InstitutesMaster.findByIdAndDelete(id);     
+  return await InstitutesMaster.findByIdAndDelete(id);
 };
 
 module.exports = {
@@ -188,5 +205,275 @@ module.exports = {
   updateInstitute,
   deleteInstitute
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const InstitutesMaster = require('../models/institutesMaster.model');
+// const InstituteBasicInformation = require('../models/instituteBasicInformation.model');
+// const InstituteDetails = require('../models/instituteDetails.model');
+// const InstituteSubscriptionTransactions = require('../models/instituteSubscriptionTransactions.model');
+// const OnboardingBasicInformation = require('../models/onboardingBasicInformation.model');
+// const OnboardingInstituteDetails = require('../models/onboardingInstituteDetails.model'); 
+// const OnboardingTransaction = require('../models/onboardingInstituteApplicationTransaction.model');
+// const { generateInstituteCode } = require('../utils/generateCodes');
+// const mongoose = require('mongoose'); 
+ 
+// // const activateInstitute = async (onboarding_basic_info_id, transaction_id) => { 
+//   const activateInstitute = async (onboarding_basic_info_id, transaction_reference_id) => {
+
+//   // const session = await mongoose.startSession(); 
+//   // session.startTransaction();
+  
+//   try {
+//     const onboardingBasic = await OnboardingBasicInformation.findById(
+//       onboarding_basic_info_id
+//     );
+//     if (!onboardingBasic) {
+//       throw new Error('Onboarding basic information not found');
+//     }
+
+//     const onboardingDetails = await OnboardingInstituteDetails.findOne({
+//       onboarding_basic_info_id
+//     });
+
+//     // const transaction = await OnboardingTransaction.findById(transaction_id).populate(  
+//     //   'subscription_plan_variant_id'
+//     // );
+//     const transaction = await OnboardingTransaction.findOne({
+//       reference_id: transaction_reference_id
+//     }).populate('subscription_plan_variant_id');
+
+//     if (!transaction) {
+//       throw new Error('Transaction not found');
+//     }
+
+//     await OnboardingBasicInformation.findByIdAndUpdate(
+//       onboarding_basic_info_id,
+//       {
+//         is_archived: true,
+//         archived_at: new Date()
+//       },
+//       // { session }
+//     );
+
+//     const institute_code = generateInstituteCode();
+//     const instituteMaster = new InstitutesMaster({
+//       institute_code,
+//       institute_name: onboardingBasic.institute_name,
+//       institute_type: onboardingBasic.institute_type,
+//       application_reference_id: transaction.reference_id,
+//       status: 'active'
+//     });
+//     // await instituteMaster.save({ session });
+//     await instituteMaster.save();
+
+//     const instituteBasicInfo = new InstituteBasicInformation({
+//       institute_id: instituteMaster._id,
+//       owner_name: onboardingBasic.owner_name,
+//       designation: onboardingBasic.designation,
+//       email: onboardingBasic.email,
+//       mobile: onboardingBasic.mobile,
+//       address: onboardingBasic.address,
+//       email_verified: false,
+//       mobile_verified: onboardingBasic.mobile_number_verified || false
+//     });
+//     // await instituteBasicInfo.save({ session });
+//     await instituteBasicInfo.save();
+
+//     if (onboardingDetails) {
+//       const instituteDetails = new InstituteDetails({
+//         institute_id: instituteMaster._id,
+//         school_board: onboardingDetails.school_board,
+//         school_type: onboardingDetails.school_type,
+//         classes_offered: onboardingDetails.classes_offered,
+//         courses_offered: onboardingDetails.courses_offered,
+//         medium: onboardingDetails.medium,
+//         approx_students_range: onboardingDetails.approx_students_range
+//       });
+//       // await instituteDetails.save({ session });
+//       await instituteDetails.save();
+//     }
+
+//     const planVariant = transaction.subscription_plan_variant_id;
+//     const durationMonths = planVariant.plan_master_id?.duration_months || 1;
+
+//     const subscription_start_date = new Date();
+//     const subscription_end_date = new Date();
+//     subscription_end_date.setMonth(
+//       subscription_end_date.getMonth() + durationMonths
+//     );
+
+//     const subscriptionTransaction = new InstituteSubscriptionTransactions({
+//       institute_id: instituteMaster._id,
+//       subscription_plan_variant_id: transaction.subscription_plan_variant_id,
+//       amount: transaction.amount,
+//       payment_status: 'success',
+//       payment_gateway: transaction.payment_gateway,
+//       transaction_id: transaction.payment_transaction_id,
+//       receipt_url: transaction.receipt_url,
+//       paid_at: new Date(),
+//       subscription_start_date,
+//       subscription_end_date,
+//       is_active: true
+//     });
+//     // await subscriptionTransaction.save({ session });
+//     await subscriptionTransaction.save();
+
+//     // await OnboardingTransaction.findByIdAndUpdate(
+//     //   transaction_id,
+//     //   { application_status: 'account_activated' },
+//     //   { session }
+//     // );
+//     await OnboardingTransaction.findOneAndUpdate(
+//   { reference_id: transaction_reference_id },
+//   // { application_status: 'account_activated' },{ session }
+//   { application_status: 'account_activated' }
+// );
+
+
+//     // await session.commitTransaction();
+
+//     return {
+//       instituteMaster,
+//       instituteBasicInfo,
+//       subscriptionTransaction
+//     };
+//   } catch (error) {
+//     // await session.abortTransaction();
+//     throw error;
+//   } finally {
+//     // session.endSession();
+//   }
+// };
+
+// const createInstituteMaster = async (instituteData) => {
+//   const institute_code = generateInstituteCode();
+//   const institute = new InstitutesMaster({
+//     ...instituteData,
+//     institute_code
+//   });
+//   return await institute.save();
+// };
+
+// const getAllInstitutes = async () => {
+//   return await InstitutesMaster.find().sort({ createdAt: -1 });
+// };
+
+// const getInstituteById = async (id) => {
+//   return await InstitutesMaster.findById(id);
+// };
+
+// const getInstituteByCode = async (institute_code) => {
+//   return await InstitutesMaster.findOne({ institute_code });
+// };
+
+// const getInstitutesByType = async (institute_type) => {
+//   return await InstitutesMaster.find({ institute_type }).sort({ createdAt: -1 });
+// };
+
+// const getInstitutesByStatus = async (status) => {
+//   return await InstitutesMaster.find({ status }).sort({ createdAt: -1 });
+// };
+
+// const updateInstitute = async (id, updateData) => {
+//   return await InstitutesMaster.findByIdAndUpdate(id, updateData, {
+//     new: true,
+//     runValidators: true
+//   });
+// };
+
+// const deleteInstitute = async (id) => {
+//   return await InstitutesMaster.findByIdAndDelete(id);     
+// };
+
+// module.exports = {
+//   activateInstitute,
+//   createInstituteMaster,
+//   getAllInstitutes,
+//   getInstituteById,
+//   getInstituteByCode,
+//   getInstitutesByType,
+//   getInstitutesByStatus,
+//   updateInstitute,
+//   deleteInstitute
+// };
 
 

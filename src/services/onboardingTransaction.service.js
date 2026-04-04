@@ -100,7 +100,7 @@ const createTransaction = async (data) => {
     reference_id: generateReferenceId(),
     onboarding_basic_info_id,
     subscription_plan_variant_id,
-    amount: finalAmount, // ✅ mapped correctly
+    amount: finalAmount, //  mapped correctly
     currency: 'INR'
   });
 
@@ -377,7 +377,7 @@ const getTransactionWithFullDetailsByOnboardingBasicInfoId = async (
     onboarding_basic_info_id
   }).lean();
 
-  // ✅ CASE 1: Transactions exist → return transactions
+  //  CASE 1: Transactions exist → return transactions
   // if (transactions.length) {
   //   return {
   //     hasTransaction: true,
@@ -403,7 +403,7 @@ if (transactions.length) {
 
 
 
-  // ✅ CASE 2: NO transaction → return onboarding-only data
+  //  CASE 2: NO transaction → return onboarding-only data
   const onboardingBasicInfo = await OnboardingBasicInformation.findById(
     onboarding_basic_info_id
   ).lean();

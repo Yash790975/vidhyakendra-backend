@@ -1702,54 +1702,56 @@
           "name": "Assessments",
           "item": [
             {
-              "name": "Create Assessment - 1",
+              "name": "Create Assessment - School",
               "request": {
                 "method": "POST",
-                "header": [
-                  { "key": "Content-Type", "value": "application/json" }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"title\": \"Chapter 3 Quiz\",\n  \"description\": \"Algebra Test\",\n  \"assessment_type\": \"mixed\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null,\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"academic_year\": \"2025-26\",\n  \"pass_marks\": 8,\n  \"duration_minutes\": 15,\n  \"available_from\": \"2026-03-20T10:00:00Z\",\n  \"available_until\": \"2026-03-20T12:00:00Z\",\n  \"max_attempts\": 1,\n  \"show_result_immediately\": true,\n  \"show_answer_key\": true,\n  \"status\": \"published\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"institute_type\": \"school\",\n  \"title\": \"Chapter 3 Quiz\",\n  \"description\": \"Algebra Test\",\n  \"assessment_type\": \"mixed\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null,\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"academic_year\": \"2025-26\",\n  \"pass_marks\": 8,\n  \"duration_minutes\": 15,\n  \"available_from\": \"2026-03-20T10:00:00Z\",\n  \"available_until\": \"2026-03-20T12:00:00Z\",\n  \"max_attempts\": 1,\n  \"show_result_immediately\": true,\n  \"show_answer_key\": true,\n  \"status\": \"published\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
                 },
-                "url": "http://localhost:4000/sms/assessments"
-              }
-            },
-            { 
-              "name": "Get All Assessments",
-              "request": {
-                "method": "GET",
-                "header": [],
-                "url": {
-                  "raw": "http://localhost:4000/sms/assessments",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessments"]
-                }
+                "url": "http://localhost:4000/sms/assessments",
+                "description": "School: class_id required, batch_id must be null."
               }
             },
             {
-              "name": "Get All Assessments (with filters) - 5",
+              "name": "Create Assessment - Coaching",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"institute_type\": \"coaching\",\n  \"title\": \"Physics Mock Test 1\",\n  \"description\": \"JEE Coaching Batch Test\",\n  \"assessment_type\": \"mcq\",\n  \"class_id\": null,\n  \"section_id\": null,\n  \"batch_id\": \"60d5ec49f1b2c72b8c8e4b01\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4s01\",\n  \"academic_year\": \"2025-26\",\n  \"pass_marks\": 50,\n  \"duration_minutes\": 60,\n  \"available_from\": \"2026-03-20T10:00:00Z\",\n  \"available_until\": \"2026-03-20T12:00:00Z\",\n  \"max_attempts\": 1,\n  \"show_result_immediately\": true,\n  \"show_answer_key\": false,\n  \"status\": \"published\",\n  \"created_by\": \"60d5ec49f1b2c72b8c8e4t01\"\n}"
+                },
+                "url": "http://localhost:4000/sms/assessments",
+                "description": "Coaching: batch_id required, class_id and section_id must be null."
+              }
+            },
+            {
+              "name": "Get All Assessments",
               "request": {
                 "method": "GET",
-                "header": [],
+                "url": "http://localhost:4000/sms/assessments"
+              }
+            },
+            {
+              "name": "Get All Assessments (with filters)",
+              "request": {
+                "method": "GET",
                 "url": {
                   "raw": "http://localhost:4000/sms/assessments?institute_id=60d5ec49f1b2c72b8c8e4f10&status=published&available_now=true",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessments"],
                   "query": [
                     { "key": "institute_id", "value": "60d5ec49f1b2c72b8c8e4f10" },
+                    { "key": "institute_type", "value": "coaching", "disabled": true },
                     { "key": "class_id", "value": "60d5ec49f1b2c72b8c8e4c10", "disabled": true },
                     { "key": "section_id", "value": "", "disabled": true },
+                    { "key": "batch_id", "value": "60d5ec49f1b2c72b8c8e4b01", "disabled": true },
                     { "key": "subject_id", "value": "", "disabled": true },
                     { "key": "created_by", "value": "", "disabled": true },
                     { "key": "status", "value": "published" },
-                    { "key": "assessment_type", "value": "mixed", "disabled": true },
+                    { "key": "assessment_type", "value": "mcq", "disabled": true },
                     { "key": "academic_year", "value": "2025-26", "disabled": true },
-                    { "key": "available_now", "value": "true", "description": "Filter tests within active availability window" }
+                    { "key": "available_now", "value": "true" }
                   ]
                 }
               }
@@ -1758,49 +1760,33 @@
               "name": "Get Assessment By ID",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/assessments/:id",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessments", ":id"],
                   "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
                 }
               }
             },
             {
-              "name": "Get Assessment Analytics (Teacher Dashboard) - 14",
+              "name": "Get Assessment Analytics",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/assessments/:id/analytics",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessments", ":id", "analytics"],
                   "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
                 }
               }
             },
             {
-              "name": "Update Assessment - 4",
+              "name": "Update Assessment",
               "request": {
                 "method": "PUT",
-                "header": [
-                  { "key": "Content-Type", "value": "application/json" }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"Updated Quiz Title\",\n  \"status\": \"published\",\n  \"duration_minutes\": 30,\n  \"pass_marks\": 10,\n  \"available_until\": \"2026-03-21T12:00:00Z\"\n}"
                 },
                 "url": {
                   "raw": "http://localhost:4000/sms/assessments/:id",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessments", ":id"],
                   "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
                 }
               }
@@ -1809,13 +1795,8 @@
               "name": "Delete Assessment",
               "request": {
                 "method": "DELETE",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/assessments/:id",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessments", ":id"],
                   "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
                 }
               }
@@ -1925,62 +1906,55 @@
           "name": "Assessment Attempts",
           "item": [
             {
-              "name": "Start Attempt (Student) - 6",
+              "name": "Start Attempt - School",
               "request": {
                 "method": "POST",
-                "header": [
-                  { "key": "Content-Type", "value": "application/json" }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"institute_type\": \"school\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a01\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4c10\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4sec\",\n  \"batch_id\": null\n}"
                 },
-                "url": "http://localhost:4000/sms/assessment-attempts/start"
+                "url": "http://localhost:4000/sms/assessment-attempts/start",
+                "description": "School: class_id required, batch_id must be null."
               }
             },
             {
-              "name": "Submit Attempt - 9",
+              "name": "Start Attempt - Coaching",
               "request": {
-                "method": "PUT",
-                "header": [
-                  { "key": "Content-Type", "value": "application/json" }
-                ],
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"time_taken_seconds\": 720\n}"
+                  "raw": "{\n  \"institute_id\": \"60d5ec49f1b2c72b8c8e4f10\",\n  \"institute_type\": \"coaching\",\n  \"assessment_id\": \"60d5ec49f1b2c72b8c8e4a02\",\n  \"student_id\": \"60d5ec49f1b2c72b8c8e4st1\",\n  \"class_id\": null,\n  \"section_id\": null,\n  \"batch_id\": \"60d5ec49f1b2c72b8c8e4b01\"\n}"
                 },
+                "url": "http://localhost:4000/sms/assessment-attempts/start",
+                "description": "Coaching: batch_id required, class_id and section_id must be null."
+              }
+            },
+            {
+              "name": "Submit Attempt",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": { "mode": "raw", "raw": "{}" },
                 "url": {
                   "raw": "http://localhost:4000/sms/assessment-attempts/:id/submit",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessment-attempts", ":id", "submit"],
-                  "variable": [
-                    { "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
                 }
               }
             },
             {
-              "name": "Mark Attempt Evaluated (Teacher) - 13",
+              "name": "Mark Attempt Evaluated (Teacher)",
               "request": {
                 "method": "PUT",
-                "header": [
-                  { "key": "Content-Type", "value": "application/json" }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"evaluated_by\": \"60d5ec49f1b2c72b8c8e4t01\",\n  \"remarks\": \"Good effort, short answers need improvement\"\n}"
                 },
                 "url": {
                   "raw": "http://localhost:4000/sms/assessment-attempts/:id/evaluate",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessment-attempts", ":id", "evaluate"],
-                  "variable": [
-                    { "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
                 }
               }
             },
@@ -1988,38 +1962,24 @@
               "name": "Get Attempt By ID",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/assessment-attempts/:id",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessment-attempts", ":id"],
-                  "variable": [
-                    { "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4at1" }]
                 }
               }
             },
             {
-              "name": "Get Attempts by Assessment (Teacher View) - 10",
+              "name": "Get Attempts by Assessment (Teacher View)",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/assessment-attempts/assessment/:assessment_id?status=submitted",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessment-attempts", "assessment", ":assessment_id"],
+                  "variable": [{ "key": "assessment_id", "value": "60d5ec49f1b2c72b8c8e4a01" }],
                   "query": [
                     { "key": "status", "value": "submitted" },
                     { "key": "student_id", "value": "", "disabled": true },
                     { "key": "section_id", "value": "", "disabled": true },
-                    { "key": "batch_id", "value": "", "disabled": true }
-                  ],
-                  "variable": [
-                    { "key": "assessment_id", "value": "60d5ec49f1b2c72b8c8e4a01" }
+                    { "key": "batch_id", "value": "60d5ec49f1b2c72b8c8e4b01", "disabled": true }
                   ]
                 }
               }
@@ -2028,19 +1988,13 @@
               "name": "Get Attempts by Student",
               "request": {
                 "method": "GET",
-                "header": [],
                 "url": {
                   "raw": "http://localhost:4000/sms/assessment-attempts/student/:student_id",
-                  "protocol": "http",
-                  "host": ["localhost"],
-                  "port": "4000",
-                  "path": ["sms", "assessment-attempts", "student", ":student_id"],
+                  "variable": [{ "key": "student_id", "value": "60d5ec49f1b2c72b8c8e4st1" }],
                   "query": [
                     { "key": "status", "value": "submitted", "disabled": true },
-                    { "key": "assessment_id", "value": "", "disabled": true }
-                  ],
-                  "variable": [
-                    { "key": "student_id", "value": "60d5ec49f1b2c72b8c8e4st1" }
+                    { "key": "assessment_id", "value": "", "disabled": true },
+                    { "key": "institute_type", "value": "coaching", "disabled": true }
                   ]
                 }
               }
@@ -3305,7 +3259,7 @@
     {   
       "name": "Admin Institute Details Module",
       "item": [
-            {
+        {
           "name": "Institute Basic Information",
           "item": [
             {
@@ -4838,7 +4792,7 @@
           ]
         }
       ]
-    }, 
+    },  
     {
       "name": "Teacher Management Module",
       "item": [
@@ -6611,29 +6565,42 @@
           "name": "Subjects By Class",
           "item": [
             {
-              "name": "Create Subject By Class",
+              "name": "Create Subject By Class (School - with section)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": \"60a7f9b8e4b0f83d6c8e9f3c\",\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"theory\",\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": \"60a7f9b8e4b0f83d6c8e9f3c\",\n  \"batch_id\": null,\n  \"subject_name\": \"Mathematics\",\n  \"subject_type\": \"theory\",\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
-                "description": "Assigns a subject to a class (and optionally a section).\n\nBusiness logic:\n1. Checks if the subject already exists in subjects_master for this institute (case-insensitive match).\n2. If NOT found → auto-creates it in subjects_master with a generated code (e.g. MATH123).\n3. Builds a class-wise subject_code: <subject_code>-<class_level><section> e.g. MATH-1A or MATH-1.\n4. Saves the record in subjects_by_class.\n\nNote: section_id is optional — omit or pass null if the class has no sections.\nDuplicate assignment (same institute + class + section + subject) returns 409 Conflict."
+                "description": "Assigns a subject to a class+section (school). batch_id is null for school use-case.\n\nBusiness logic:\n1. Checks if subject exists in subjects_master (case-insensitive).\n2. If not found → auto-creates it with a generated code.\n3. Builds class-wise subject_code: <subject_code>-<class_level><section> e.g. MATH-1A.\n4. Saves record. Duplicate (same institute+class+section+batch+subject) returns 409."
               }
             },
             {
-              "name": "Create Subject By Class (No Section)",
+              "name": "Create Subject By Class (School - no section)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": null,\n  \"subject_name\": \"Science\",\n  \"subject_type\": \"practical\",\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": null,\n  \"batch_id\": null,\n  \"subject_name\": \"Science\",\n  \"subject_type\": \"practical\",\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
-                "description": "Same as Create Subject By Class but without a section. Generated code example: SCIE-1."
+                "description": "School use-case without a section. Generated code example: SCIE-1."
+              }
+            },
+            {
+              "name": "Create Subject By Class (Coaching - with batch_id)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"60a7f9b8e4b0f83d6c8e9f3a\",\n  \"class_id\": \"60a7f9b8e4b0f83d6c8e9f3b\",\n  \"section_id\": null,\n  \"batch_id\": \"500000000000000000000001\",\n  \"subject_name\": \"Physics\",\n  \"subject_type\": \"both\",\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/subjects-by-class/subject-by-class",
+                "description": "Coaching use-case: assigns a subject to a class scoped to a specific batch. The unique index includes batch_id, so the same subject can exist under different batches for the same class."
               }
             },
             {
@@ -6645,16 +6612,14 @@
               }
             },
             {
-              "name": "Get Subject By Class Record ID",
+              "name": "Get Subject By Record ID",
               "request": {
                 "method": "GET",
                 "url": {
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
-                  "variable": [
-                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
-                  ]
+                  "variable": [{ "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }]
                 },
                 "description": "Returns a single subjects_by_class record by its MongoDB _id."
               }
@@ -6667,9 +6632,7 @@
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id"],
-                  "variable": [
-                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" }
-                  ]
+                  "variable": [{ "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a" }]
                 },
                 "description": "Returns all subjects assigned to any class under a specific institute."
               }
@@ -6682,11 +6645,22 @@
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/class/:class_id",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", "class", ":class_id"],
-                  "variable": [
-                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" }
-                  ]
+                  "variable": [{ "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b" }]
                 },
                 "description": "Returns all subjects assigned to a specific class."
+              }
+            },
+            {
+              "name": "Get Subjects By Batch ID (Coaching)",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/batch/:batch_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "batch", ":batch_id"],
+                  "variable": [{ "key": "batch_id", "value": "500000000000000000000001", "description": "batches _id" }]
+                },
+                "description": "Coaching-compatible: returns all subjects assigned to a specific batch."
               }
             },
             {
@@ -6698,11 +6672,11 @@
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "class", ":class_id"],
                   "variable": [
-                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
-                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" }
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a" },
+                    { "key": "class_id",     "value": "60a7f9b8e4b0f83d6c8e9f3b" }
                   ]
                 },
-                "description": "Returns all subjects assigned to a specific class under a specific institute."
+                "description": "Returns all subjects for a specific class under a specific institute."
               }
             },
             {
@@ -6714,12 +6688,28 @@
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "class", ":class_id", "section", ":section_id"],
                   "variable": [
-                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a", "description": "institutes_master _id" },
-                    { "key": "class_id", "value": "60a7f9b8e4b0f83d6c8e9f3b", "description": "classes_master _id" },
-                    { "key": "section_id", "value": "60a7f9b8e4b0f83d6c8e9f3c", "description": "classes_sections_master _id" }
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a" },
+                    { "key": "class_id",     "value": "60a7f9b8e4b0f83d6c8e9f3b" },
+                    { "key": "section_id",   "value": "60a7f9b8e4b0f83d6c8e9f3c" }
                   ]
                 },
-                "description": "Returns subjects for a specific institute + class + section combination. Most granular filter."
+                "description": "Most granular filter: institute + class + section."
+              }
+            },
+            {
+              "name": "Get Subjects By Institute And Batch (Coaching)",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/institute/:institute_id/batch/:batch_id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", "institute", ":institute_id", "batch", ":batch_id"],
+                  "variable": [
+                    { "key": "institute_id", "value": "60a7f9b8e4b0f83d6c8e9f3a" },
+                    { "key": "batch_id",     "value": "500000000000000000000001" }
+                  ]
+                },
+                "description": "Coaching-compatible: returns subjects for a specific institute + batch combination."
               }
             },
             {
@@ -6730,11 +6720,9 @@
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/status/:status",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", "status", ":status"],
-                  "variable": [
-                    { "key": "status", "value": "active", "description": "Allowed values: active | inactive" }
-                  ]
+                  "variable": [{ "key": "status", "value": "active", "description": "Allowed: active | inactive" }]
                 },
-                "description": "Filter subjects_by_class records by status. Allowed values: active, inactive."
+                "description": "Filter by status. Allowed values: active, inactive."
               }
             },
             {
@@ -6745,11 +6733,9 @@
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/type/:type",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", "type", ":type"],
-                  "variable": [
-                    { "key": "type", "value": "theory", "description": "Allowed values: theory | practical | both" }
-                  ]
+                  "variable": [{ "key": "type", "value": "theory", "description": "Allowed: theory | practical | both" }]
                 },
-                "description": "Filter subjects_by_class records by subject_type. Allowed values: theory, practical, both."
+                "description": "Filter by subject_type. Allowed values: theory, practical, both."
               }
             },
             {
@@ -6765,11 +6751,27 @@
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
-                  "variable": [
-                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
-                  ]
+                  "variable": [{ "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d" }]
                 },
-                "description": "Updates subject_type and/or status of a subjects_by_class record. At least one field is required.\n\nAllowed fields:\n- subject_type: theory | practical | both\n- status: active | inactive"
+                "description": "Updates subject_type and/or status. At least one field required.\nAllowed fields: subject_type (theory|practical|both), status (active|inactive), batch_id (ObjectId|null)."
+              }
+            },
+            {
+              "name": "Update Subject By Class (Assign Batch)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_id\": \"500000000000000000000001\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
+                  "host": ["http://localhost:4000"],
+                  "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
+                  "variable": [{ "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d" }]
+                },
+                "description": "Coaching-compatible: assign or change the batch for an existing subjects_by_class record."
               }
             },
             {
@@ -6780,11 +6782,9 @@
                   "raw": "http://localhost:4000/sms/subjects-by-class/subject-by-class/:id",
                   "host": ["http://localhost:4000"],
                   "path": ["sms", "subjects-by-class", "subject-by-class", ":id"],
-                  "variable": [
-                    { "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d", "description": "subjects_by_class _id" }
-                  ]
+                  "variable": [{ "key": "id", "value": "60a7f9b8e4b0f83d6c8e9f3d" }]
                 },
-                "description": "Permanently deletes a subjects_by_class record by ID. Does NOT delete the parent subjects_master record."
+                "description": "Permanently deletes a subjects_by_class record. Does NOT delete the parent subjects_master record."
               }
             }
           ]
@@ -9014,18 +9014,13 @@
           ]
         },
         {
-          "name": "Class Subject Schedule",  
+          "name": "Class Subject Schedule",
           "item": [
             {
-              "name": "Create Schedule",
+              "name": "Create Schedule (With Section)",
               "request": {
                 "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"section_id\": \"60d5ec49f1b2c72b8c8e4f1f\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"day_of_week\": \"mon\",\n  \"start_time\": \"08:00\",\n  \"end_time\": \"09:00\",\n  \"academic_year\": \"2025-26\",\n  \"room_number\": \"101\"\n}"
@@ -9034,18 +9029,25 @@
               }
             },
             {
-              "name": "Create Schedule (Without Section)",
+              "name": "Create Schedule (With Batch)",
               "request": {
                 "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"day_of_week\": \"tue\",\n  \"start_time\": \"09:00\",\n  \"end_time\": \"10:00\",\n  \"academic_year\": \"2025-26\",\n  \"room_number\": \"102\"\n}"
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"batch_id\": \"60d5ec49f1b2c72b8c8e4f2a\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"day_of_week\": \"tue\",\n  \"start_time\": \"10:00\",\n  \"end_time\": \"11:00\",\n  \"academic_year\": \"2025-26\",\n  \"room_number\": \"Lab-1\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-subject-schedule"
+              }
+            },
+            {
+              "name": "Create Schedule (Without Section/Batch)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"day_of_week\": \"wed\",\n  \"start_time\": \"09:00\",\n  \"end_time\": \"10:00\",\n  \"academic_year\": \"2025-26\"\n}"
                 },
                 "url": "http://localhost:4000/sms/class-subject-schedule"
               }
@@ -9062,20 +9064,13 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "http://localhost:4000/sms/class-subject-schedule?class_id=60d5ec49f1b2c72b8c8e4f1c&day_of_week=mon&academic_year=2025-26",
+                  "raw": "http://localhost:4000/sms/class-subject-schedule?class_id=60d5ec49f1b2c72b8c8e4f1c&day_of_week=mon&academic_year=2025-26&status=active",
                   "query": [
-                    {
-                      "key": "class_id",
-                      "value": "60d5ec49f1b2c72b8c8e4f1c"
-                    },
-                    {
-                      "key": "day_of_week",
-                      "value": "mon"
-                    },
-                    {
-                      "key": "academic_year",
-                      "value": "2025-26"
-                    }
+                    { "key": "class_id", "value": "60d5ec49f1b2c72b8c8e4f1c" },
+                    { "key": "day_of_week", "value": "mon" },
+                    { "key": "academic_year", "value": "2025-26" },
+                    { "key": "status", "value": "active" },
+                    { "key": "batch_id", "value": "", "disabled": true }
                   ]
                 }
               }
@@ -9084,7 +9079,10 @@
               "name": "Get Schedule by ID",
               "request": {
                 "method": "GET",
-                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/:id",
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
               }
             },
             {
@@ -9092,16 +9090,13 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "http://localhost:4000/sms/class-subject-schedule/class/:class_id?section_id=60d5ec49f1b2c72b8c8e4f1f&academic_year=2025-26",
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/class/:class_id?section_id=60d5ec49f1b2c72b8c8e4f1f&academic_year=2025-26&status=active",
+                  "variable": [{ "key": "class_id", "value": "60d5ec49f1b2c72b8c8e4f1c" }],
                   "query": [
-                    {
-                      "key": "section_id",
-                      "value": "60d5ec49f1b2c72b8c8e4f1f"
-                    },
-                    {
-                      "key": "academic_year",
-                      "value": "2025-26"
-                    }
+                    { "key": "section_id", "value": "60d5ec49f1b2c72b8c8e4f1f" },
+                    { "key": "academic_year", "value": "2025-26" },
+                    { "key": "status", "value": "active" },
+                    { "key": "batch_id", "value": "", "disabled": true }
                   ]
                 }
               }
@@ -9111,91 +9106,99 @@
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "http://localhost:4000/sms/class-subject-schedule/teacher/:teacher_id?academic_year=2025-26",
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/teacher/:teacher_id?academic_year=2025-26&status=active",
+                  "variable": [{ "key": "teacher_id", "value": "60d5ec49f1b2c72b8c8e4f1b" }],
                   "query": [
-                    {
-                      "key": "academic_year",
-                      "value": "2025-26"
-                    }
+                    { "key": "academic_year", "value": "2025-26" },
+                    { "key": "status", "value": "active" }
                   ]
                 }
               }
             },
             {
-              "name": "Get Schedule by Day",
+              "name": "Get Schedule by Batch ID",
               "request": {
                 "method": "GET",
                 "url": {
-                  "raw": "http://localhost:4000/sms/class-subject-schedule/class/:class_id/day/mon?section_id=60d5ec49f1b2c72b8c8e4f1f&academic_year=2025-26",
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/batch/:batch_id?academic_year=2025-26&status=active&day_of_week=mon",
+                  "variable": [{ "key": "batch_id", "value": "60d5ec49f1b2c72b8c8e4f2a" }],
                   "query": [
-                    {
-                      "key": "section_id",
-                      "value": "60d5ec49f1b2c72b8c8e4f1f"
-                    },
-                    {
-                      "key": "academic_year",
-                      "value": "2025-26"
-                    }
+                    { "key": "academic_year", "value": "2025-26" },
+                    { "key": "status", "value": "active" },
+                    { "key": "day_of_week", "value": "mon" }
                   ]
-                }
+                },
+                "description": "Get all schedules for a specific batch. Supports optional filters: academic_year, status, day_of_week."
               }
             },
             {
               "name": "Update Schedule",
               "request": {
                 "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"start_time\": \"09:00\",\n  \"end_time\": \"10:00\",\n  \"room_number\": \"102\",\n  \"status\": \"active\"\n}"
                 },
-                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/:id",
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
               }
             },
             {
               "name": "Update Schedule - Change Teacher",
               "request": {
                 "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1d\",\n  \"day_of_week\": \"wed\"\n}"
                 },
-                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/:id",
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
+              }
+            },
+            {
+              "name": "Update Schedule - Assign Batch",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_id\": \"60d5ec49f1b2c72b8c8e4f2a\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/:id",
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
               }
             },
             {
               "name": "Update Schedule Status to Inactive",
               "request": {
                 "method": "PUT",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"status\": \"inactive\"\n}"
                 },
-                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/:id",
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
               }
             },
             {
               "name": "Delete Schedule",
               "request": {
                 "method": "DELETE",
-                "url": "http://localhost:4000/sms/class-subject-schedule/:id"
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-subject-schedule/:id",
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
               }
             }
           ]
@@ -9252,6 +9255,61 @@
                   "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"role\": \"principal\",\n  \"academic_year\": \"2025-26\",\n  \"assigned_from\": \"2025-04-01\"\n}"
                 },
                 "url": "http://localhost:4000/sms/class-teacher-assignments"
+              }
+            },
+            {
+              "name": "Create Assignment - Batch Incharge",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"batch_id\": \"60d5ec49f1b2c72b8c8e4f2a\",\n  \"role\": \"batch_incharge\",\n  \"academic_year\": \"2025-26\",\n  \"assigned_from\": \"2025-04-01\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-teacher-assignments"
+              }
+            },
+            {
+              "name": "Create Assignment - Faculty",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"teacher_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"class_id\": \"60d5ec49f1b2c72b8c8e4f1c\",\n  \"batch_id\": \"60d5ec49f1b2c72b8c8e4f2a\",\n  \"subject_id\": \"60d5ec49f1b2c72b8c8e4f1e\",\n  \"role\": \"faculty\",\n  \"academic_year\": \"2025-26\",\n  \"assigned_from\": \"2025-04-01\"\n}"
+                },
+                "url": "http://localhost:4000/sms/class-teacher-assignments"
+              }
+            },
+            {
+              "name": "Get Batch Incharge by Batch ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-teacher-assignments/batch/:batch_id/incharge?academic_year=2025-26",
+                  "variable": [{ "key": "batch_id", "value": "60d5ec49f1b2c72b8c8e4f2a" }],
+                  "query": [{ "key": "academic_year", "value": "2025-26" }]
+                }
+              }
+            },
+            {
+              "name": "Get Assignments by Role - Batch Incharge",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-teacher-assignments/role/batch_incharge?academic_year=2025-26",
+                  "query": [{ "key": "academic_year", "value": "2025-26" }]
+                }
+              }
+            },
+            {
+              "name": "Get Assignments by Role - Faculty",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:4000/sms/class-teacher-assignments/role/faculty?academic_year=2025-26",
+                  "query": [{ "key": "academic_year", "value": "2025-26" }]
+                }
               }
             },
             {
@@ -9585,37 +9643,49 @@
           "name": "Fee Structures",
           "item": [
             {
-              "name": "Create Fee Structure (Monthly School)",
+              "name": "Create Fee Structure (Monthly - School)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
             },
             {
-              "name": "Create Fee Structure (Quarterly School)",
+              "name": "Create Fee Structure (Quarterly - School)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 9000,\n      \"frequency\": \"quarterly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Library Fee\",\n      \"amount\": 1200,\n      \"frequency\": \"annual\",\n      \"mandatory\": false\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
             },
             {
-              "name": "Create Fee Structure (Annual School)",
+              "name": "Create Fee Structure (Annual - School)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": null,\n  \"fee_heads\": [\n    {\n      \"name\": \"Annual School Fee\",\n      \"amount\": 50000,\n      \"frequency\": \"annual\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Development Fee\",\n      \"amount\": 10000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
+                },
+                "url": "http://localhost:4000/sms/fee-structures/fee-structure"
+              }
+            },
+            {
+              "name": "Create Fee Structure (Coaching - Batch)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": \"500000000000000000000001\",\n  \"fee_heads\": [\n    {\n      \"name\": \"Batch Fee\",\n      \"amount\": 8000,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Enrollment Fee\",\n      \"amount\": 2000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
                 },
                 "url": "http://localhost:4000/sms/fee-structures/fee-structure"
               }
@@ -9629,6 +9699,21 @@
               }
             },
             {
+              "name": "Get All Fee Structures (Filter by batch_id)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure?batch_id=500000000000000000000001",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure"],
+                  "query": [{ "key": "batch_id", "value": "500000000000000000000001" }]
+                }
+              }
+            },
+            {
               "name": "Get Fee Structure By ID",
               "request": {
                 "method": "GET",
@@ -9639,12 +9724,7 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "fee-structures", "fee-structure", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f1b"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
                 }
               }
             },
@@ -9659,12 +9739,22 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "fee-structures", "fee-structure", "class", ":class_id"],
-                  "variable": [
-                    {
-                      "key": "class_id",
-                      "value": "200000000000000000000010"
-                    }
-                  ]
+                  "variable": [{ "key": "class_id", "value": "200000000000000000000010" }]
+                }
+              }
+            },
+            {
+              "name": "Get Fee Structures By Batch ID (Coaching)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure/batch/:batch_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure", "batch", ":batch_id"],
+                  "variable": [{ "key": "batch_id", "value": "500000000000000000000001" }]
                 }
               }
             },
@@ -9675,7 +9765,7 @@
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3500,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ],\n  \"total_annual_amount\": 47000\n}"
+                  "raw": "{\n  \"fee_heads\": [\n    {\n      \"name\": \"Tuition Fee\",\n      \"amount\": 3500,\n      \"frequency\": \"monthly\",\n      \"mandatory\": true\n    },\n    {\n      \"name\": \"Admission Fee\",\n      \"amount\": 5000,\n      \"frequency\": \"one_time\",\n      \"mandatory\": true\n    }\n  ]\n}"
                 },
                 "url": {
                   "raw": "http://localhost:4000/sms/fee-structures/fee-structure/:id",
@@ -9683,12 +9773,26 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "fee-structures", "fee-structure", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f1b"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
+                }
+              }
+            },
+            {
+              "name": "Update Fee Structure (Assign Batch)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch_id\": \"500000000000000000000001\"\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:4000/sms/fee-structures/fee-structure/:id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "fee-structures", "fee-structure", ":id"],
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
                 }
               }
             },
@@ -9703,12 +9807,7 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "fee-structures", "fee-structure", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f1b"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f1b" }]
                 }
               }
             }
@@ -9855,25 +9954,49 @@
           "name": "Student Fees",
           "item": [
             {
-              "name": "Generate Student Fee For Term",
+              "name": "Generate Student Fee For Term (School)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": null,\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
                 },
                 "url": "http://localhost:4000/sms/student-fees/student-fee/generate"
               }
             },
             {
-              "name": "Create Student Fee (Manual)",
+              "name": "Generate Student Fee For Term (Coaching - with batch_id)",
               "request": {
                 "method": "POST",
                 "header": [{ "key": "Content-Type", "value": "application/json" }],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"fee_snapshot\": [\n    { \"name\": \"Tuition Fee\", \"amount\": 3000, \"frequency\": \"monthly\" },\n    { \"name\": \"Admission Fee\", \"amount\": 5000, \"frequency\": \"one_time\" }\n  ],\n  \"total_amount\": 8000,\n  \"paid_amount\": 0,\n  \"due_amount\": 8000,\n  \"due_date\": \"2025-04-10\",\n  \"status\": \"pending\",\n  \"is_late_fee_applied\": false\n}"
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000002\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": \"500000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\"\n}"
+                },
+                "url": "http://localhost:4000/sms/student-fees/student-fee/generate"
+              }
+            },
+            {
+              "name": "Create Student Fee (Manual - School)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000001\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": null,\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"fee_snapshot\": [\n    { \"name\": \"Tuition Fee\", \"amount\": 3000, \"frequency\": \"monthly\" },\n    { \"name\": \"Admission Fee\", \"amount\": 5000, \"frequency\": \"one_time\" }\n  ],\n  \"total_amount\": 8000,\n  \"paid_amount\": 0,\n  \"due_amount\": 8000,\n  \"due_date\": \"2025-04-10\",\n  \"status\": \"pending\",\n  \"is_late_fee_applied\": false\n}"
+                },
+                "url": "http://localhost:4000/sms/student-fees/student-fee"
+              }
+            },
+            {
+              "name": "Create Student Fee (Manual - Coaching with batch_id)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"institute_id\": \"100000000000000000000001\",\n  \"student_id\": \"300000000000000000000002\",\n  \"class_id\": \"200000000000000000000010\",\n  \"section_id\": null,\n  \"batch_id\": \"500000000000000000000001\",\n  \"academic_year\": \"2025-26\",\n  \"term_id\": \"60d5ec49f1b2c72b8c8e4f2c\",\n  \"fee_structure_id\": \"60d5ec49f1b2c72b8c8e4f1b\",\n  \"fee_snapshot\": [\n    { \"name\": \"Batch Fee\", \"amount\": 8000, \"frequency\": \"monthly\" },\n    { \"name\": \"Enrollment Fee\", \"amount\": 2000, \"frequency\": \"one_time\" }\n  ],\n  \"total_amount\": 10000,\n  \"paid_amount\": 0,\n  \"due_amount\": 10000,\n  \"due_date\": \"2025-04-10\",\n  \"status\": \"pending\",\n  \"is_late_fee_applied\": false\n}"
                 },
                 "url": "http://localhost:4000/sms/student-fees/student-fee"
               }
@@ -9887,6 +10010,21 @@
               }
             },
             {
+              "name": "Get All Student Fees (Filter by batch_id)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee?batch_id=500000000000000000000001",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee"],
+                  "query": [{ "key": "batch_id", "value": "500000000000000000000001" }]
+                }
+              }
+            },
+            {
               "name": "Get Student Fee By ID",
               "request": {
                 "method": "GET",
@@ -9897,12 +10035,7 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "student-fees", "student-fee", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f3d"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f3d" }]
                 }
               }
             },
@@ -9917,12 +10050,22 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "student-fees", "student-fee", "student", ":student_id"],
-                  "variable": [
-                    {
-                      "key": "student_id",
-                      "value": "300000000000000000000001"
-                    }
-                  ]
+                  "variable": [{ "key": "student_id", "value": "300000000000000000000001" }]
+                }
+              }
+            },
+            {
+              "name": "Get Student Fees By Batch ID (Coaching)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:4000/sms/student-fees/student-fee/batch/:batch_id",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "4000",
+                  "path": ["sms", "student-fees", "student-fee", "batch", ":batch_id"],
+                  "variable": [{ "key": "batch_id", "value": "500000000000000000000001" }]
                 }
               }
             },
@@ -9941,12 +10084,7 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "student-fees", "student-fee", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f3d"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f3d" }]
                 }
               }
             },
@@ -9965,12 +10103,7 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "student-fees", "student-fee", ":id", "apply-late-fee"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f3d"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f3d" }]
                 }
               }
             },
@@ -9985,12 +10118,7 @@
                   "host": ["localhost"],
                   "port": "4000",
                   "path": ["sms", "student-fees", "student-fee", ":id"],
-                  "variable": [
-                    {
-                      "key": "id",
-                      "value": "60d5ec49f1b2c72b8c8e4f3d"
-                    }
-                  ]
+                  "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4f3d" }]
                 }
               }
             }
@@ -10128,16 +10256,16 @@
       ]
     },
     {
-      "name": "Coaching Teacher Details (Currently not in use)",
+      "name": "Coaching Teacher Details",
       "item": [
         {
           "name": "Create Detail",
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"teacher_id\": \"696cd28dfbf296c1e3492c43\",\n  \"role\": \"faculty\",\n  \"subjects\": [\"Physics\", \"Chemistry\"],\n  \"batch_ids\": [\"696cd28dfbf296c1e3492c50\", \"696cd28dfbf296c1e3492c51\"],\n  \"payout_model\": \"percentage\"\n}"
+              "raw": "{\n  \"teacher_id\": \"696cd28dfbf296c1e3492c43\",\n  \"institute_id\": \"696cd28dfbf296c1e3492c99\",\n  \"role\": \"faculty\",\n  \"subjects\": [\"Physics\", \"Chemistry\"],\n  \"batch_ids\": [\"696cd28dfbf296c1e3492c50\", \"696cd28dfbf296c1e3492c51\"],\n  \"payout_model\": \"percentage\"\n}"
             },
             "url": "http://localhost:4000/sms/coaching-teacher-detail/create"
           }
@@ -10150,24 +10278,54 @@
           }
         },
         {
+          "name": "Get All Details (Filter by Institute)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get-all?institute_id=696cd28dfbf296c1e3492c99",
+              "query": [{ "key": "institute_id", "value": "696cd28dfbf296c1e3492c99" }]
+            }
+          }
+        },
+        {
           "name": "Get Detail By ID",
           "request": {
             "method": "GET",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/get/:id"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get/:id",
+              "variable": [{ "key": "id", "value": "696cd28dfbf296c1e3492c43" }]
+            }
           }
         },
         {
           "name": "Get Detail By Teacher ID",
           "request": {
             "method": "GET",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-teacher/:teacherId"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get-by-teacher/:teacherId",
+              "variable": [{ "key": "teacherId", "value": "696cd28dfbf296c1e3492c43" }]
+            }
+          }
+        },
+        {
+          "name": "Get Details By Institute ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get-by-institute/:instituteId",
+              "variable": [{ "key": "instituteId", "value": "696cd28dfbf296c1e3492c99" }]
+            },
+            "description": "Returns all coaching teacher details for a specific institute."
           }
         },
         {
           "name": "Get Details By Role - Mentor",
           "request": {
             "method": "GET",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-role/mentor"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get-by-role/mentor?institute_id=696cd28dfbf296c1e3492c99",
+              "query": [{ "key": "institute_id", "value": "696cd28dfbf296c1e3492c99", "description": "Optional: filter by institute" }]
+            }
           }
         },
         {
@@ -10195,14 +10353,21 @@
           "name": "Get Details By Subject",
           "request": {
             "method": "GET",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-subject/Physics"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get-by-subject/Physics?institute_id=696cd28dfbf296c1e3492c99",
+              "query": [{ "key": "institute_id", "value": "696cd28dfbf296c1e3492c99", "description": "Optional: filter by institute", "disabled": true }]
+            }
           }
         },
         {
           "name": "Get Details By Batch ID",
           "request": {
             "method": "GET",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/get-by-batch/:batchId"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/get-by-batch/:batchId?institute_id=696cd28dfbf296c1e3492c99",
+              "variable": [{ "key": "batchId", "value": "696cd28dfbf296c1e3492c50" }],
+              "query": [{ "key": "institute_id", "value": "696cd28dfbf296c1e3492c99", "description": "Optional: filter by institute", "disabled": true }]
+            }
           }
         },
         {
@@ -10223,50 +10388,65 @@
           "name": "Update Detail",
           "request": {
             "method": "PUT",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"role\": \"mentor\",\n  \"subjects\": [\"Physics\", \"Chemistry\", \"Mathematics\"],\n  \"payout_model\": \"fixed\"\n}"
             },
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/update/:id"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/update/:id",
+              "variable": [{ "key": "id", "value": "696cd28dfbf296c1e3492c43" }]
+            }
           }
         },
         {
           "name": "Add Batch",
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"batch_id\": \"696cd28dfbf296c1e3492c52\"\n}"
             },
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/add-batch/:id"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/add-batch/:id",
+              "variable": [{ "key": "id", "value": "696cd28dfbf296c1e3492c43" }]
+            }
           }
         },
         {
           "name": "Remove Batch",
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"batch_id\": \"696cd28dfbf296c1e3492c52\"\n}"
             },
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/remove-batch/:id"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/remove-batch/:id",
+              "variable": [{ "key": "id", "value": "696cd28dfbf296c1e3492c43" }]
+            }
           }
         },
         {
           "name": "Delete Detail",
           "request": {
             "method": "DELETE",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/delete/:id"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/delete/:id",
+              "variable": [{ "key": "id", "value": "696cd28dfbf296c1e3492c43" }]
+            }
           }
         },
         {
           "name": "Delete Detail By Teacher ID",
           "request": {
             "method": "DELETE",
-            "url": "http://localhost:4000/sms/coaching-teacher-detail/delete-by-teacher/:teacherId"
+            "url": {
+              "raw": "http://localhost:4000/sms/coaching-teacher-detail/delete-by-teacher/:teacherId",
+              "variable": [{ "key": "teacherId", "value": "696cd28dfbf296c1e3492c43" }]
+            }
           }
         }
       ]

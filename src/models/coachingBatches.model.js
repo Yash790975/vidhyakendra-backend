@@ -4,17 +4,17 @@ const coachingBatchesSchema = new mongoose.Schema(
   {
     class_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ClassesMaster",
+      ref: "ClassesMaster", 
       required: true,
       description: "FK → classes_master._id (coaching)",
     },
     batch_name: {
       type: String,
       required: true,
-      description: "Morning / Evening Batch",          
+      description: "Morning / Evening Batch",           
     },
     start_time: {
-      type: String,
+      type: String, 
       required: true,
       description: "10:00",
     },
@@ -48,4 +48,4 @@ const coachingBatchesSchema = new mongoose.Schema(
 coachingBatchesSchema.index({ class_id: 1 });
 coachingBatchesSchema.index({ status: 1 });
 
-module.exports = mongoose.model("CoachingBatches", coachingBatchesSchema);
+module.exports = mongoose.model("CoachingBatches", coachingBatchesSchema); 

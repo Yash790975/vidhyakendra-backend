@@ -13,9 +13,9 @@ const instituteIdentityDocumentSchema = new mongoose.Schema(
     document_type: {
       type: String,
       required: true,
-      enum: ["aadhaar", "pan"],
+      enum: ["aadhaar", "pan", "others"],
     },
-    document_number: {
+    document_number: { 
       type: String,
       required: true,
       description: "Encrypted value",

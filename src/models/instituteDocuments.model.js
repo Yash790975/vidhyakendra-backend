@@ -17,7 +17,8 @@ const instituteDocumentSchema = new mongoose.Schema(
         "registration_certificate",  
         "affiliation_certificate",
         "gst_certificate", 
-        "logo",
+        "logo", 
+        "other"
       ],
     },
     file_url: {

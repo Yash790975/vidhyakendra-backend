@@ -10,11 +10,11 @@ const teacherIdentityDocumentsSchema = new mongoose.Schema(
     document_type: {   
       type: String,
       required: true,
-      enum: ["pan_card", "address_card", "passport", "driving_license", "photo"],    
+      enum: ["pan_card", "address_card", "passport", "driving_license", "photo", "other"],    
     },
-    document_number: {
+    document_number: { 
       type: String,
-      required: true,
+      required: true, 
       description: "Encrypted value",
     },  
     masked_number: {

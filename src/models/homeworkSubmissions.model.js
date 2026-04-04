@@ -63,7 +63,7 @@ const homeworkSubmissionsSchema = new mongoose.Schema(
 
 
 /* ----------------------------------
-   ✅ Decimal128 → Number conversion
+    Decimal128 → Number conversion
 ----------------------------------- */
 
 homeworkSubmissionsSchema.set('toJSON', {

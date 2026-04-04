@@ -17,7 +17,7 @@ const createExamSchedule = async (scheduleData) => {
   const endTime = scheduleData.end_time;
 
   // -------------------------------
-  // ✅ Common overlap condition
+  //  Common overlap condition
   // -------------------------------
   const timeOverlapCondition = {
     exam_date: examDate,
@@ -26,7 +26,7 @@ const createExamSchedule = async (scheduleData) => {
   };
 
   // =====================================================
-  // ✅ 1. Prevent double schedule for same invigilator
+  //  1. Prevent double schedule for same invigilator
   // =====================================================
   if (scheduleData.invigilator_id && startTime && endTime) {
     const teacherConflict = await ExamSchedules.findOne({
@@ -43,7 +43,7 @@ const createExamSchedule = async (scheduleData) => {
   }
 
   // =====================================================
-  // ✅ 2. Prevent double schedule for same class/section
+  //  2. Prevent double schedule for same class/section
   // =====================================================
   if (scheduleData.class_id && startTime && endTime) {
     const classSectionConflict = await ExamSchedules.findOne({
@@ -61,7 +61,7 @@ const createExamSchedule = async (scheduleData) => {
   }
 
   // -------------------------------
-  // ✅ Create Schedule
+  //  Create Schedule
   // -------------------------------
   const schedule = new ExamSchedules({
     exam_id: new mongoose.Types.ObjectId(scheduleData.exam_id),

@@ -11,11 +11,12 @@ const createDocumentValidation = Joi.object({
       "any.required": "institute_id is required",
     }),
   document_type: Joi.string() 
-    .valid(
+    .valid(   
       "registration_certificate",
       "affiliation_certificate",
       "gst_certificate",
-      "logo"
+      "logo",
+      "others"
     )
     .required()
     .messages({
@@ -23,14 +24,15 @@ const createDocumentValidation = Joi.object({
       "any.required": "document_type is required",
     }),
 });
-
+ 
 const updateDocumentValidation = Joi.object({
   document_type: Joi.string()
     .valid(
       "registration_certificate",
       "affiliation_certificate",
       "gst_certificate",
-      "logo"
+      "logo",
+      "others"
     )
     .optional(),
   verification_status: Joi.string()

@@ -1,10 +1,24 @@
 const Joi = require('joi');
 
+const objectIdPattern = /^[0-9a-fA-F]{24}$/;
+
 const createDetailValidation = Joi.object({
-  teacher_id: Joi.string().required().messages({
-    'string.empty': 'Teacher ID is required',
-    'any.required': 'Teacher ID is required'
-  }),
+  teacher_id: Joi.string()
+    .pattern(objectIdPattern)
+    .required()
+    .messages({
+      'string.empty': 'Teacher ID is required',
+      'string.pattern.base': 'Invalid teacher_id format',
+      'any.required': 'Teacher ID is required'
+    }),
+  institute_id: Joi.string()                               //  NEW
+    .pattern(objectIdPattern)
+    .required()
+    .messages({
+      'string.empty': 'Institute ID is required',
+      'string.pattern.base': 'Invalid institute_id format',
+      'any.required': 'Institute ID is required'
+    }),
   role: Joi.string()
     .valid('mentor', 'faculty', 'guest_faculty', 'counsellor')
     .required()
@@ -14,7 +28,7 @@ const createDetailValidation = Joi.object({
       'any.required': 'Role is required'
     }),
   subjects: Joi.array().items(Joi.string()).optional().allow(null),
-  batch_ids: Joi.array().items(Joi.string()).optional().allow(null),
+  batch_ids: Joi.array().items(Joi.string().pattern(objectIdPattern)).optional().allow(null),
   payout_model: Joi.string()
     .valid('fixed', 'percentage')
     .optional()
@@ -25,13 +39,18 @@ const createDetailValidation = Joi.object({
 });
 
 const updateDetailValidation = Joi.object({
+  institute_id: Joi.string()                               //  NEW (allow update)
+    .pattern(objectIdPattern)
+    .optional()
+    .messages({
+      'string.pattern.base': 'Invalid institute_id format'
+    }),
   role: Joi.string()
     .valid('mentor', 'faculty', 'guest_faculty', 'counsellor')
-    .messages({
-      'any.only': 'Invalid role'
-    }),
+    .optional()
+    .messages({ 'any.only': 'Invalid role' }),
   subjects: Joi.array().items(Joi.string()).optional().allow(null),
-  batch_ids: Joi.array().items(Joi.string()).optional().allow(null),
+  batch_ids: Joi.array().items(Joi.string().pattern(objectIdPattern)).optional().allow(null),
   payout_model: Joi.string()
     .valid('fixed', 'percentage')
     .optional()
@@ -53,17 +72,25 @@ const getByRoleValidation = Joi.object({
 });
 
 const addBatchValidation = Joi.object({
-  batch_id: Joi.string().required().messages({
-    'string.empty': 'Batch ID is required',
-    'any.required': 'Batch ID is required'
-  })
+  batch_id: Joi.string()
+    .pattern(objectIdPattern)
+    .required()
+    .messages({
+      'string.empty': 'Batch ID is required',
+      'string.pattern.base': 'Invalid batch_id format',
+      'any.required': 'Batch ID is required'
+    })
 });
 
 const removeBatchValidation = Joi.object({
-  batch_id: Joi.string().required().messages({
-    'string.empty': 'Batch ID is required',
-    'any.required': 'Batch ID is required'
-  })
+  batch_id: Joi.string()
+    .pattern(objectIdPattern)
+    .required()
+    .messages({
+      'string.empty': 'Batch ID is required',
+      'string.pattern.base': 'Invalid batch_id format',
+      'any.required': 'Batch ID is required'
+    })
 });
 
 module.exports = {

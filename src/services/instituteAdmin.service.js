@@ -2,8 +2,8 @@
 const InstituteAdmin = require('../models/instituteAdmin.model');
 const InstituteMaster = require('../models/institutesMaster.model');       
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+const crypto = require('crypto'); 
+const nodemailer = require('nodemailer'); 
 const statusCode = require('../enums/statusCode');  
 // Nodemailer transporter configuration 
 const createTransporter = () => { 
@@ -73,7 +73,6 @@ const sendEmail = async (to, subject, html) => {
 
 // Create admin
 const createAdmin = async (data) => {
-  // Check if institute exists
   const institute = await InstituteMaster.findById(data.institute_id);
   if (!institute) {
     const error = new Error('Institute not found');
@@ -81,30 +80,19 @@ const createAdmin = async (data) => {
     throw error;
   }
 
-  // Check if admin already exists with this email
-  const existingAdmin = await InstituteAdmin.findOne({ email: data.email });
-  if (existingAdmin) {
-    const error = new Error('Admin with this email already exists');
-    error.statusCode = statusCode.CONFLICT;
-    throw error;
-  }
+  // ✅ Removed duplicate email check — same email allowed for school + coaching admins
 
-  // Generate temporary password
   const temporaryPassword = generateTemporaryPassword();
-  
-  // Hash password
   const salt = await bcrypt.genSalt(10);
   const password_hash = await bcrypt.hash(temporaryPassword, salt);
-  
-  // Encrypt temporary password for password_key
   const password_key = encryptPassword(temporaryPassword);
 
-  // Create admin
   const admin = new InstituteAdmin({
     institute_id: data.institute_id,
     name: data.name,
     email: data.email,
     mobile: data.mobile,
+    admin_type: data.admin_type || null,   // ✅ save it
     password_hash,
     password_key,
     is_first_login: true,
@@ -113,7 +101,7 @@ const createAdmin = async (data) => {
 
   await admin.save();
 
-  // Send email with credentials
+  // Email credentials
   const emailSubject = 'Admin Panel Credentials Created Successfully';
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -122,6 +110,7 @@ const createAdmin = async (data) => {
       <p>Your Admin Panel credentials have been created successfully.</p>
       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
         <p><strong>Institute Type:</strong> ${institute.institute_type}</p>
+        ${data.admin_type ? `<p><strong>Admin Role:</strong> ${data.admin_type.charAt(0).toUpperCase() + data.admin_type.slice(1)} Admin</p>` : ''}
         <p><strong>Username (Email):</strong> ${data.email}</p>
         <p><strong>Temporary Password:</strong> ${temporaryPassword}</p>
       </div>
@@ -133,7 +122,6 @@ const createAdmin = async (data) => {
 
   await sendEmail(data.email, emailSubject, emailHtml);
 
-  // Remove sensitive data before returning
   const adminObject = admin.toObject();
   delete adminObject.password_hash;
   delete adminObject.password_key;
@@ -142,6 +130,76 @@ const createAdmin = async (data) => {
 
   return adminObject;
 };
+// const createAdmin = async (data) => {
+//   // Check if institute exists
+//   const institute = await InstituteMaster.findById(data.institute_id);
+//   if (!institute) {
+//     const error = new Error('Institute not found');
+//     error.statusCode = statusCode.NOT_FOUND;
+//     throw error;
+//   }
+
+//   // Check if admin already exists with this email
+//   const existingAdmin = await InstituteAdmin.findOne({ email: data.email });
+//   if (existingAdmin) {
+//     const error = new Error('Admin with this email already exists');
+//     error.statusCode = statusCode.CONFLICT;
+//     throw error;
+//   }
+
+//   // Generate temporary password
+//   const temporaryPassword = generateTemporaryPassword();
+  
+//   // Hash password
+//   const salt = await bcrypt.genSalt(10);
+//   const password_hash = await bcrypt.hash(temporaryPassword, salt);
+  
+//   // Encrypt temporary password for password_key
+//   const password_key = encryptPassword(temporaryPassword);
+
+//   // Create admin
+//   const admin = new InstituteAdmin({
+//     institute_id: data.institute_id,
+//     name: data.name,
+//     email: data.email,
+//     mobile: data.mobile,
+//     password_hash,
+//     password_key,
+//     is_first_login: true,
+//     status: data.status || 'active'
+//   });
+
+//   await admin.save();
+
+//   // Send email with credentials
+//   const emailSubject = 'Admin Panel Credentials Created Successfully';
+//   const emailHtml = `
+//     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+//       <h2 style="color: #333;">Welcome to ${institute.institute_name}</h2>
+//       <p>Dear ${data.name},</p>
+//       <p>Your Admin Panel credentials have been created successfully.</p>
+//       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+//         <p><strong>Institute Type:</strong> ${institute.institute_type}</p>
+//         <p><strong>Username (Email):</strong> ${data.email}</p>
+//         <p><strong>Temporary Password:</strong> ${temporaryPassword}</p>
+//       </div>
+//       <p style="color: #d9534f;"><strong>Important:</strong> This is a temporary password. You will be required to change it upon your first login.</p>
+//       <p>Please keep these credentials secure and do not share them with anyone.</p>
+//       <p>Best regards,<br/>School Management System Team</p>
+//     </div>
+//   `;
+
+//   await sendEmail(data.email, emailSubject, emailHtml);
+
+//   // Remove sensitive data before returning
+//   const adminObject = admin.toObject();
+//   delete adminObject.password_hash;
+//   delete adminObject.password_key;
+//   delete adminObject.otp;
+//   delete adminObject.otp_expiry;
+
+//   return adminObject;
+// };
 
 // Get all admins
 const getAllAdmins = async () => {
@@ -211,48 +269,52 @@ const deleteAdmin = async (id) => {
  
 // Verify login
 const verifyLogin = async (email, password) => {
-  const admin = await InstituteAdmin.findOne({ email }).populate('institute_id', 'institute_code institute_name institute_type status');
-  
-  if (!admin) {
+  const admins = await InstituteAdmin.find({ email }).populate(
+    'institute_id',
+    'institute_code institute_name institute_type status'
+  );
+
+  console.log(`Found ${admins.length} admin(s) with email: ${email}`); // ✅ check this
+
+  if (!admins || admins.length === 0) {
     const error = new Error('Invalid email or password');
     error.statusCode = statusCode.UNAUTHORIZED;
     throw error;
   }
 
-  // Check if admin is active
-  if (admin.status !== 'active') {
-    const error = new Error(`Account is ${admin.status}. Please contact administrator`);
+  let matchedAdmin = null;
+  for (const admin of admins) {
+    console.log(`Trying admin _id: ${admin._id}`); // ✅ check which ones are tried
+    const isMatch = await bcrypt.compare(password, admin.password_hash);
+    console.log(`Password match for ${admin._id}: ${isMatch}`); // ✅ check match result
+    if (isMatch) {
+      matchedAdmin = admin;
+      break;
+    }
+  }
+
+  if (!matchedAdmin) {
+    const error = new Error('Invalid email or password');
+    error.statusCode = statusCode.UNAUTHORIZED;
+    throw error;
+  }
+
+  if (matchedAdmin.status !== 'active') {
+    const error = new Error(`Account is ${matchedAdmin.status}. Please contact administrator`);
     error.statusCode = statusCode.FORBIDDEN;
     throw error;
   }
 
-  
-
-// ✅ First login handling
-//   if (admin.is_first_login === true) {
-//     admin.is_first_login = false;
-//   }
-
-
-  if (admin.institute_id.status !== 'active') {
+  if (matchedAdmin.institute_id.status !== 'active') {
     const error = new Error('Institute is not active. Please contact administrator');
     error.statusCode = statusCode.FORBIDDEN;
     throw error;
   }
 
-  // Verify password
-  const isPasswordValid = await bcrypt.compare(password, admin.password_hash);
-  if (!isPasswordValid) {
-    const error = new Error('Invalid email or password');
-    error.statusCode = statusCode.UNAUTHORIZED;
-    throw error;
-  } 
+  matchedAdmin.last_login_at = new Date();
+  await matchedAdmin.save();
 
-  // Update last login
-  admin.last_login_at = new Date();
-  await admin.save();
-
-  const adminObject = admin.toObject();
+  const adminObject = matchedAdmin.toObject();
   delete adminObject.password_hash;
   delete adminObject.password_key;
   delete adminObject.otp;
@@ -260,10 +322,66 @@ const verifyLogin = async (email, password) => {
 
   return {
     admin: adminObject,
-    is_first_login: admin.is_first_login,
-    institute_type: admin.institute_id.institute_type
+    is_first_login: matchedAdmin.is_first_login,
+    institute_type: matchedAdmin.institute_id.institute_type
   };
 };
+
+
+// const verifyLogin = async (email, password) => {
+//   const admin = await InstituteAdmin.findOne({ email }).populate('institute_id', 'institute_code institute_name institute_type status');
+  
+//   if (!admin) {
+//     const error = new Error('Invalid email or password');
+//     error.statusCode = statusCode.UNAUTHORIZED;
+//     throw error;
+//   }
+
+//   // Check if admin is active
+//   if (admin.status !== 'active') {
+//     const error = new Error(`Account is ${admin.status}. Please contact administrator`);
+//     error.statusCode = statusCode.FORBIDDEN;
+//     throw error;
+//   }
+
+  
+
+// //  First login handling
+// //   if (admin.is_first_login === true) {
+// //     admin.is_first_login = false;
+// //   }
+
+
+//   if (admin.institute_id.status !== 'active') {
+//     const error = new Error('Institute is not active. Please contact administrator');
+//     error.statusCode = statusCode.FORBIDDEN;
+//     throw error;
+//   }
+
+//   // Verify password
+//   const isPasswordValid = await bcrypt.compare(password, admin.password_hash);
+//   if (!isPasswordValid) {
+//     const error = new Error('Invalid email or password');
+//     error.statusCode = statusCode.UNAUTHORIZED;
+//     throw error;
+//   } 
+
+//   // Update last login
+//   admin.last_login_at = new Date();
+//   await admin.save();
+
+//   const adminObject = admin.toObject();
+//   delete adminObject.password_hash;
+//   delete adminObject.password_key;
+//   delete adminObject.otp;
+//   delete adminObject.otp_expiry;
+
+//   return {
+//     admin: adminObject,
+//     is_first_login: admin.is_first_login,
+//     institute_type: admin.institute_id.institute_type
+//   };
+// };
 
 // Request OTP
 const requestOTP = async (email) => {
@@ -467,7 +585,7 @@ module.exports = {
   getAllAdmins,
   getAdminById,
   updateAdmin,
-  deleteAdmin,
+  deleteAdmin, 
   verifyLogin,
   requestOTP,
   verifyOTP,

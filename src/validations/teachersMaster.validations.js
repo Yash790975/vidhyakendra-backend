@@ -3,10 +3,10 @@ const Joi = require("joi");
 // Teachers Master Validation
 const createTeacherValidation = Joi.object({
   institute_id: Joi.string()   
-    .pattern(/^[0-9a-fA-F]{24}$/)    
+    .pattern(/^[0-9a-fA-F]{24}$/)     
     .required()   
     .messages({    
-      "string.pattern.base": "Invalid institute_id format",
+      "string.pattern.base": "Invalid institute_id format", 
       "any.required": "institute_id is required",
     }),
   teacher_type: Joi.string()

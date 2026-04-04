@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const instituteAdminController = require('../controllers/instituteAdmin.controller');
       
-// Admin CRUD operations
+// Admin CRUD operations  
 router.post('/create', instituteAdminController.createAdmin);
 router.get('/get-all', instituteAdminController.getAllAdmins);
 router.get('/get/:id', instituteAdminController.getAdminById);

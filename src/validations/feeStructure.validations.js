@@ -2,22 +2,28 @@ const Joi = require("joi");
 
 const feeHeadSchema = Joi.object({
   name: Joi.string().required(),
-  amount: Joi.number().positive().required(),  
+  amount: Joi.number().positive().required(),
   frequency: Joi.string()
     .valid("one_time", "monthly", "quarterly", "half_yearly", "annual")
     .required(),
   mandatory: Joi.boolean().default(true),
 });
 
-const createFeeStructureValidation = Joi.object({
+const createFeeStructureValidation = Joi.object({ 
   institute_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .required(),
   academic_year: Joi.string().allow(null, "").default(null),
   class_id: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/)
-    .required(),
+    .pattern(/^[0-9a-fA-F]{24}$/)  
+    .allow(null, "")
+    .default(null),
   section_id: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .allow(null, "")
+    .default(null),
+  // Coaching-compatible: optional batch_id
+  batch_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .allow(null, "")
     .default(null),
@@ -29,6 +35,10 @@ const createFeeStructureValidation = Joi.object({
 const updateFeeStructureValidation = Joi.object({
   academic_year: Joi.string().allow(null, ""),
   section_id: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .allow(null, ""),
+  // Coaching-compatible: optional batch_id
+  batch_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .allow(null, ""),
   fee_heads: Joi.array().items(feeHeadSchema).min(1),
@@ -90,12 +100,21 @@ module.exports = {
 
 
 
+
+
+
+
+
+
+
+
+
 // const Joi = require("joi");
 
 // const feeHeadSchema = Joi.object({
 //   name: Joi.string().required(),
-//   amount: Joi.number().positive().required(),  
-//   frequency: Joi.string()
+//   amount: Joi.number().positive().required(),   
+//   frequency: Joi.string()   
 //     .valid("one_time", "monthly", "quarterly", "half_yearly", "annual")
 //     .required(),
 //   mandatory: Joi.boolean().default(true),

@@ -7,14 +7,11 @@ const createExamScheduleValidation = Joi.object({
     .messages({
       "string.pattern.base": "Invalid exam_id format",
       "any.required": "exam_id is required",
-    }),
+    }),  
   class_id: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/)
-    .required()
-    .messages({
-      "string.pattern.base": "Invalid class_id format",
-      "any.required": "class_id is required",
-    }),
+    .pattern(/^[0-9a-fA-F]{24}$/) 
+    .optional()
+    .allow(null, ""),
   section_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .optional()

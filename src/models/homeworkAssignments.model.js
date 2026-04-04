@@ -7,7 +7,7 @@ const homeworkAssignmentsSchema = new mongoose.Schema(
       ref: "institutes_master",
       required: true,
     },
-    title: {
+    title: { 
       type: String,
       required: true,
     },

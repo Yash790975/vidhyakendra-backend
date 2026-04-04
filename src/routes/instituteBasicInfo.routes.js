@@ -10,4 +10,4 @@ router.get('/verified/list', controller.getVerifiedInstituteBasicInfo);
 router.put('/:id', controller.updateInstituteBasicInfo);
 router.delete('/:id', controller.deleteInstituteBasicInfo); 
  
-module.exports = router;          
+module.exports = router;           

@@ -13,13 +13,13 @@ const studentAcademicMappingSchema = new mongoose.Schema(
       default: null,
     },
     section_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId, 
       ref: "ClassSections",
       default: null,
       description: "For school - FK → class_sections._id",
     },
     batch_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId, 
       ref: "CoachingBatches",
       default: null,
       description: "For coaching - FK → coaching_batches._id",
@@ -49,7 +49,7 @@ const studentAcademicMappingSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["active", "promoted", "completed", "dropped", "repeated"],
+      enum: ["active", "promoted", "completed", "dropped", "repeated", "transferred"],
       default: "active",
     },
   },

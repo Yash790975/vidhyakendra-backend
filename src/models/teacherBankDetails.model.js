@@ -12,7 +12,7 @@ const teacherBankDetailsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    bank_name: {    
+    bank_name: {     
       type: String,
     },
     branch_name: {

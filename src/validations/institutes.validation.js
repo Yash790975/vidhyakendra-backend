@@ -7,7 +7,7 @@ const createInstituteMasterValidation = Joi.object({
   status: Joi.string()
     .valid(
       'pending_activation',
-      'trial',
+      'trial', 
       'active',
       'suspended',
       'blocked',
@@ -74,10 +74,10 @@ const updateInstituteDetailsValidation = Joi.object({
   approx_students_range: Joi.string()
     .valid('1-100', '101-250', '251-500', '500-1000', '1000+')
     .allow(null)
-}).min(1);
+}).min(1); 
 
 module.exports = {
-  createInstituteMasterValidation,
+  createInstituteMasterValidation, 
   updateInstituteMasterValidation,
   createInstituteBasicInfoValidation,
   updateInstituteBasicInfoValidation,

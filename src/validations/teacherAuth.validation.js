@@ -6,7 +6,7 @@ const createAuthValidation = Joi.object({
     'string.empty': 'Teacher ID is required',
     'any.required': 'Teacher ID is required'   
   }),
-  email: Joi.string().email().required().messages({
+  email: Joi.string().email().required().messages({ 
     'string.empty': 'Email is required',
     'string.email': 'Please provide a valid email',
     'any.required': 'Email is required'

@@ -5,7 +5,7 @@ const createStudentIdentityDocValidation = Joi.object({
   student_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .required()
-    .messages({
+    .messages({ 
       "string.pattern.base": "student_id must be a valid MongoDB ObjectId",
       "any.required": "student_id is required",
     }),
@@ -14,12 +14,13 @@ const createStudentIdentityDocValidation = Joi.object({
       "birth_certificate",
       "aadhaar_card",
       "pan_card",
-      "passport",
-      "student_photo"
+      "passport", 
+      "student_photo",
+      "other"
     )
     .required()
     .messages({
-      "any.only": "document_type must be one of: birth_certificate, aadhaar_card, pan_card, passport, student_photo",
+      "any.only": "document_type must be one of: birth_certificate, aadhaar_card, pan_card, passport, student_photo, other",
       "any.required": "document_type is required",
     }),
   student_name: Joi.string()

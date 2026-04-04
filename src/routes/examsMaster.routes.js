@@ -5,7 +5,7 @@ const examController = require("../controllers/examsMaster.controller");
 // ============= EXAMS MASTER =============
 
 // Create exam
-router.post("/", examController.createExam); 
+router.post("/", examController.createExam);  
 
 // Get all exams with filters
 router.get("/", examController.getAllExams);

@@ -7,8 +7,8 @@ const institutesMasterSchema = new mongoose.Schema(
       required: true, 
       unique: true, 
       index: true 
-    },
-    institute_name: {   
+    }, 
+    institute_name: {       
       type: String,
       required: true 
     },

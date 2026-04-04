@@ -4,7 +4,7 @@ const createExamValidation = Joi.object({
   institute_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .required()
-    .messages({
+    .messages({  
       "string.pattern.base": "Invalid institute_id format",
       "any.required": "institute_id is required",
     }),
@@ -13,10 +13,10 @@ const createExamValidation = Joi.object({
   }),
   exam_code: Joi.string().optional().allow(null, ""),
   exam_type: Joi.string()
-    .valid("quarterly", "half_yearly", "annual", "unit_test", "mock", "entrance")
+    .valid("quarterly", "half_yearly", "annual", "unit_test", "mock", "entrance", "competitive")
     .required()
     .messages({
-      "any.only": "exam_type must be one of: quarterly, half_yearly, annual, unit_test, mock, entrance",
+      "any.only": "exam_type must be one of: quarterly, half_yearly, annual, unit_test, mock, entrance, competitive",
       "any.required": "exam_type is required",
     }),
   academic_year: Joi.string().required().messages({
@@ -45,7 +45,7 @@ const updateExamValidation = Joi.object({
   exam_name: Joi.string().optional(),
   exam_code: Joi.string().optional().allow(null, ""),
   exam_type: Joi.string()
-    .valid("quarterly", "half_yearly", "annual", "unit_test", "mock", "entrance")
+    .valid("quarterly", "half_yearly", "annual", "unit_test", "mock", "entrance", "competitive")
     .optional(),
   academic_year: Joi.string().optional(),
   term: Joi.string().optional().allow(null, ""),

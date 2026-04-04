@@ -1,13 +1,32 @@
 const assessmentAttemptsService = require("../services/assessmentAttempts.service");
 const statusCode = require("../enums/statusCode");
 const {
-  startAttemptValidation,
+  startSchoolAttemptValidation,
+  startCoachingAttemptValidation,
   evaluateAttemptValidation,
 } = require("../validations/assessmentAttempts.validations");
 
 const startAttempt = async (req, res) => {
   try {
-    const { error, value } = startAttemptValidation.validate(req.body);
+    //  Route to the correct schema based on institute_type
+    const instituteType = req.body.institute_type;
+
+    let schema;
+    if (instituteType === "school") {
+      schema = startSchoolAttemptValidation;
+    } else if (instituteType === "coaching") {
+      schema = startCoachingAttemptValidation;
+    } else {
+      return res.status(statusCode.BAD_REQUEST).json({
+        success: false,
+        isException: false,
+        statusCode: statusCode.BAD_REQUEST,
+        result: {},
+        message: "institute_type is required and must be 'school' or 'coaching'",
+      });
+    }
+
+    const { error, value } = schema.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
         success: false,
@@ -43,18 +62,14 @@ const submitAttempt = async (req, res) => {
     const attempt = await assessmentAttemptsService.submitAttempt(req.params.id);
 
     res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: attempt,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: attempt,
       message: "Assessment submitted successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
+      success: false, isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: {},
       message: err.message || "Failed to submit assessment",
     });
   }
@@ -65,18 +80,14 @@ const getAttemptById = async (req, res) => {
     const attempt = await assessmentAttemptsService.getAttemptById(req.params.id);
 
     res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: attempt,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: attempt,
       message: "Attempt retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
+      success: false, isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: {},
       message: err.message || "Failed to retrieve attempt",
     });
   }
@@ -97,18 +108,14 @@ const getAttemptsByAssessment = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: attempts,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: attempts,
       message: "Attempts retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
+      success: false, isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: {},
       message: err.message || "Failed to retrieve attempts",
     });
   }
@@ -119,6 +126,7 @@ const getAttemptsByStudent = async (req, res) => {
     const filters = {
       status: req.query.status,
       assessment_id: req.query.assessment_id,
+      institute_type: req.query.institute_type,             //  NEW
     };
 
     const attempts = await assessmentAttemptsService.getAttemptsByStudent(
@@ -127,18 +135,14 @@ const getAttemptsByStudent = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: attempts,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: attempts,
       message: "Student attempts retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
+      success: false, isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: {},
       message: err.message || "Failed to retrieve student attempts",
     });
   }
@@ -149,35 +153,28 @@ const markAttemptEvaluated = async (req, res) => {
     const { error, value } = evaluateAttemptValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: {},
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: {},
         message: error.details[0].message,
       });
     }
 
     const attempt = await assessmentAttemptsService.markAttemptEvaluated(
-      req.params.id,
-      value
+      req.params.id, value
     );
 
     res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: attempt,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: attempt,
       message: "Attempt marked as evaluated successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
+      success: false, isException: err.exception || true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: {},
       message: err.message || "Failed to mark attempt as evaluated",
     });
-  } 
+  }
 };
 
 module.exports = {
@@ -271,11 +268,14 @@ module.exports = {
 
 
 
+
+
+
+
 // const assessmentAttemptsService = require("../services/assessmentAttempts.service");
 // const statusCode = require("../enums/statusCode");
 // const {
-//   startAttemptValidation,
-//   submitAttemptValidation, 
+//   startAttemptValidation, 
 //   evaluateAttemptValidation,
 // } = require("../validations/assessmentAttempts.validations");
 
@@ -314,18 +314,7 @@ module.exports = {
 
 // const submitAttempt = async (req, res) => {
 //   try {
-//     const { error, value } = submitAttemptValidation.validate(req.body);
-//     if (error) {
-//       return res.status(statusCode.BAD_REQUEST).json({
-//         success: false,
-//         isException: false,
-//         statusCode: statusCode.BAD_REQUEST,
-//         result: {},
-//         message: error.details[0].message,
-//       });
-//     }
-
-//     const attempt = await assessmentAttemptsService.submitAttempt(req.params.id, value);
+//     const attempt = await assessmentAttemptsService.submitAttempt(req.params.id);
 
 //     res.status(statusCode.OK).json({
 //       success: true,
@@ -462,7 +451,7 @@ module.exports = {
 //       result: {},
 //       message: err.message || "Failed to mark attempt as evaluated",
 //     });
-//   }
+//   } 
 // };
 
 // module.exports = {

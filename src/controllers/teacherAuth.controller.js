@@ -6,7 +6,7 @@ const {
   createAuthValidation,  
   updateAuthValidation,    
   verifyLoginValidation,
-  requestOTPValidation,
+  requestOTPValidation,   
   verifyOTPValidation, 
   changePasswordValidation,
   resetPasswordValidation

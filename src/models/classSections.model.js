@@ -10,7 +10,7 @@ const classSectionsSchema = new mongoose.Schema(
     section_name: {
       type: String,
       required: true,
-      description: "A, B, C",
+      description: "A, B, C",   
     },
     class_teacher_id: {
       type: mongoose.Schema.Types.ObjectId,

@@ -8,7 +8,7 @@ const createMappingValidation = Joi.object({
       "string.pattern.base": "Invalid student_id format",
       "any.required": "student_id is required",
     }),
-  class_id: Joi.string()
+  class_id: Joi.string() 
     .pattern(/^[0-9a-fA-F]{24}$/)
     .optional()
     .allow(null, "")
@@ -68,7 +68,7 @@ const updateMappingValidation = Joi.object({
   roll_number: Joi.string().optional().allow(null, ""),
   left_at: Joi.date().optional().allow(null, ""),
   status: Joi.string()
-    .valid("active", "promoted", "completed", "dropped", "repeated")
+    .valid("active", "promoted", "completed", "dropped", "repeated", "transferred")
     .optional(),
 });
 

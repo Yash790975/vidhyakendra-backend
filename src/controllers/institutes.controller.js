@@ -2,7 +2,7 @@ const institutesService = require('../services/institutes.service');
 const {
   createInstituteMasterValidation,
   updateInstituteMasterValidation 
-} = require('../validations/institutes.validation');
+} = require('../validations/institutes.validation'); 
 const statusCode = require('../enums/statusCode');
 
 const activateInstitute = async (req, res) => { 

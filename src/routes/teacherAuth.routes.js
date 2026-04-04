@@ -9,7 +9,7 @@ router.get('/get/:id', teacherAuthController.getTeacherAuthById);
 router.get('/get-by-teacher/:teacherId', teacherAuthController.getTeacherAuthByTeacherId);
 router.put('/update/:id', teacherAuthController.updateTeacherAuth);
 router.delete('/delete/:id', teacherAuthController.deleteTeacherAuth);
-
+ 
 // Authentication operations
 router.post('/verify-login', teacherAuthController.verifyLogin);
 router.post('/request-otp', teacherAuthController.requestOTP);

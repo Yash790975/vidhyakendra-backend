@@ -17,10 +17,10 @@ const createIdentityDocumentValidation = Joi.object({
       "any.required": "institute_id is required",
     }),
   document_type: Joi.string()
-    .valid("aadhaar", "pan")
+    .valid("aadhaar", "pan", "others")
     .required()
     .messages({
-      "any.only": "document_type must be either aadhaar or pan",
+      "any.only": "document_type must be either aadhaar, pan or others",
       "any.required": "document_type is required",
     }),
   document_number: Joi.string()
@@ -55,7 +55,7 @@ const createIdentityDocumentValidation = Joi.object({
 const updateIdentityDocumentValidation = Joi.object({
   document_number: Joi.string()
     .optional()
-    .custom((value, helpers) => {
+    .custom((value, helpers) => { 
       // Get document from database to check type
       // This will be validated in the service layer
       return value;

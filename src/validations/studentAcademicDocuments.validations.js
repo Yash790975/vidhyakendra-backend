@@ -12,15 +12,16 @@ const createStudentAcademicDocValidation = Joi.object({
   document_type: Joi.string()
     .valid(
       "transfer_certificate",
-      "leaving_certificate",
+      "leaving_certificate", 
       "marksheet",
       "migration_certificate",
       "bonafide_certificate",
-      "character_certificate"
+      "character_certificate",
+      "other"
     )
     .required()
     .messages({
-      "any.only": "document_type must be one of: transfer_certificate, leaving_certificate, marksheet, migration_certificate, bonafide_certificate, character_certificate",
+      "any.only": "document_type must be one of: transfer_certificate, leaving_certificate, marksheet, migration_certificate, bonafide_certificate, character_certificate, other",
       "any.required": "document_type is required",
     }),
   student_name: Joi.string()
@@ -75,5 +76,5 @@ const verifyStudentAcademicDocValidation = Joi.object({
 module.exports = {
   createStudentAcademicDocValidation,
   updateStudentAcademicDocValidation,
-  verifyStudentAcademicDocValidation,
+  verifyStudentAcademicDocValidation, 
 };

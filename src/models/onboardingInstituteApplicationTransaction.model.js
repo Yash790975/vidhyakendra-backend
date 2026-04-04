@@ -78,7 +78,7 @@ const onboardingInstituteApplicationTransactionSchema = new mongoose.Schema(
 );
 
 /* ----------------------------------
-   ✅ Decimal128 → Number conversion
+    Decimal128 → Number conversion
 ----------------------------------- */
 
 onboardingInstituteApplicationTransactionSchema.set('toJSON', {

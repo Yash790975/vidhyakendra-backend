@@ -67,6 +67,7 @@ Vidhya Kendra School Management System Team
 const update = async (data) => {
   try {
     const id = data.id;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new CustomError("Invalid admin ID format", statusCode.BAD_REQUEST);
     }
@@ -96,13 +97,61 @@ const update = async (data) => {
       admin.password = encryptPassword(data.password, admin.key);
     }
 
+    // ✅ ADD THIS BLOCK
+    if (data.isActive !== undefined) {
+      admin.isActive = data.isActive;
+    }
+
     const updatedAdmin = await admin.save();
     updatedAdmin.key = "";
+
     return updatedAdmin;
+
   } catch (error) {
     throw new CustomError(error.message || "Failed to update admin", statusCode.INTERNAL_SERVER_ERROR);
   }
 };
+
+ 
+// const update = async (data) => {
+//   try {
+//     const id = data.id;
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       throw new CustomError("Invalid admin ID format", statusCode.BAD_REQUEST);
+//     }
+
+//     const admin = await Admin.findById(id);
+//     if (!admin) {
+//       throw new CustomError("Admin not found", statusCode.NOT_FOUND);
+//     }
+
+//     if (data.email && data.email !== admin.email) {
+//       const conflict = await Admin.findOne({ _id: { $ne: id }, email: data.email });
+//       if (conflict) {
+//         throw new CustomError("Another admin with this email already exists", statusCode.BAD_REQUEST);
+//       }
+//       admin.email = data.email;
+//     }
+
+//     if (data.name) {
+//       admin.name = data.name;
+//     }
+
+//     if (data.mobile !== undefined) {
+//       admin.mobile = data.mobile;
+//     }
+
+//     if (data.password) {      
+//       admin.password = encryptPassword(data.password, admin.key);
+//     }
+
+//     const updatedAdmin = await admin.save();
+//     updatedAdmin.key = "";
+//     return updatedAdmin;
+//   } catch (error) {
+//     throw new CustomError(error.message || "Failed to update admin", statusCode.INTERNAL_SERVER_ERROR);
+//   }
+// };
 
 const remove = async (id) => {
   try {

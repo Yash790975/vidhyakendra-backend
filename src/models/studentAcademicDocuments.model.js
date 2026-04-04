@@ -11,13 +11,14 @@ const studentAcademicDocumentsSchema = new mongoose.Schema(
     document_type: {
       type: String,
       required: true,
-      enum: [
+      enum: [ 
         "transfer_certificate",
         "leaving_certificate",
         "marksheet",
         "migration_certificate",
         "bonafide_certificate",
-        "character_certificate"
+        "character_certificate",
+        "other"
       ],
     },
     academic_year: {

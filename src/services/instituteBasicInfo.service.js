@@ -3,7 +3,7 @@ const InstituteBasicInformation = require('../models/instituteBasicInformation.m
 const createInstituteBasicInfo = async (basicInfoData) => {
   const basicInfo = new InstituteBasicInformation(basicInfoData);
   return await basicInfo.save(); 
-};
+}; 
 
 const getAllInstituteBasicInfo = async () => {
   return await InstituteBasicInformation.find()

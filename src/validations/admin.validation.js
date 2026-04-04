@@ -42,12 +42,15 @@ const updateAdmin = Joi.object({
   }),
   mobile: Joi.string()
     .pattern(/^[0-9]{10}$/)
-    .optional()
-    .allow(null, "")
+    .optional() 
+    .allow(null, "") 
     .messages({
       "string.pattern.base": "Mobile number must be a valid 10-digit number",
     }),
-});
+    isActive: Joi.boolean().optional().messages({
+    "boolean.base": "isActive must be true or false",
+  }),
+}); 
 
 // Get Admin by ID
 const getAdminById = Joi.object({ 

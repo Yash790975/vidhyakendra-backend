@@ -13,7 +13,7 @@ const generateUniqueFilename = (originalName, prefix, index = null) => {
   return `${baseName}_${randomNum}${ext}`; 
 };
 
-// ✅ Custom image filter: only jpg, jpeg, png
+//  Custom image filter: only jpg, jpeg, png
 const imageFilter = (req, file, cb) => {
   const allowedExt = [".jpg", ".jpeg", ".png","webp","gif"];
   const ext = path.extname(file.originalname).toLowerCase();
@@ -24,7 +24,7 @@ const imageFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-// ✅ Create folder if not exists
+//  Create folder if not exists
 const ensureDir = (dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });

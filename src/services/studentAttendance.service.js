@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
   
 
 // ===============================
-// ✅ Reusable marked_by populate   
+//  Reusable marked_by populate   
 // ===============================
 const markedByPopulate = {
   path: 'marked_by',
@@ -17,7 +17,7 @@ const markedByPopulate = {
 };
 
 // ===============================
-// ✅ Flatten helper
+//  Flatten helper
 // ===============================
 const flattenMarkedBy = (doc) => {
   if (!doc) return doc;

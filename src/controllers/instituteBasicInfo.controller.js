@@ -2,7 +2,7 @@ const service = require('../services/instituteBasicInfo.service');
 const { createInstituteBasicInfoValidation, updateInstituteBasicInfoValidation } = require('../validations/institutes.validation');
 const statusCode = require('../enums/statusCode');
 
-const createInstituteBasicInfo = async (req, res) => {
+const createInstituteBasicInfo = async (req, res) => { 
   try {
     const { error } = createInstituteBasicInfoValidation.validate(req.body);
     if (error) {

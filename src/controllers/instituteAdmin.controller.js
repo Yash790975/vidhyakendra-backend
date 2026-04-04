@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 const instituteAdminService = require('../services/instituteAdmin.service');
 const { 
   createAdminValidation,  
-  updateAdminValidation,
-  verifyLoginValidation,
+  updateAdminValidation, 
+  verifyLoginValidation, 
   requestOTPValidation,
   verifyOTPValidation,
   changePasswordValidation,

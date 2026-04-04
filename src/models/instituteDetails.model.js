@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const instituteDetailsSchema = new mongoose.Schema(
   {
     institute_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId, 
       ref: 'institutes_master',
       required: true
-    },  
+    },   
     school_board: {  
       type: String
     },

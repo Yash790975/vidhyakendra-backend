@@ -6,11 +6,11 @@ const examSchedulesSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "ExamsMaster",
       required: true,
-    },
+    }, 
     class_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ClassesMaster",
-      required: true,
+      default: null, 
     },
     section_id: {
       type: mongoose.Schema.Types.ObjectId,

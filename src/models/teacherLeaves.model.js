@@ -13,9 +13,9 @@ const teacherLeavesSchema = new mongoose.Schema({
       'casual', 'sick', 'paid', 'unpaid', 'earned',
       'maternity', 'paternity', 'bereavement', 'marriage',
       'study', 'work_from_home', 'half_day',
-      'optional_holiday', 'restricted_holiday'
+      'optional_holiday', 'restricted_holiday', "other"
     ],
-    required: true
+    required: true 
   },
   from_date: {
     type: Date,

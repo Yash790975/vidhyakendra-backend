@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const instituteBasicInformationSchema = new mongoose.Schema(
   {
-    institute_id: {
+    institute_id: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: 'institutes_master',
       required: true
     },
-    owner_name: { 
+    owner_name: {  
       type: String,
       required: true
     },

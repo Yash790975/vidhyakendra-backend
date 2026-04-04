@@ -2,19 +2,17 @@
 const Joi = require('joi');
 
 const createLeaveValidation = Joi.object({
-  teacher_id: Joi.string().required().messages({  
+  teacher_id: Joi.string().required().messages({   
     'string.empty': 'Teacher ID is required',
     'any.required': 'Teacher ID is required'
   }),
-  leave_type: Joi.string().valid(
+  leave_type: Joi.string().valid( 
     'casual', 'sick', 'paid', 'unpaid', 'earned',
     'maternity', 'paternity', 'bereavement', 'marriage',
     'study', 'work_from_home', 'half_day',
-    'optional_holiday', 'restricted_holiday'
+    'optional_holiday', 'restricted_holiday', "other"
   ).required().messages({
-    'any.required': 'Leave type is required',
-    'any.only': 'Invalid leave type'
-  }),
+    'any.only': "leave_type must be one of: casual, sick, paid, unpaid, earned, maternity, paternity, bereavement, marriage, study, work_from_home, half_day, optional_holiday, restricted_holiday, other "}),
   from_date: Joi.date().required().messages({
     'any.required': 'From date is required'
   }),
@@ -31,8 +29,9 @@ const updateLeaveValidation = Joi.object({
     'casual', 'sick', 'paid', 'unpaid', 'earned',
     'maternity', 'paternity', 'bereavement', 'marriage',
     'study', 'work_from_home', 'half_day',
-    'optional_holiday', 'restricted_holiday'
-  ),
+    'optional_holiday', 'restricted_holiday', "other"
+  ).messages({
+    'any.only': "leave_type must be one of: casual, sick, paid, unpaid, earned, maternity, paternity, bereavement, marriage, study, work_from_home, half_day, optional_holiday, restricted_holiday, other "}),
   from_date: Joi.date(),
   to_date: Joi.date(),
   reason: Joi.string().allow(null),

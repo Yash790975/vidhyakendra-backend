@@ -55,7 +55,7 @@ subscriptionPlanVariantSchema.index(
 subscriptionPlanVariantSchema.index({ applicable_for: 1 });
 subscriptionPlanVariantSchema.index({ is_active: 1 });
 
-// ✅ Virtual for discounted price
+//  Virtual for discounted price
 subscriptionPlanVariantSchema.virtual('discounted_price').get(function () {
   const price = this.price ? Number(this.price.toString()) : 0;
   const discount = this.discount_percentage
@@ -65,7 +65,7 @@ subscriptionPlanVariantSchema.virtual('discounted_price').get(function () {
   return price - (price * discount) / 100;
 });
 
-// ✅ Convert Decimal128 → Number in API responses
+//  Convert Decimal128 → Number in API responses
 subscriptionPlanVariantSchema.set('toJSON', {
   virtuals: true,
   transform: (doc, ret) => {

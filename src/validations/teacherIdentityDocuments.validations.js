@@ -6,8 +6,12 @@ const createIdentityDocValidation = Joi.object({
     .pattern(/^[0-9a-fA-F]{24}$/)    
     .required(), 
   document_type: Joi.string()  
-    .valid("pan_card", "address_card", "passport", "driving_license", "photo")
-    .required(),
+    .valid("pan_card", "address_card", "passport", "driving_license", "photo", "other")
+    .required()
+    .messages({
+      "any.only": "document_type must be one of: pan_card, address_card, passport, driving_license, photo, other",
+      "any.required": "document_type is required",
+    }),
   document_number: Joi.string().required(),
   teacher_name: Joi.string().required().messages({
     "any.required": "teacher_name is required for filename generation",

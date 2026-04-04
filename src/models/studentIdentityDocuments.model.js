@@ -10,13 +10,14 @@ const studentIdentityDocumentsSchema = new mongoose.Schema(
     },
     document_type: {
       type: String,
-      required: true, 
+      required: true,  
       enum: [
         "birth_certificate",
         "aadhaar_card",
         "pan_card",
         "passport",
-        "student_photo"
+        "student_photo", 
+        "other"
       ],
     },
     file_url: {

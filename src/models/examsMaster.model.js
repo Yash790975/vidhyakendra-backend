@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const examsMasterSchema = new mongoose.Schema( 
   {
     institute_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "institutes_master",
+      type: mongoose.Schema.Types.ObjectId,   
+      ref: "institutes_master", 
       required: true,
     },
     exam_name: {
@@ -14,10 +14,10 @@ const examsMasterSchema = new mongoose.Schema(
     exam_code: {
       type: String,
       default: null,
-    },
+    }, 
     exam_type: {
       type: String,
-      enum: ["quarterly", "half_yearly", "annual", "unit_test", "mock", "entrance"],
+      enum: ["quarterly", "half_yearly", "annual", "unit_test", "mock", "entrance", "competitive"],
       required: true,
     },
     academic_year: {

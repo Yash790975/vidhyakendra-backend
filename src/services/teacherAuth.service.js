@@ -1,25 +1,24 @@
-
 const TeacherAuth = require('../models/teacherAuth.model');
-const Teacher = require('../models/teachersMaster.model'); 
+const Teacher = require('../models/teachersMaster.model');
 const ClassTeacherAssignments = require('../models/classTeacherAssignments.model');
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');     
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const statusCode = require('../enums/statusCode');
 
 // Nodemailer transporter configuration
-const createTransporter = () => { 
-  return nodemailer.createTransport({   
+const createTransporter = () => {
+  return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     secure: process.env.EMAIL_SECURE === 'true',
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS 
-    }
+      pass: process.env.EMAIL_PASS,
+    },
   });
 };
- 
+
 // Generate random 8-digit password
 const generateTemporaryPassword = () => {
   return Math.floor(10000000 + Math.random() * 90000000).toString();
@@ -32,14 +31,14 @@ const generateOTP = () => {
 
 // Encrypt password using AES-256
 const encryptPassword = (password) => {
-  const algorithm = 'aes-256-cbc'; 
+  const algorithm = 'aes-256-cbc';
   const key = Buffer.from(process.env.TEACHER_ENCRYPTION_KEY || process.env.ADMIN_ENCRYPTION_KEY, 'hex');
   const iv = crypto.randomBytes(16);
-  
+
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   let encrypted = cipher.update(password, 'utf8', 'hex');
-  encrypted += cipher.final('hex');  
-  
+  encrypted += cipher.final('hex');
+
   return iv.toString('hex') + ':' + encrypted;
 };
 
@@ -47,34 +46,34 @@ const encryptPassword = (password) => {
 const decryptPassword = (encryptedPassword) => {
   const algorithm = 'aes-256-cbc';
   const key = Buffer.from(process.env.TEACHER_ENCRYPTION_KEY || process.env.ADMIN_ENCRYPTION_KEY, 'hex');
-  
+
   const parts = encryptedPassword.split(':');
   const iv = Buffer.from(parts[0], 'hex');
   const encrypted = parts[1];
-  
+
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
   let decrypted = decipher.update(encrypted, 'hex', 'utf8');
   decrypted += decipher.final('utf8');
-  
+
   return decrypted;
 };
 
 // Send email
 const sendEmail = async (to, subject, html) => {
   const transporter = createTransporter();
-  
+
   const mailOptions = {
     from: `"School Management System" <${process.env.EMAIL_USER}>`,
     to,
     subject,
-    html
+    html,
   };
-  
+
   await transporter.sendMail(mailOptions);
 };
 
 // Create teacher auth
-const createTeacherAuth = async (data) => { 
+const createTeacherAuth = async (data) => {
   // Check if teacher exists
   const teacher = await Teacher.findById(data.teacher_id);
   if (!teacher) {
@@ -84,13 +83,13 @@ const createTeacherAuth = async (data) => {
   }
 
   // Check if teacher auth already exists
-  const existingAuth = await TeacherAuth.findOne({ 
+  const existingAuth = await TeacherAuth.findOne({
     $or: [
       { teacher_id: data.teacher_id },
-      { email: data.email }
-    ]
+      { email: data.email },
+    ],
   });
-  
+
   if (existingAuth) {
     const error = new Error('Teacher auth already exists for this teacher or email');
     error.statusCode = statusCode.CONFLICT;
@@ -99,23 +98,23 @@ const createTeacherAuth = async (data) => {
 
   // Generate temporary password
   const temporaryPassword = generateTemporaryPassword();
-  
+
   // Hash password
   const salt = await bcrypt.genSalt(10);
   const password_hash = await bcrypt.hash(temporaryPassword, salt);
-  
+
   // Encrypt temporary password for password_key
-  const password_key = encryptPassword(temporaryPassword); 
+  const password_key = encryptPassword(temporaryPassword);
 
   // Create teacher auth
   const teacherAuth = new TeacherAuth({
     teacher_id: data.teacher_id,
-    email: data.email,  
+    email: data.email,
     mobile: data.mobile,
     password_hash,
     password_key,
     is_first_login: true,
-    status: data.status || 'active'
+    status: data.status || 'active',
   });
 
   await teacherAuth.save();
@@ -125,7 +124,7 @@ const createTeacherAuth = async (data) => {
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Welcome to the Teacher Portal</h2>
-      <p>Dear ${teacher.name || 'Teacher'},</p>
+      <p>Dear ${teacher.full_name || 'Teacher'},</p>
       <p>Your Teacher Portal credentials have been created successfully.</p>
       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
         <p><strong>Username (Email):</strong> ${data.email}</p>
@@ -295,9 +294,8 @@ const deleteTeacherAuth = async (id) => {
 
 // Verify login
 const verifyLogin = async (email, password) => {
-  const teacherAuth = await TeacherAuth.findOne({ email })
-    .populate('teacher_id');
-  
+  const teacherAuth = await TeacherAuth.findOne({ email }).populate('teacher_id');
+
   if (!teacherAuth) {
     const error = new Error('Invalid email or password');
     error.statusCode = statusCode.UNAUTHORIZED;
@@ -330,16 +328,15 @@ const verifyLogin = async (email, password) => {
   delete authObject.otp_expiry;
 
   return {
-    // teacherAuth: authObject,
     teacherAuth: authObject,
-    is_first_login: teacherAuth.is_first_login
+    is_first_login: teacherAuth.is_first_login,
   };
 };
 
 // Request OTP
 const requestOTP = async (email) => {
   const teacherAuth = await TeacherAuth.findOne({ email });
-  
+
   if (!teacherAuth) {
     const error = new Error('Teacher not found with this email');
     error.statusCode = statusCode.NOT_FOUND;
@@ -356,7 +353,7 @@ const requestOTP = async (email) => {
 
   // Get teacher name
   const teacher = await Teacher.findById(teacherAuth.teacher_id);
-  const teacherName = teacher ? teacher.name : 'Teacher';
+  const teacherName = teacher ? teacher.full_name : 'Teacher';
 
   // Send OTP email
   const emailSubject = 'OTP for Password Reset';
@@ -382,7 +379,7 @@ const requestOTP = async (email) => {
 // Verify OTP
 const verifyOTP = async (email, otp) => {
   const teacherAuth = await TeacherAuth.findOne({ email });
-  
+
   if (!teacherAuth) {
     const error = new Error('Teacher not found with this email');
     error.statusCode = statusCode.NOT_FOUND;
@@ -413,7 +410,7 @@ const verifyOTP = async (email, otp) => {
 // Change password
 const changePassword = async (email, old_password, new_password) => {
   const teacherAuth = await TeacherAuth.findOne({ email });
-  
+
   if (!teacherAuth) {
     const error = new Error('Teacher not found');
     error.statusCode = statusCode.NOT_FOUND;
@@ -439,7 +436,7 @@ const changePassword = async (email, old_password, new_password) => {
 
   // Get teacher name
   const teacher = await Teacher.findById(teacherAuth.teacher_id);
-  const teacherName = teacher ? teacher.name || teacher.full_name : 'Teacher';
+  const teacherName = teacher ? teacher.full_name : 'Teacher';
 
   // Send confirmation email
   const emailSubject = 'Password Changed Successfully';
@@ -461,7 +458,7 @@ const changePassword = async (email, old_password, new_password) => {
 // Reset password (with OTP)
 const resetPassword = async (email, otp, new_password) => {
   const teacherAuth = await TeacherAuth.findOne({ email });
-  
+
   if (!teacherAuth) {
     const error = new Error('Teacher not found');
     error.statusCode = statusCode.NOT_FOUND;
@@ -500,7 +497,7 @@ const resetPassword = async (email, otp, new_password) => {
 
   // Get teacher name
   const teacher = await Teacher.findById(teacherAuth.teacher_id);
-  const teacherName = teacher ? teacher.name : 'Teacher';
+  const teacherName = teacher ? teacher.full_name : 'Teacher';
 
   // Send confirmation email
   const emailSubject = 'Password Reset Successfully';
@@ -530,40 +527,8 @@ module.exports = {
   requestOTP,
   verifyOTP,
   changePassword,
-  resetPassword                        
-}; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  resetPassword,
+};
 
 
 
@@ -646,7 +611,7 @@ module.exports = {
 // const ClassTeacherAssignments = require('../models/classTeacherAssignments.model');
 // const bcrypt = require('bcryptjs');
 // const crypto = require('crypto');     
-// const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');  
 // const statusCode = require('../enums/statusCode');
 
 // // Nodemailer transporter configuration
@@ -796,8 +761,36 @@ module.exports = {
 //   const teacherAuths = await TeacherAuth.find()
 //     .populate('teacher_id')
 //     .select('-password_hash -password_key -otp -otp_expiry');
-  
-//   return teacherAuths;
+
+//   const result = await Promise.all(
+//     teacherAuths.map(async (auth) => {
+//       const authObj = auth.toObject();
+
+//       const classTeacherAssignment = await ClassTeacherAssignments.findOne({
+//         teacher_id: authObj.teacher_id?._id || authObj.teacher_id,
+//         role: 'class_teacher',
+//         status: 'active',
+//       })
+//         .populate('class_id', 'class_name class_type academic_year')
+//         .populate('section_id', 'section_name')
+//         .select('class_id section_id');
+
+//       authObj.class_teacher_info = classTeacherAssignment
+//         ? {
+//             class_id: classTeacherAssignment.class_id?._id || null,
+//             class_name: classTeacherAssignment.class_id?.class_name || null,
+//             class_type: classTeacherAssignment.class_id?.class_type || null,
+//             academic_year: classTeacherAssignment.class_id?.academic_year || null,
+//             section_id: classTeacherAssignment.section_id?._id || null,
+//             section_name: classTeacherAssignment.section_id?.section_name || null,
+//           }
+//         : null;
+
+//       return authObj;
+//     })
+//   );
+
+//   return result;
 // };
 
 // // Get teacher auth by ID
@@ -805,8 +798,32 @@ module.exports = {
 //   const teacherAuth = await TeacherAuth.findById(id)
 //     .populate('teacher_id')
 //     .select('-password_hash -password_key -otp -otp_expiry');
-  
-//   return teacherAuth;
+
+//   if (!teacherAuth) return null;
+
+//   const authObj = teacherAuth.toObject();
+
+//   const classTeacherAssignment = await ClassTeacherAssignments.findOne({
+//     teacher_id: authObj.teacher_id?._id || authObj.teacher_id,
+//     role: 'class_teacher',
+//     status: 'active',
+//   })
+//     .populate('class_id', 'class_name class_type academic_year')
+//     .populate('section_id', 'section_name')
+//     .select('class_id section_id');
+
+//   authObj.class_teacher_info = classTeacherAssignment
+//     ? {
+//         class_id: classTeacherAssignment.class_id?._id || null,
+//         class_name: classTeacherAssignment.class_id?.class_name || null,
+//         class_type: classTeacherAssignment.class_id?.class_type || null,
+//         academic_year: classTeacherAssignment.class_id?.academic_year || null,
+//         section_id: classTeacherAssignment.section_id?._id || null,
+//         section_name: classTeacherAssignment.section_id?.section_name || null,
+//       }
+//     : null;
+
+//   return authObj;
 // };
 
 // // Get teacher auth by teacher_id
@@ -814,8 +831,32 @@ module.exports = {
 //   const teacherAuth = await TeacherAuth.findOne({ teacher_id: teacherId })
 //     .populate('teacher_id')
 //     .select('-password_hash -password_key -otp -otp_expiry');
-  
-//   return teacherAuth;
+
+//   if (!teacherAuth) return null;
+
+//   const authObj = teacherAuth.toObject();
+
+//   const classTeacherAssignment = await ClassTeacherAssignments.findOne({
+//     teacher_id: teacherId,
+//     role: 'class_teacher',
+//     status: 'active',
+//   })
+//     .populate('class_id', 'class_name class_type academic_year')
+//     .populate('section_id', 'section_name')
+//     .select('class_id section_id');
+
+//   authObj.class_teacher_info = classTeacherAssignment
+//     ? {
+//         class_id: classTeacherAssignment.class_id?._id || null,
+//         class_name: classTeacherAssignment.class_id?.class_name || null,
+//         class_type: classTeacherAssignment.class_id?.class_type || null,
+//         academic_year: classTeacherAssignment.class_id?.academic_year || null,
+//         section_id: classTeacherAssignment.section_id?._id || null,
+//         section_name: classTeacherAssignment.section_id?.section_name || null,
+//       }
+//     : null;
+
+//   return authObj;
 // };
 
 // // Update teacher auth
@@ -1098,3 +1139,6 @@ module.exports = {
 //   changePassword,
 //   resetPassword                        
 // }; 
+
+
+

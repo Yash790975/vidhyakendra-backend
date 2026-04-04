@@ -13,10 +13,8 @@ const createDetail = async (req, res) => {
     const { error } = createDetailValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: error.details[0].message
       });
     }
@@ -24,18 +22,14 @@ const createDetail = async (req, res) => {
     const detail = await coachingTeacherDetailService.createDetail(req.body);
 
     return res.status(statusCode.CREATED).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.CREATED,
-      result: detail,
+      success: true, isException: false,
+      statusCode: statusCode.CREATED, result: detail,
       message: 'Coaching teacher detail created successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while creating detail'
     });
   }
@@ -43,21 +37,22 @@ const createDetail = async (req, res) => {
 
 const getAllDetails = async (req, res) => {
   try {
-    const details = await coachingTeacherDetailService.getAllDetails();
+    const filters = {
+      institute_id: req.query.institute_id,               
+      role: req.query.role,
+    };
+
+    const details = await coachingTeacherDetailService.getAllDetails(filters);
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: details,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: details,
       message: 'Coaching teacher details retrieved successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching details'
     });
   }
@@ -69,27 +64,21 @@ const getDetailById = async (req, res) => {
 
     if (!detail) {
       return res.status(statusCode.NOT_FOUND).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.NOT_FOUND,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.NOT_FOUND, result: null,
         message: 'Detail not found'
       });
     }
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: detail,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: detail,
       message: 'Detail retrieved successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching detail'
     });
   }
@@ -101,27 +90,21 @@ const getDetailByTeacherId = async (req, res) => {
 
     if (!detail) {
       return res.status(statusCode.NOT_FOUND).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.NOT_FOUND,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.NOT_FOUND, result: null,
         message: 'Detail not found for this teacher'
       });
     }
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: detail,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: detail,
       message: 'Teacher detail retrieved successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching teacher detail'
     });
   }
@@ -132,29 +115,26 @@ const getDetailsByRole = async (req, res) => {
     const { error } = getByRoleValidation.validate({ role: req.params.role });
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: error.details[0].message
       });
     }
 
-    const details = await coachingTeacherDetailService.getDetailsByRole(req.params.role);
+    const details = await coachingTeacherDetailService.getDetailsByRole(
+      req.params.role,
+      req.query.institute_id || null                      
+    );
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: details,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: details,
       message: `${req.params.role} details retrieved successfully`
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching details by role'
     });
   }
@@ -163,32 +143,28 @@ const getDetailsByRole = async (req, res) => {
 const getDetailsBySubject = async (req, res) => {
   try {
     const { subject } = req.params;
-
     if (!subject) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: 'Subject is required'
       });
     }
 
-    const details = await coachingTeacherDetailService.getDetailsBySubject(subject);
+    const details = await coachingTeacherDetailService.getDetailsBySubject(
+      subject,
+      req.query.institute_id || null                      
+    );
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: details,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: details,
       message: `Teachers for subject ${subject} retrieved successfully`
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching details'
     });
   }
@@ -197,32 +173,28 @@ const getDetailsBySubject = async (req, res) => {
 const getDetailsByBatchId = async (req, res) => {
   try {
     const { batchId } = req.params;
-
     if (!batchId) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: 'Batch ID is required'
       });
     }
 
-    const details = await coachingTeacherDetailService.getDetailsByBatchId(batchId);
+    const details = await coachingTeacherDetailService.getDetailsByBatchId(
+      batchId,
+      req.query.institute_id || null                      
+    );
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: details,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: details,
       message: 'Teachers for batch retrieved successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching details'
     });
   }
@@ -231,33 +203,50 @@ const getDetailsByBatchId = async (req, res) => {
 const getDetailsByPayoutModel = async (req, res) => {
   try {
     const { payoutModel } = req.params;
-
     if (!['fixed', 'percentage'].includes(payoutModel)) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: 'Invalid payout model. Must be "fixed" or "percentage"'
       });
     }
 
-    const details = await coachingTeacherDetailService.getDetailsByPayoutModel(payoutModel);
+    const details = await coachingTeacherDetailService.getDetailsByPayoutModel(
+      payoutModel,
+      req.query.institute_id || null                      
+    );
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: details,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: details,
       message: `Teachers with ${payoutModel} payout model retrieved successfully`
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while fetching details'
+    });
+  }
+};
+
+
+const getDetailsByInstituteId = async (req, res) => {
+  try {
+    const { instituteId } = req.params;
+
+    const details = await coachingTeacherDetailService.getDetailsByInstituteId(instituteId);
+
+    return res.status(statusCode.OK).json({
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: details,
+      message: 'Institute teacher details retrieved successfully'
+    });
+  } catch (err) {
+    return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
+      message: err.message || 'Something went wrong while fetching institute details'
     });
   }
 };
@@ -267,10 +256,8 @@ const updateDetail = async (req, res) => {
     const { error } = updateDetailValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: error.details[0].message
       });
     }
@@ -278,18 +265,14 @@ const updateDetail = async (req, res) => {
     const detail = await coachingTeacherDetailService.updateDetail(req.params.id, req.body);
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: detail,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: detail,
       message: 'Detail updated successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while updating detail'
     });
   }
@@ -300,10 +283,8 @@ const addBatch = async (req, res) => {
     const { error } = addBatchValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: error.details[0].message
       });
     }
@@ -311,18 +292,14 @@ const addBatch = async (req, res) => {
     const detail = await coachingTeacherDetailService.addBatch(req.params.id, req.body.batch_id);
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: detail,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: detail,
       message: 'Batch added successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while adding batch'
     });
   }
@@ -333,10 +310,8 @@ const removeBatch = async (req, res) => {
     const { error } = removeBatchValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
-        isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: null,
+        success: false, isException: false,
+        statusCode: statusCode.BAD_REQUEST, result: null,
         message: error.details[0].message
       });
     }
@@ -344,18 +319,14 @@ const removeBatch = async (req, res) => {
     const detail = await coachingTeacherDetailService.removeBatch(req.params.id, req.body.batch_id);
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: detail,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result: detail,
       message: 'Batch removed successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while removing batch'
     });
   }
@@ -366,18 +337,14 @@ const deleteDetail = async (req, res) => {
     const result = await coachingTeacherDetailService.deleteDetail(req.params.id);
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: result,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result,
       message: 'Detail deleted successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while deleting detail'
     });
   }
@@ -388,18 +355,14 @@ const deleteDetailByTeacherId = async (req, res) => {
     const result = await coachingTeacherDetailService.deleteDetailByTeacherId(req.params.teacherId);
 
     return res.status(statusCode.OK).json({
-      success: true,
-      isException: false,
-      statusCode: statusCode.OK,
-      result: result,
+      success: true, isException: false,
+      statusCode: statusCode.OK, result,
       message: 'Teacher detail deleted successfully'
     });
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      isException: true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: null,
+      success: false, isException: true,
+      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR, result: null,
       message: err.message || 'Something went wrong while deleting teacher detail'
     });
   }
@@ -414,6 +377,7 @@ module.exports = {
   getDetailsBySubject,
   getDetailsByBatchId,
   getDetailsByPayoutModel,
+  getDetailsByInstituteId,    
   updateDetail,
   addBatch,
   removeBatch,

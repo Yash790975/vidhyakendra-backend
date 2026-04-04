@@ -1,13 +1,32 @@
 const assessmentsService = require("../services/assessments.service");
 const statusCode = require("../enums/statusCode");
 const {
-  createAssessmentValidation,
+  createSchoolAssessmentValidation,
+  createCoachingAssessmentValidation,
   updateAssessmentValidation,
 } = require("../validations/assessments.validations");
 
 const createAssessment = async (req, res) => {
   try {
-    const { error, value } = createAssessmentValidation.validate(req.body);
+    //  Route to the correct schema based on institute_type in the body
+    const instituteType = req.body.institute_type;
+
+    let schema;
+    if (instituteType === "school") {
+      schema = createSchoolAssessmentValidation;
+    } else if (instituteType === "coaching") {
+      schema = createCoachingAssessmentValidation;
+    } else {
+      return res.status(statusCode.BAD_REQUEST).json({
+        success: false,
+        isException: false,
+        statusCode: statusCode.BAD_REQUEST,
+        result: {},
+        message: "institute_type is required and must be 'school' or 'coaching'",
+      });
+    }
+
+    const { error, value } = schema.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
         success: false,
@@ -42,6 +61,7 @@ const getAllAssessments = async (req, res) => {
   try {
     const filters = {
       institute_id: req.query.institute_id,
+      institute_type: req.query.institute_type,             
       class_id: req.query.class_id,
       section_id: req.query.section_id,
       batch_id: req.query.batch_id,
@@ -255,9 +275,14 @@ module.exports = {
 
 
 
+
+
+
+
+
 // const assessmentsService = require("../services/assessments.service");
 // const statusCode = require("../enums/statusCode");
-// const {
+// const {  
 //   createAssessmentValidation, 
 //   updateAssessmentValidation,
 // } = require("../validations/assessments.validations");
@@ -437,3 +462,5 @@ module.exports = {
 //   deleteAssessment,
 //   getAssessmentAnalytics,
 // };
+
+

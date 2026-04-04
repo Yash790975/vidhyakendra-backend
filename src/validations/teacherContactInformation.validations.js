@@ -6,7 +6,7 @@ const createContactValidation = Joi.object({
     .pattern(/^[0-9a-fA-F]{24}$/)    
     .required(),
   mobile: Joi.string()       
-    .pattern(/^[0-9]{10}$/)
+    .pattern(/^[0-9]{10}$/)  
     .required()
     .messages({
       "string.pattern.base": "Mobile must be 10 digits",
