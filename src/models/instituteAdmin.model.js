@@ -1,6 +1,6 @@
 // models/instituteAdmin.model.js
 const mongoose = require('mongoose');
-
+ 
 const instituteAdminSchema = new mongoose.Schema({
   institute_id: {
     type: mongoose.Schema.Types.ObjectId, 

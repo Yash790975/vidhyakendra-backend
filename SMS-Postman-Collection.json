@@ -1784,7 +1784,7 @@
                 "body": {
                   "mode": "raw",
                   "raw": "{\n  \"title\": \"Updated Quiz Title\",\n  \"status\": \"published\",\n  \"duration_minutes\": 30,\n  \"pass_marks\": 10,\n  \"available_until\": \"2026-03-21T12:00:00Z\"\n}"
-                },
+                }, 
                 "url": {
                   "raw": "http://localhost:4000/sms/assessments/:id",
                   "variable": [{ "key": "id", "value": "60d5ec49f1b2c72b8c8e4a01" }]
@@ -8643,7 +8643,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"username\": \"ABC-SCH-STD-001\",\n  \"password\": \"12345678\"\n}"
+                  "raw": "{\n  \"username\": \"ABC-SCH-STD-001\",\n  \"password\": \"12345678\",\n  \"login_type\": \"school\"\n}"
                 },
                 "url": {
                   "raw": "http://localhost:4000/sms/student-auth/verify-login",

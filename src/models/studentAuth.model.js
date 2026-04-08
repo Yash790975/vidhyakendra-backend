@@ -4,7 +4,7 @@ const studentAuthSchema = new mongoose.Schema({
   student_id: {    
     type: mongoose.Schema.Types.ObjectId,
     ref: 'StudentsMaster',  
-    required: true,
+    required: true, 
     unique: true   
   },   
   username: {

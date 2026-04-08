@@ -1,8 +1,7 @@
 const Joi = require('joi');
 
 const createAuthValidation = Joi.object({   
-  student_id: Joi.string().required().messages({
-    'string.empty': 'Student ID is required',
+  student_id: Joi.string().required().messages({ 
     'any.required': 'Student ID is required'   
   }),
   status: Joi.string().valid('active', 'blocked', 'disabled').default('active')
@@ -20,6 +19,9 @@ const verifyLoginValidation = Joi.object({
   password: Joi.string().required().messages({
     'string.empty': 'Password is required',
     'any.required': 'Password is required'
+  }),
+  login_type: Joi.string().valid('school', 'coaching').optional().messages({  // ✅ new
+    'any.only': 'login_type must be either "school" or "coaching"'
   })
 });
 
@@ -84,6 +86,141 @@ module.exports = {
   changePasswordValidation,
   resetPasswordValidation
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const Joi = require('joi');
+
+// const createAuthValidation = Joi.object({   
+//   student_id: Joi.string().required().messages({ 
+//     'any.required': 'Student ID is required'   
+//   }),
+//   status: Joi.string().valid('active', 'blocked', 'disabled').default('active')
+// });
+   
+// const updateAuthValidation = Joi.object({
+//   status: Joi.string().valid('active', 'blocked', 'disabled')
+// }).min(1);
+
+// const verifyLoginValidation = Joi.object({
+//   username: Joi.string().required().messages({
+//     'string.empty': 'Username is required',
+//     'any.required': 'Username is required'
+//   }),
+//   password: Joi.string().required().messages({
+//     'string.empty': 'Password is required',
+//     'any.required': 'Password is required'
+//   })
+// });
+
+// const requestOTPValidation = Joi.object({
+//   username: Joi.string().required().messages({
+//     'string.empty': 'Username is required',
+//     'any.required': 'Username is required'
+//   })
+// });
+
+// const verifyOTPValidation = Joi.object({
+//   username: Joi.string().required().messages({
+//     'string.empty': 'Username is required',
+//     'any.required': 'Username is required'
+//   }),
+//   otp: Joi.string().length(6).required().messages({
+//     'string.empty': 'OTP is required',
+//     'string.length': 'OTP must be 6 digits',
+//     'any.required': 'OTP is required'
+//   })
+// });
+
+// const changePasswordValidation = Joi.object({
+//   username: Joi.string().required().messages({
+//     'string.empty': 'Username is required',
+//     'any.required': 'Username is required'
+//   }),
+//   old_password: Joi.string().required().messages({
+//     'string.empty': 'Old password is required',
+//     'any.required': 'Old password is required'
+//   }),
+//   new_password: Joi.string().min(8).required().messages({
+//     'string.empty': 'New password is required',
+//     'string.min': 'New password must be at least 8 characters',
+//     'any.required': 'New password is required'
+//   })
+// });
+
+// const resetPasswordValidation = Joi.object({
+//   username: Joi.string().required().messages({
+//     'string.empty': 'Username is required',
+//     'any.required': 'Username is required'
+//   }),
+//   otp: Joi.string().length(6).required().messages({
+//     'string.empty': 'OTP is required',
+//     'string.length': 'OTP must be 6 digits',
+//     'any.required': 'OTP is required'
+//   }),
+//   new_password: Joi.string().min(8).required().messages({
+//     'string.empty': 'New password is required',
+//     'string.min': 'New password must be at least 8 characters',
+//     'any.required': 'New password is required'
+//   })
+// });
+
+// module.exports = {
+//   createAuthValidation,
+//   updateAuthValidation,
+//   verifyLoginValidation,
+//   requestOTPValidation,
+//   verifyOTPValidation,
+//   changePasswordValidation,
+//   resetPasswordValidation
+// };
 
 
 

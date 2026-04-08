@@ -10,7 +10,7 @@ router.get('/get/:id', instituteAdminController.getAdminById);
 router.get('/get-by-institute/:instituteId', instituteAdminController.getAdminByInstituteId);
 router.put('/update/:id', instituteAdminController.updateAdmin);
 router.delete('/delete/:id', instituteAdminController.deleteAdmin);   
-
+ 
 // Authentication operations
 router.post('/verify-login', instituteAdminController.verifyLogin);
 router.post('/request-otp', instituteAdminController.requestOTP);
