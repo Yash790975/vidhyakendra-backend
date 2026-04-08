@@ -5701,7 +5701,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"12345678\"\n}"
+                  "raw": "{\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"12345678\",\n  \"login_type\": \"school\"\n}"
                 },
                 "url": {
                   "raw": "http://localhost:4000/sms/teacher-auth/verify-login",

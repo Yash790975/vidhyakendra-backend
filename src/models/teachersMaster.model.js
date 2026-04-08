@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
     
 const teachersMasterSchema = new mongoose.Schema(
   {    
-    institute_id: { 
+    institute_id: {  
       type: mongoose.Schema.Types.ObjectId, 
       ref: "institutes_master",  
       required: true,  
     },      
-    teacher_code: {  
+    teacher_code: {   
       type: String, 
       required: true,
       description: "Unique institute-level teacher code",

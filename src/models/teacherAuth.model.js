@@ -5,7 +5,7 @@ const teacherAuthSchema = new mongoose.Schema({
   teacher_id: {    
     type: mongoose.Schema.Types.ObjectId,
     // ref: 'teachers_master', 
-        ref: "TeachersMaster",  
+        ref: "TeachersMaster",    
     required: true,   
     unique: true   
   },   
