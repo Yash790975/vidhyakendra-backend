@@ -2,7 +2,7 @@ const onboardingService = require('../services/onboardingBasicInformation.servic
 const otpService = require('../services/otp.service');
 const {
   createOnboardingValidation,
-  updateOnboardingValidation,
+  updateOnboardingValidation,  
   sendOTPValidation,
   verifyOTPValidation,
   idValidation,
@@ -359,7 +359,7 @@ const getUnverifiedOnboardings = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+}; 
 
 module.exports = {
   createOnboarding,

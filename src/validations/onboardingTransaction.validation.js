@@ -4,7 +4,7 @@ const createTransactionValidation = Joi.object({
   onboarding_basic_info_id: Joi.string().hex().length(24).required(),
   subscription_plan_variant_id: Joi.string().hex().length(24).required(),
 
-  // amount: Joi.number().min(0).required(),
+  // amount: Joi.number().min(0).required(), 
 
   // currency: Joi.string().default('INR'),
   payment_gateway: Joi.string().allow('', null),
@@ -61,7 +61,7 @@ const updateApplicationStatusValidation = Joi.object({
 });
 
 module.exports = {
-  createTransactionValidation,
+  createTransactionValidation, 
   updateTransactionValidation,
   updatePaymentStatusValidation,
   updateApplicationStatusValidation

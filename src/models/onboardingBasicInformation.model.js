@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const onboardingBasicInformationSchema = new mongoose.Schema(
-  {
-    institute_name: {
+  { 
+    institute_name: { 
       type: String,
       required: [true, 'Institute name is required'],
       trim: true,

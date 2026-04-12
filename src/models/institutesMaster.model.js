@@ -4,7 +4,7 @@ const institutesMasterSchema = new mongoose.Schema(
   {
     institute_code: {
       type: String,
-      required: true, 
+      required: true,  
       unique: true, 
       index: true 
     }, 
@@ -31,7 +31,7 @@ const institutesMasterSchema = new mongoose.Schema(
         'blocked',
         'expired',
         'archived'
-      ],
+      ], 
       required: true,
       default: 'pending_activation',
       index: true

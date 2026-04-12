@@ -2,7 +2,7 @@ const OnboardingInstituteDetails = require('../models/onboardingInstituteDetails
 const OnboardingBasicInformation = require('../models/onboardingBasicInformation.model');
 
 const createInstituteDetails = async (data) => {
-  try {         
+  try {          
     // Check if basic info exists
     const basicInfo = await OnboardingBasicInformation.findById(data.onboarding_basic_info_id);
     if (!basicInfo) {
@@ -228,7 +228,7 @@ const getCompleteOnboardingData = async (basicInfoId) => {
   }
 };
 
-module.exports = {
+module.exports = { 
   createInstituteDetails,
   getAllInstituteDetails,
   getInstituteDetailsById,

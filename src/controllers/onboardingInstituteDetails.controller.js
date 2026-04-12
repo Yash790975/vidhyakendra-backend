@@ -1,7 +1,7 @@
 const instituteDetailsService = require('../services/onboardingInstituteDetails.service');
 const {
   createInstituteDetailsValidation,
-  updateInstituteDetailsValidation,
+  updateInstituteDetailsValidation, 
   idValidation,
   getByBasicInfoIdValidation,
 } = require('../validations/onboardingInstituteDetails.validation');
@@ -427,7 +427,7 @@ const getCompleteOnboardingData = async (req, res, next) => {
   }
 };
 
-module.exports = {
+module.exports = { 
   createInstituteDetails,
   getAllInstituteDetails,
   getInstituteDetailsById,

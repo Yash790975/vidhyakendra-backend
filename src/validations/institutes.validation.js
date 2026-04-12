@@ -6,7 +6,7 @@ const createInstituteMasterValidation = Joi.object({
   application_reference_id: Joi.string().allow('', null),
   status: Joi.string()
     .valid(
-      'pending_activation',
+      'pending_activation', 
       'trial', 
       'active',
       'suspended',
@@ -78,7 +78,7 @@ const updateInstituteDetailsValidation = Joi.object({
 
 module.exports = {
   createInstituteMasterValidation, 
-  updateInstituteMasterValidation,
+  updateInstituteMasterValidation, 
   createInstituteBasicInfoValidation,
   updateInstituteBasicInfoValidation,
   createInstituteDetailsValidation,

@@ -2,7 +2,7 @@ const SubscriptionPlanMaster = require('../models/subscriptionPlanMaster.model')
 
 const createPlanMaster = async (data) => {
   try {
-    const planMaster = new SubscriptionPlanMaster(data);
+    const planMaster = new SubscriptionPlanMaster(data);  
     await planMaster.save();
     return planMaster;
   } catch (error) {
@@ -86,14 +86,14 @@ const getActivePlanMasters = async () => {
     return planMasters;
   } catch (error) {
     throw error;
-  }
+  } 
 };
 
 module.exports = {
-  createPlanMaster,
-  getAllPlanMasters,
+  createPlanMaster, 
+  getAllPlanMasters,  
   getPlanMasterById,
   updatePlanMaster, 
   deletePlanMaster,
-  getActivePlanMasters,
+  getActivePlanMasters, 
 };

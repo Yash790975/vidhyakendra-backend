@@ -115,7 +115,7 @@ const getAdminByInstituteId = async (req, res) => {
       success: true,
       isException: false,
       statusCode: statusCode.OK,
-      result: admin,
+      result: admin, 
       message: 'Admin retrieved successfully'
     });
   } catch (err) {
@@ -192,10 +192,10 @@ const deleteAdmin = async (req, res) => {
       message: err.message || 'Something went wrong while deleting admin'
     });
   }
-};
+};   
 
 
-
+ 
 // Update the verifyLogin function
 const verifyLogin = async (req, res) => {
   try {
@@ -245,6 +245,8 @@ const verifyLogin = async (req, res) => {
   }
 };
 
+
+
 const requestOTP = async (req, res) => {
   try {
     const { error } = requestOTPValidation.validate(req.body);
@@ -258,7 +260,21 @@ const requestOTP = async (req, res) => {
       });
     }
 
-    const result = await instituteAdminService.requestOTP(req.body.email);
+    const { email, portal_type } = req.body;
+
+    // ✅ Optional safety check (recommended)
+    if (!['school', 'coaching'].includes(portal_type)) {
+      return res.status(statusCode.BAD_REQUEST).json({
+        success: false,
+        isException: false,
+        statusCode: statusCode.BAD_REQUEST,
+        result: null,
+        message: 'Invalid portal type (must be school or coaching)'
+      });
+    }
+
+    // ✅ Pass portal_type to service
+    const result = await instituteAdminService.requestOTP(email, portal_type);
 
     return res.status(statusCode.OK).json({
       success: true,
@@ -267,6 +283,7 @@ const requestOTP = async (req, res) => {
       result: result,
       message: 'OTP sent successfully'
     });
+
   } catch (err) {
     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -277,6 +294,39 @@ const requestOTP = async (req, res) => {
     });
   }
 };
+
+// const requestOTP = async (req, res) => {
+//   try {
+//     const { error } = requestOTPValidation.validate(req.body);
+//     if (error) {
+//       return res.status(statusCode.BAD_REQUEST).json({
+//         success: false,
+//         isException: false,
+//         statusCode: statusCode.BAD_REQUEST,
+//         result: null,
+//         message: error.details[0].message
+//       });
+//     }
+
+//     const result = await instituteAdminService.requestOTP(req.body.email);
+
+//     return res.status(statusCode.OK).json({
+//       success: true,
+//       isException: false,
+//       statusCode: statusCode.OK,
+//       result: result,
+//       message: 'OTP sent successfully'
+//     });
+//   } catch (err) {
+//     return res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
+//       success: false,
+//       isException: true,
+//       statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+//       result: null,
+//       message: err.message || 'Something went wrong while sending OTP'
+//     });
+//   }
+// };
 
 const verifyOTP = async (req, res) => {
   try {

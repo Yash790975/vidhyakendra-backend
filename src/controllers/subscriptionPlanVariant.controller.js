@@ -3,7 +3,7 @@ const {
   createPlanVariantValidation,
   updatePlanVariantValidation,
   idValidation,
-  getByInstituteTypeValidation,
+  getByInstituteTypeValidation,    
 } = require('../validations/subscriptionPlanVariant.validation');
 
 const createPlanVariant = async (req, res, next) => {

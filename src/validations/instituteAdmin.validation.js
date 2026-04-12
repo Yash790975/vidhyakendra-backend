@@ -1,9 +1,9 @@
-
+ 
 // validations/instituteAdmin.validation.js
 const Joi = require('joi'); 
 
 const createAdminValidation = Joi.object({
-  institute_id: Joi.string().required().messages({
+  institute_id: Joi.string().required().messages({ 
     'string.empty': 'Institute ID is required', 
     'any.required': 'Institute ID is required'
   }),
@@ -11,7 +11,7 @@ const createAdminValidation = Joi.object({
     'string.empty': 'Name is required',
     'string.min': 'Name must be at least 2 characters', 
     'string.max': 'Name cannot exceed 100 characters',
-    'any.required': 'Name is required'
+    'any.required': 'Name is required' 
   }),
   email: Joi.string().email().required().messages({
     'string.empty': 'Email is required',
@@ -37,7 +37,10 @@ const updateAdminValidation = Joi.object({
   mobile: Joi.string().pattern(/^[0-9]{10}$/).messages({
     'string.pattern.base': 'Mobile number must be 10 digits'
   }),
-  status: Joi.string().valid('active', 'blocked', 'disabled')
+  status: Joi.string().valid('active', 'blocked', 'disabled'),
+  admin_type: Joi.string().valid('school', 'coaching').messages({
+    'any.only': 'admin_type must be either "school" or "coaching"'
+  })
 }).min(1);
 
 const verifyLoginValidation = Joi.object({
@@ -60,7 +63,8 @@ const requestOTPValidation = Joi.object({
     'string.empty': 'Email is required',
     'string.email': 'Please provide a valid email',
     'any.required': 'Email is required'
-  })
+  }),
+  portal_type: Joi.string().valid('school', 'coaching').required()
 });
 
 const verifyOTPValidation = Joi.object({

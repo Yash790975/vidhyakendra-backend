@@ -8,7 +8,7 @@ const OnboardingTransaction = require('../models/onboardingInstituteApplicationT
 const { generateInstituteCode } = require('../utils/generateCodes');
 const mongoose = require('mongoose');  
  
-// ✅ Import createAdmin service directly (no HTTP call needed)
+// ✅ Import createAdmin service directly (no HTTP call needed) 
 const { createAdmin } = require('./instituteAdmin.service');
 
 const activateInstitute = async (onboarding_basic_info_id, transaction_reference_id) => {
@@ -21,7 +21,7 @@ const activateInstitute = async (onboarding_basic_info_id, transaction_reference
     const onboardingDetails = await OnboardingInstituteDetails.findOne({ onboarding_basic_info_id });
 
     const transaction = await OnboardingTransaction.findOne({
-      reference_id: transaction_reference_id
+      reference_id: transaction_reference_id 
     }).populate('subscription_plan_variant_id');
 
     if (!transaction) {

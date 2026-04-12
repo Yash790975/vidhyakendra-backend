@@ -7,7 +7,7 @@ const createAttendanceValidation = Joi.object({
     'any.required': 'Teacher ID is required'
   }),
   date: Joi.date().required().messages({
-    'any.required': 'Date is required'
+    'any.required': 'Date is required' 
   }),
   status: Joi.string().valid('present', 'absent', 'half_day', 'leave').required().messages({
     'any.required': 'Status is required',
@@ -15,7 +15,7 @@ const createAttendanceValidation = Joi.object({
   }),
   check_in_time: Joi.alternatives()
   .try(Joi.date(), Joi.string())
-  .allow(null),
+  .allow(null), 
 
 check_out_time: Joi.alternatives()
   .try(Joi.date(), Joi.string())

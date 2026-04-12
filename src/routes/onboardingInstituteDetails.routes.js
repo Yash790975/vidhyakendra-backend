@@ -5,7 +5,7 @@ const instituteDetailsController = require('../controllers/onboardingInstituteDe
 // Create institute details
 router.post('/', instituteDetailsController.createInstituteDetails);
 
-// Get all institute details
+// Get all institute details 
 router.get('/', instituteDetailsController.getAllInstituteDetails);
 
 // Get institute details by school board

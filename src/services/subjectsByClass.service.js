@@ -2,7 +2,7 @@ const SubjectsByClass = require('../models/subjectsByClass.model');
 const SubjectsMaster = require('../models/subjectsMaster.model');
 const InstituteMaster = require('../models/institutesMaster.model');
 const ClassesMaster = require('../models/classesMaster.model');
-const ClassesSectionsMaster = require('../models/classSections.model');
+const ClassesSectionsMaster = require('../models/classSections.model'); 
 const statusCode = require('../enums/statusCode');
 const { generateSubjectCode } = require('./subjectsMaster.service');
 

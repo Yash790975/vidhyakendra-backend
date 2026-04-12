@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const examSchedulesSchema = new mongoose.Schema(
-  {  
+  {   
     exam_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ExamsMaster",

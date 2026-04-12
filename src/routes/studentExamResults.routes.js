@@ -9,9 +9,9 @@ router.post("/", resultController.createStudentExamResult);
 
 // Get all student exam results with filters
 router.get("/", resultController.getAllStudentExamResults);
-
+  
 // Get student exam result by ID
-router.get("/:id", resultController.getStudentExamResultById);
+router.get("/:id", resultController.getStudentExamResultById); 
 
 // Get results by student ID
 router.get("/student/:student_id", resultController.getResultsByStudentId);

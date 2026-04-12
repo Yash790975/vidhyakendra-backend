@@ -6,7 +6,7 @@ const createPlanVariantValidation = Joi.object({
     .required()
     .messages({
       'string.pattern.base': 'Invalid plan master ID format',
-      'any.required': 'Plan master ID is required',
+      'any.required': 'Plan master ID is required',  
     }),
   applicable_for: Joi.string()
     .valid('school', 'coaching', 'both')
@@ -109,7 +109,7 @@ const getByInstituteTypeValidation = Joi.object({
 });
 
 module.exports = {
-  createPlanVariantValidation,
+  createPlanVariantValidation, 
   updatePlanVariantValidation,
   idValidation,
   getByInstituteTypeValidation,

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const subjectsByClassController = require('../controllers/subjectsByClass.controller');
 
-// Create — POST /subject-by-class
+// Create — POST /subject-by-class 
 router.post('/subject-by-class', subjectsByClassController.createSubjectByClass);
-
+  
 // Read — all
 router.get('/subject-by-class', subjectsByClassController.getAllSubjectsByClass);
 
@@ -20,7 +20,7 @@ router.get('/subject-by-class/class/:class_id', subjectsByClassController.getSub
 // Read — by batch (coaching-compatible)
 router.get('/subject-by-class/batch/:batch_id', subjectsByClassController.getSubjectsByBatchId);
 
-// Read — by institute + class
+// Read — by institute + class 
 router.get(
   '/subject-by-class/institute/:institute_id/class/:class_id',
   subjectsByClassController.getSubjectsByInstituteAndClass

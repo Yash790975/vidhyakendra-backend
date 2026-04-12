@@ -8,7 +8,7 @@ const statusCode = require('../enums/statusCode');
 // Parse "10:35AM" OR ISO date into Date
 const parseTimeWithDate = (date, timeStr) => {
   if (!timeStr) return null;
-
+ 
   // Already a valid date string
   if (!isNaN(Date.parse(timeStr))) {
     return new Date(timeStr);
@@ -124,7 +124,7 @@ const getAttendanceByTeacherId = async (teacherId) => {
 
   return attendance.map(formatAttendance);
 };
-
+ 
 const getAttendanceByDate = async (date) => {
   const attendance = await TeacherAttendance.find({ date })
     .populate('teacher_id', 'full_name teacher_code');
@@ -132,9 +132,16 @@ const getAttendanceByDate = async (date) => {
   return attendance.map(formatAttendance);
 };
 
+// const getAttendanceByDateRange = async (startDate, endDate) => {
+//   const attendance = await TeacherAttendance.find({
+//     date: { $gte: startDate, $lte: endDate },
+//   })
 const getAttendanceByDateRange = async (startDate, endDate) => {
   const attendance = await TeacherAttendance.find({
-    date: { $gte: startDate, $lte: endDate },
+    date: {
+      $gte: new Date(startDate),
+      $lte: new Date(new Date(endDate).setHours(23, 59, 59, 999)),
+    },
   })
     .populate('teacher_id', 'full_name teacher_code')
     .sort({ date: -1 });

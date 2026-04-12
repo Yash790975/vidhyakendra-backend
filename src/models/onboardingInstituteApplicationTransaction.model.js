@@ -4,8 +4,8 @@ const onboardingInstituteApplicationTransactionSchema = new mongoose.Schema(
   {
     reference_id: {
       type: String,  
-      required: true, 
-      unique: true,
+      required: true,  
+      unique: true, 
       index: true
     },
 
@@ -87,7 +87,7 @@ onboardingInstituteApplicationTransactionSchema.set('toJSON', {
     if (ret.amount) {
       ret.amount = Number(ret.amount.toString());
     }
-    return ret;
+    return ret; 
   }
 });
 

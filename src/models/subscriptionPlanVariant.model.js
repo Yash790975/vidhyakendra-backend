@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const subscriptionPlanVariantSchema = new mongoose.Schema(
+const subscriptionPlanVariantSchema = new mongoose.Schema( 
   {
     plan_master_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -81,7 +81,7 @@ subscriptionPlanVariantSchema.set('toJSON', {
   }, 
 });
 
-subscriptionPlanVariantSchema.set('toObject', {
+subscriptionPlanVariantSchema.set('toObject', { 
   virtuals: true,
 });
 

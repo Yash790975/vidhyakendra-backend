@@ -2,7 +2,7 @@ const subjectsByClassService = require('../services/subjectsByClass.service');
 const {
   createSubjectByClassValidation,
   updateSubjectByClassValidation
-} = require('../validations/subjectsByClass.validation');
+} = require('../validations/subjectsByClass.validation');  
 const statusCode = require('../enums/statusCode');
 
 const createSubjectByClass = async (req, res) => {

@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 const teacherAttendanceController = require('../controllers/teacherAttendance.controller');
 
+// ── Specific named routes FIRST (before /:id wildcard) ──
 router.post('/attendance', teacherAttendanceController.createAttendance);
 router.get('/attendance', teacherAttendanceController.getAllAttendance);
-router.get('/attendance/:id', teacherAttendanceController.getAttendanceById);
-router.get('/attendance/teacher/:teacher_id', teacherAttendanceController.getAttendanceByTeacherId);
-router.get('/attendance/date/:date', teacherAttendanceController.getAttendanceByDate);
 router.get('/attendance/date-range', teacherAttendanceController.getAttendanceByDateRange);
+router.get('/attendance/date/:date', teacherAttendanceController.getAttendanceByDate);
+router.get('/attendance/teacher/:teacher_id', teacherAttendanceController.getAttendanceByTeacherId);
+
+// ── Wildcard /:id LAST ──
+router.get('/attendance/:id', teacherAttendanceController.getAttendanceById);
 router.put('/attendance/:id', teacherAttendanceController.updateAttendance);
 router.delete('/attendance/:id', teacherAttendanceController.deleteAttendance);
 
@@ -17,6 +20,65 @@ module.exports = router;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const express = require('express');
+// const router = express.Router();
+// const teacherAttendanceController = require('../controllers/teacherAttendance.controller');
+
+// router.post('/attendance', teacherAttendanceController.createAttendance);
+// router.get('/attendance', teacherAttendanceController.getAllAttendance);
+// router.get('/attendance/:id', teacherAttendanceController.getAttendanceById);
+// router.get('/attendance/teacher/:teacher_id', teacherAttendanceController.getAttendanceByTeacherId);
+// router.get('/attendance/date/:date', teacherAttendanceController.getAttendanceByDate);
+// router.get('/attendance/date-range', teacherAttendanceController.getAttendanceByDateRange);
+// router.put('/attendance/:id', teacherAttendanceController.updateAttendance);
+// router.delete('/attendance/:id', teacherAttendanceController.deleteAttendance);
+
+// module.exports = router;
+
+
+
+ 
+ 
 
 
 

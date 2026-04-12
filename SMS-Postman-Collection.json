@@ -3040,7 +3040,7 @@
               }
             }
           ]
-        },
+        }, 
         {
           "name": "Onboarding Transactions",
           "item": [
@@ -3254,7 +3254,7 @@
             }
           ]
         }
-      ]
+      ] 
     },
     {   
       "name": "Admin Institute Details Module",
@@ -4789,7 +4789,7 @@
                 }
               }
             }
-          ]
+          ] 
         }
       ]
     },  
@@ -5690,7 +5690,7 @@
               "response": []
             },
             {
-              "name": "Verify Login",
+              "name": "Verify Login", 
               "request": {
                 "method": "POST",
                 "header": [
@@ -9010,7 +9010,7 @@
                 "method": "DELETE",
                 "url": "http://localhost:4000/sms/class-subjects/:id"
               }
-            }
+            } 
           ]
         },
         {

@@ -5,7 +5,7 @@ const createPlanMasterValidation = Joi.object({
   .trim()
   .required()
   .messages({
-    'string.base': 'Plan name must be a string',
+    'string.base': 'Plan name must be a string', 
     'any.required': 'Plan name is required',
   }),
   plan_type: Joi.string()
@@ -78,7 +78,7 @@ const idValidation = Joi.object({
     .required()
     .messages({
       'string.pattern.base': 'Invalid ID format',
-      'any.required': 'ID is required',
+      'any.required': 'ID is required', 
     }),
 });
 

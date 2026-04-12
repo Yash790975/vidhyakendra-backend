@@ -1,8 +1,8 @@
 const transactionService = require('../services/onboardingTransaction.service');
 const {
   createTransactionValidation,
-  updateTransactionValidation,  
-  updatePaymentStatusValidation,
+  updateTransactionValidation,   
+  updatePaymentStatusValidation, 
   updateApplicationStatusValidation
 } = require('../validations/onboardingTransaction.validation');
 const statusCode = require('../enums/statusCode');
@@ -494,7 +494,7 @@ const getTransactionWithFullDetailsByOnboardingBasicInfoId = async (req, res) =>
 module.exports = {
   createTransaction,
   getAllTransactions,
-  getTransactionById,
+  getTransactionById, 
   getTransactionByReferenceId,
   getTransactionsByOnboardingId,
   getTransactionsByPaymentStatus,

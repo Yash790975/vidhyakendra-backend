@@ -2,7 +2,7 @@ const TeacherContactInformation = require("../models/teacherContactInformation.m
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
 const { sendOTPEmail } = require("./email.service");
-const { createTeacherAuth } = require("./teacherAuth.service");
+const { createTeacherAuth } = require("./teacherAuth.service"); 
 
 // ============= CONTACT INFORMATION =============
 
@@ -241,7 +241,7 @@ const getAllTeachersContacts = async (filters = {}) => {
 
   return contacts;
 };
-
+ 
 
 // Delete contact by teacher id
 const deleteContact = async (teacherId) => {

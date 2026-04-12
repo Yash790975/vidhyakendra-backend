@@ -4,7 +4,7 @@ const planVariantController = require('../controllers/subscriptionPlanVariant.co
 
 // Create a new plan variant
 router.post('/', planVariantController.createPlanVariant);
-
+ 
 // Get all plan variants
 router.get('/', planVariantController.getAllPlanVariants);
 
@@ -16,7 +16,7 @@ router.get('/plan-master/:plan_master_id', planVariantController.getPlanVariants
 
 // Get a single plan variant by ID
 router.get('/:id', planVariantController.getPlanVariantById);
-
+ 
 // Update a plan variant
 router.put('/:id', planVariantController.updatePlanVariant);
 

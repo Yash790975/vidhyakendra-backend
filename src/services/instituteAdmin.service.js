@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer'); 
 const statusCode = require('../enums/statusCode');  
 // Nodemailer transporter configuration 
-const createTransporter = () => { 
+const createTransporter = () => {  
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST, 
     port: process.env.EMAIL_PORT,
@@ -212,7 +212,7 @@ const verifyLogin = async (email, password, login_type) => {
     error.statusCode = statusCode.UNAUTHORIZED;
     throw error;
   }
-
+ 
   let matchedAdmin = null;
   for (const admin of admins) {
     const isMatch = await bcrypt.compare(password, admin.password_hash);
@@ -279,92 +279,81 @@ const verifyLogin = async (email, password, login_type) => {
 };
 
 
-// const verifyLogin = async (email, password) => {
-//   const admin = await InstituteAdmin.findOne({ email }).populate('institute_id', 'institute_code institute_name institute_type status');
-  
-//   if (!admin) {
-//     const error = new Error('Invalid email or password');
-//     error.statusCode = statusCode.UNAUTHORIZED;
-//     throw error;
-//   }
+const requestOTP = async (email, portal_type) => {
+  const admin = await InstituteAdmin.findOne({ email }).populate(
+    'institute_id',
+    'institute_code institute_name institute_type status'
+  );
 
-//   // Check if admin is active
-//   if (admin.status !== 'active') {
-//     const error = new Error(`Account is ${admin.status}. Please contact administrator`);
-//     error.statusCode = statusCode.FORBIDDEN;
-//     throw error;
-//   }
-
-  
-
-// //  First login handling
-// //   if (admin.is_first_login === true) {
-// //     admin.is_first_login = false;
-// //   }
-
-
-//   if (admin.institute_id.status !== 'active') {
-//     const error = new Error('Institute is not active. Please contact administrator');
-//     error.statusCode = statusCode.FORBIDDEN;
-//     throw error;
-//   }
-
-//   // Verify password
-//   const isPasswordValid = await bcrypt.compare(password, admin.password_hash);
-//   if (!isPasswordValid) {
-//     const error = new Error('Invalid email or password');
-//     error.statusCode = statusCode.UNAUTHORIZED;
-//     throw error;
-//   } 
-
-//   // Update last login
-//   admin.last_login_at = new Date();
-//   await admin.save();
-
-//   const adminObject = admin.toObject();
-//   delete adminObject.password_hash;
-//   delete adminObject.password_key;
-//   delete adminObject.otp;
-//   delete adminObject.otp_expiry;
-
-//   return {
-//     admin: adminObject,
-//     is_first_login: admin.is_first_login,
-//     institute_type: admin.institute_id.institute_type
-//   };
-// };
-
-// Request OTP
-const requestOTP = async (email) => {
-  const admin = await InstituteAdmin.findOne({ email });
-  
   if (!admin) {
     const error = new Error('Admin not found with this email');
     error.statusCode = statusCode.NOT_FOUND;
     throw error;
   }
 
-  // Generate OTP
+  // ❌ Check admin status
+  if (admin.status !== 'active') {
+    const error = new Error(`Account is ${admin.status}. Please contact administrator`);
+    error.statusCode = statusCode.FORBIDDEN;
+    throw error;
+  }
+
+  // ❌ Check institute status
+  if (!admin.institute_id || admin.institute_id.status !== 'active') {
+    const error = new Error('Institute is not active. Please contact administrator');
+    error.statusCode = statusCode.FORBIDDEN;
+    throw error;
+  }
+
+  const instituteType = admin.institute_id.institute_type; // school | coaching | both
+  const adminType = admin.admin_type; // school | coaching
+
+  // ✅ 🎯 Dynamic Validation
+  if (portal_type === 'coaching') {
+    if (instituteType !== 'coaching' && instituteType !== 'both') {
+      const error = new Error("Only coaching institutes are allowed in this portal");
+      error.statusCode = statusCode.FORBIDDEN;
+      throw error;
+    }
+
+    if (adminType !== 'coaching') {
+      const error = new Error("Only coaching admin can access this portal");
+      error.statusCode = statusCode.FORBIDDEN;
+      throw error;
+    }
+  }
+
+  if (portal_type === 'school') {
+    if (instituteType !== 'school' && instituteType !== 'both') {
+      const error = new Error("Only school institutes are allowed in this portal");
+      error.statusCode = statusCode.FORBIDDEN;
+      throw error;
+    }
+
+    if (adminType !== 'school') {
+      const error = new Error("Only school admin can access this portal");
+      error.statusCode = statusCode.FORBIDDEN;
+      throw error;
+    }
+  }
+
+  // ✅ Generate OTP
   const otp = generateOTP();
-  const otp_expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+  const otp_expiry = new Date(Date.now() + 10 * 60 * 1000);
 
   admin.otp = otp;
   admin.otp_expiry = otp_expiry;
   await admin.save();
 
-  // Send OTP email
+  // ✅ Send email
   const emailSubject = 'OTP for Password Reset';
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">Password Reset OTP</h2>
+      <h2>Password Reset OTP</h2>
       <p>Dear ${admin.name},</p>
-      <p>You have requested to reset your password. Please use the following OTP to proceed:</p>
-      <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0; text-align: center;">
-        <h1 style="color: #007bff; margin: 0; letter-spacing: 5px;">${otp}</h1>
-      </div>
-      <p><strong>This OTP is valid for 10 minutes.</strong></p>
-      <p>If you did not request this, please ignore this email.</p>
-      <p>Best regards,<br/>School Management System Team</p>
+      <p>Your OTP is:</p>
+      <div style="text-align:center; font-size:24px; letter-spacing:5px;">${otp}</div>
+      <p>This OTP is valid for 10 minutes.</p>
     </div>
   `;
 
@@ -372,6 +361,45 @@ const requestOTP = async (email) => {
 
   return { message: 'OTP sent successfully to your email' };
 };
+
+// Request OTP
+// const requestOTP = async (email) => {
+//   const admin = await InstituteAdmin.findOne({ email });
+  
+//   if (!admin) {
+//     const error = new Error('Admin not found with this email');
+//     error.statusCode = statusCode.NOT_FOUND;
+//     throw error;
+//   }
+
+//   // Generate OTP
+//   const otp = generateOTP();
+//   const otp_expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+//   admin.otp = otp;
+//   admin.otp_expiry = otp_expiry;
+//   await admin.save();
+
+//   // Send OTP email
+//   const emailSubject = 'OTP for Password Reset';
+//   const emailHtml = `
+//     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+//       <h2 style="color: #333;">Password Reset OTP</h2>
+//       <p>Dear ${admin.name},</p>
+//       <p>You have requested to reset your password. Please use the following OTP to proceed:</p>
+//       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0; text-align: center;">
+//         <h1 style="color: #007bff; margin: 0; letter-spacing: 5px;">${otp}</h1>
+//       </div>
+//       <p><strong>This OTP is valid for 10 minutes.</strong></p>
+//       <p>If you did not request this, please ignore this email.</p>
+//       <p>Best regards,<br/>School Management System Team</p>
+//     </div>
+//   `;
+
+//   await sendEmail(email, emailSubject, emailHtml);
+
+//   return { message: 'OTP sent successfully to your email' };
+// };
 
 // Verify OTP
 const verifyOTP = async (email, otp) => {

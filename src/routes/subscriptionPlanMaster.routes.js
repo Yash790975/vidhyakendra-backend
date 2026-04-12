@@ -10,14 +10,14 @@ router.get('/', planMasterController.getAllPlanMasters);
 
 // Get active plan masters
 router.get('/active', planMasterController.getActivePlanMasters);
-
+   
 // Get a single plan master by ID
 router.get('/:id', planMasterController.getPlanMasterById);
 
 // Update a plan master
-router.put('/:id', planMasterController.updatePlanMaster);
-
+router.put('/:id', planMasterController.updatePlanMaster); 
+ 
 // Delete a plan master
-router.delete('/:id', planMasterController.deletePlanMaster);
+router.delete('/:id', planMasterController.deletePlanMaster); 
 
 module.exports = router;

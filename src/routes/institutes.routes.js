@@ -13,4 +13,4 @@ router.get('/status/:status', controller.getInstitutesByStatus);
 router.put('/:id', controller.updateInstitute);
 router.delete('/:id', controller.deleteInstitute); 
 
-module.exports = router;    
+module.exports = router;      

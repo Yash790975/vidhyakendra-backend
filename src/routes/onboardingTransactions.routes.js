@@ -11,7 +11,7 @@ router.get('/:id', controller.getTransactionById);
 router.get('/transactions/full-details', controller.getTransactionsWithFullDetails); 
 router.get('/transaction/full-details/onboarding/:onboarding_basic_info_id',controller.getTransactionWithFullDetailsByOnboardingBasicInfoId);
  
-
+ 
 
 router.get('/reference/:reference_id', controller.getTransactionByReferenceId);  
 router.get('/onboarding/:onboarding_id', controller.getTransactionsByOnboardingId);

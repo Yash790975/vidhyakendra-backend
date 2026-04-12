@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const subscriptionPlanMasterSchema = new mongoose.Schema(
   {
-   plan_name: {
+   plan_name: {  
       type: String,   
       required: [true, 'Plan name is required'],
       unique: true,
@@ -32,7 +32,7 @@ const subscriptionPlanMasterSchema = new mongoose.Schema(
     timestamps: true,
     collection: "subscription_plan_master" 
   }
-);
+); 
 
 // Indexes
 subscriptionPlanMasterSchema.index({ plan_name: 1 });

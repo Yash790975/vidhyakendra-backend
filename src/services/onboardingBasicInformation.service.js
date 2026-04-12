@@ -2,12 +2,12 @@ const OnboardingBasicInformation = require('../models/onboardingBasicInformation
 const { sendWelcomeEmail } = require('./email.service');
 
 const createOnboarding = async (data) => {
-  try {
+  try { 
     // Check if email already exists
     const existingEmail = await OnboardingBasicInformation.findOne({ email: data.email });
     if (existingEmail) {
       throw new Error('Email already exists'); 
-    }
+    } 
 
     // Check if mobile already exists
     const existingMobile = await OnboardingBasicInformation.findOne({ mobile: data.mobile });
@@ -15,7 +15,7 @@ const createOnboarding = async (data) => {
       throw new Error('Mobile number already exists');
     }
 
-    const onboarding = new OnboardingBasicInformation(data);
+    const onboarding = new OnboardingBasicInformation(data); 
     await onboarding.save();
 
     return onboarding;

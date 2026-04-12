@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const teacherAttendanceSchema = new mongoose.Schema({
   teacher_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "TeachersMaster",
+    ref: "TeachersMaster", 
     required: true
   },
   date: {

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const CustomError = require("../exceptions/CustomError"); 
 const statusCode = require("../enums/statusCode"); 
-
+ 
 const createExam = async (examData) => {
   const createdByModel =
     examData.created_by_role === "institute_admin"

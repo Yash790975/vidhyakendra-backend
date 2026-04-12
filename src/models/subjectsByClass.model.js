@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const subjectsByClassSchema = new mongoose.Schema({
+const subjectsByClassSchema = new mongoose.Schema({  
   institute_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'institutes_master',

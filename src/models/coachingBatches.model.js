@@ -4,7 +4,7 @@ const coachingBatchesSchema = new mongoose.Schema(
   {
     class_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ClassesMaster", 
+      ref: "ClassesMaster",  
       required: true,
       description: "FK → classes_master._id (coaching)",
     },

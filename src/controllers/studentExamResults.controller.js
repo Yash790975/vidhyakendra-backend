@@ -1,6 +1,6 @@
 const resultService = require("../services/studentExamResults.service");
 const statusCode = require("../enums/statusCode");
-const {
+const {   
   createStudentExamResultValidation, 
   updateStudentExamResultValidation,
 } = require("../validations/studentExamResults.validations");

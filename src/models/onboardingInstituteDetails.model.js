@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const onboardingInstituteDetailsSchema = new mongoose.Schema(
   {
-    onboarding_basic_info_id: {  
-      type: mongoose.Schema.Types.ObjectId,
+    onboarding_basic_info_id: {    
+      type: mongoose.Schema.Types.ObjectId, 
       ref: 'OnboardingBasicInformation',
       // ref: 'onboarding_basic_information',
-      required: [true, 'Onboarding basic info ID is required'],
+      required: [true, 'Onboarding basic info ID is required'], 
       unique: true,
     },
     school_board: { 

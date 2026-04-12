@@ -2,7 +2,7 @@ const SubscriptionPlanVariant = require('../models/subscriptionPlanVariant.model
 const SubscriptionPlanMaster = require('../models/subscriptionPlanMaster.model');
 
 
-//On frontend the plan variants are created along with plan master.
+//On frontend the plan variants are created along with plan master. 
 //So the flow was like create plan master -> ex: monthly, quarterly, yearly
 //Then we create plan variant -> first we select institute type (school/college/both) and then we set price for that plan master for that institute type, then suppose "i select 'school' and set price 100 for monthly, then the price for existing plan master like quarterly price will be 300 for school automatically, similarly for yearly 1200 for school automatically"
 //I only have to add discounts for plan masters.
@@ -139,7 +139,7 @@ const getPlanVariantsByPlanMasterId = async (planMasterId) => {
       plan_master_id: planMasterId,
       is_active: true 
     }).populate('plan_master_id');
-    
+     
     return planVariants;
   } catch (error) {
     throw error;
@@ -147,7 +147,7 @@ const getPlanVariantsByPlanMasterId = async (planMasterId) => {
 };
 
 module.exports = {
-  createPlanVariant,
+  createPlanVariant,  
   getAllPlanVariants,
   getPlanVariantById,
   updatePlanVariant,

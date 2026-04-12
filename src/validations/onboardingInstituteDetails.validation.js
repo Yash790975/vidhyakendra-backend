@@ -3,14 +3,14 @@ const Joi = require('joi');
 const createInstituteDetailsValidation = Joi.object({
   onboarding_basic_info_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
-    .required()
+    .required() 
     .messages({
       'string.pattern.base': 'Invalid onboarding basic info ID format',
       'any.required': 'Onboarding basic info ID is required',
     }),
   school_board: Joi.string()
     .valid('CBSE', 'ICSE', 'State Board', 'Other')
-    .optional()
+    .optional() 
     .messages({
       'string.base': 'School board must be a string',
       'any.only': 'School board must be one of CBSE, ICSE, State Board, or Other',

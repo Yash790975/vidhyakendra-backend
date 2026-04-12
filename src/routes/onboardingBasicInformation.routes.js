@@ -4,10 +4,10 @@ const onboardingController = require('../controllers/onboardingBasicInformation.
 
 // Create a new onboarding record
 router.post('/', onboardingController.createOnboarding);
-
+ 
 // Get all onboarding records
 router.get('/', onboardingController.getAllOnboardings);
-
+ 
 // Get verified onboarding records
 router.get('/verified', onboardingController.getVerifiedOnboardings);
 
@@ -18,7 +18,7 @@ router.get('/unverified', onboardingController.getUnverifiedOnboardings);
 router.post('/send-otp', onboardingController.sendOTP);
 
 // Resend OTP
-router.post('/resend-otp', onboardingController.resendOTP);
+router.post('/resend-otp', onboardingController.resendOTP); 
 
 // Verify OTP
 router.post('/verify-otp', onboardingController.verifyOTP);

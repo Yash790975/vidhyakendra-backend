@@ -4,7 +4,7 @@ const {
   updateInstituteMasterValidation 
 } = require('../validations/institutes.validation'); 
 const statusCode = require('../enums/statusCode');
-
+ 
 const activateInstitute = async (req, res) => { 
   try {
     const { onboarding_basic_info_id, transaction_id } = req.body;
@@ -289,7 +289,7 @@ const deleteInstitute = async (req, res) => {
   }
 };
  
-module.exports = {
+module.exports = { 
   activateInstitute,
   createInstitute,  
   getAllInstitutes,

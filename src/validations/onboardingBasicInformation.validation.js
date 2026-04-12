@@ -5,9 +5,9 @@ const createOnboardingValidation = Joi.object({
     .trim()
     .required()
     .messages({
-      'string.base': 'Institute name must be a string',
+      'string.base': 'Institute name must be a string', 
       'any.required': 'Institute name is required',
-    }),
+    }), 
   institute_type: Joi.string()
     .valid('school', 'coaching', 'both')
     .required()

@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const instituteAdminSchema = new mongoose.Schema({
   institute_id: {
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'institutes_master',
+    ref: 'institutes_master', 
     required: true
   },
   name: {
     type: String,
-    required: true,
+    required: true, 
     trim: true
   },
   email: {

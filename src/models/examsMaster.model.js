@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const examsMasterSchema = new mongoose.Schema( 
   {
     institute_id: {
-      type: mongoose.Schema.Types.ObjectId,   
-      ref: "institutes_master", 
+      type: mongoose.Schema.Types.ObjectId,    
+      ref: "institutes_master",  
       required: true,
     },
     exam_name: {

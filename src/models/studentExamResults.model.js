@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const studentExamResultsSchema = new mongoose.Schema(
   { 
     exam_schedule_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,  
       ref: "ExamSchedules",
       required: true,
     },
