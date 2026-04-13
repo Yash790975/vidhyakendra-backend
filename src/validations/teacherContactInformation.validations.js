@@ -3,7 +3,7 @@ const Joi = require("joi");
 // Contact Information Validation
 const createContactValidation = Joi.object({
   teacher_id: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/)    
+    .pattern(/^[0-9a-fA-F]{24}$/)     
     .required(),
   mobile: Joi.string()       
     .pattern(/^[0-9]{10}$/)  

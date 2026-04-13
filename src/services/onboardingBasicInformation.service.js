@@ -1,7 +1,7 @@
 const OnboardingBasicInformation = require('../models/onboardingBasicInformation.model');
 const { sendWelcomeEmail } = require('./email.service');
 
-const createOnboarding = async (data) => {
+const createOnboarding = async (data) => {  
   try { 
     // Check if email already exists
     const existingEmail = await OnboardingBasicInformation.findOne({ email: data.email });
@@ -150,7 +150,7 @@ const verifyMobileNumber = async (mobile) => {
   try {
     const onboarding = await OnboardingBasicInformation.findOneAndUpdate(
       { mobile },
-      { mobile_number_verified: true },
+      { mobile_number_verified: true }, 
       { new: true }
     );
 
@@ -198,7 +198,7 @@ module.exports = {
   getOnboardingById,
   getOnboardingByMobile,
   getOnboardingByEmail,
-  updateOnboarding,
+  updateOnboarding,  
   deleteOnboarding,
   verifyMobileNumber,
   getVerifiedOnboardings,

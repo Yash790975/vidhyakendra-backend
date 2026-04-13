@@ -3,7 +3,7 @@ const otpService = require('../services/otp.service');
 const {
   createOnboardingValidation,
   updateOnboardingValidation,  
-  sendOTPValidation,
+  sendOTPValidation,  
   verifyOTPValidation,
   idValidation,
 } = require('../validations/onboardingBasicInformation.validation');

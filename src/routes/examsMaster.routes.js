@@ -4,10 +4,10 @@ const examController = require("../controllers/examsMaster.controller");
 
 // ============= EXAMS MASTER =============
 
-// Create exam
+// Create exam    
 router.post("/", examController.createExam);  
    
-// Get all exams with filters
+// Get all exams with filters 
 router.get("/", examController.getAllExams);
 
 // Get exam by ID

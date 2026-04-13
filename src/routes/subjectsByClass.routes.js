@@ -5,7 +5,7 @@ const subjectsByClassController = require('../controllers/subjectsByClass.contro
 // Create — POST /subject-by-class 
 router.post('/subject-by-class', subjectsByClassController.createSubjectByClass);
   
-// Read — all
+// Read — all  
 router.get('/subject-by-class', subjectsByClassController.getAllSubjectsByClass);
 
 // Read — by record ID

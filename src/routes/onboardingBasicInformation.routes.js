@@ -15,7 +15,7 @@ router.get('/verified', onboardingController.getVerifiedOnboardings);
 router.get('/unverified', onboardingController.getUnverifiedOnboardings);
 
 // Send OTP
-router.post('/send-otp', onboardingController.sendOTP);
+router.post('/send-otp', onboardingController.sendOTP); 
 
 // Resend OTP
 router.post('/resend-otp', onboardingController.resendOTP); 

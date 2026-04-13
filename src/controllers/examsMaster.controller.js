@@ -1,7 +1,7 @@
 const examService = require("../services/examsMaster.service");
 const statusCode = require("../enums/statusCode");
 const {
-  createExamValidation,
+  createExamValidation,  
   updateExamValidation,  
 } = require("../validations/examsMaster.validations"); 
 

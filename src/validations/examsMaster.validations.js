@@ -3,7 +3,7 @@ const Joi = require("joi");
 const createExamValidation = Joi.object({
   institute_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
-    .required()
+    .required()  
     .messages({  
       "string.pattern.base": "Invalid institute_id format",
       "any.required": "institute_id is required",
@@ -61,4 +61,4 @@ const updateExamValidation = Joi.object({
 module.exports = {
   createExamValidation,
   updateExamValidation,
-};
+}; 

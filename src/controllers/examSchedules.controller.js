@@ -2,7 +2,7 @@ const scheduleService = require("../services/examSchedules.service");
 const statusCode = require("../enums/statusCode");
 const {
   createExamScheduleValidation, 
-  updateExamScheduleValidation,
+  updateExamScheduleValidation,  
 } = require("../validations/examSchedules.validations"); 
 
 const createExamSchedule = async (req, res) => {

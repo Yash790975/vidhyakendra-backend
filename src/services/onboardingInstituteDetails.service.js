@@ -228,7 +228,7 @@ const getCompleteOnboardingData = async (basicInfoId) => {
   }
 };
 
-module.exports = { 
+module.exports = {     
   createInstituteDetails,
   getAllInstituteDetails,
   getInstituteDetailsById,

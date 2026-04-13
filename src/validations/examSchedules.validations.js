@@ -3,7 +3,7 @@ const Joi = require("joi");
 const createExamScheduleValidation = Joi.object({
   exam_id: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
-    .required()
+    .required()  
     .messages({
       "string.pattern.base": "Invalid exam_id format",
       "any.required": "exam_id is required",

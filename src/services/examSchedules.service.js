@@ -1,6 +1,6 @@
 const ExamSchedules = require("../models/examSchedules.model");
 const ExamsMaster = require("../models/examsMaster.model");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose");  
 
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode"); 

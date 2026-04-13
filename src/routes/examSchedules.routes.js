@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router(); 
 const scheduleController = require("../controllers/examSchedules.controller");
 
-// ============= EXAM SCHEDULES =============
+// ============= EXAM SCHEDULES ============= 
  
 // Create exam schedule
 router.post("/", scheduleController.createExamSchedule);
 
-// Get all exam schedules with filters 
+// Get all exam schedules with filters  
 router.get("/", scheduleController.getAllExamSchedules); 
  
 // Get exam schedule by ID

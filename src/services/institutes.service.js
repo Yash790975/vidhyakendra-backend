@@ -9,7 +9,7 @@ const { generateInstituteCode } = require('../utils/generateCodes');
 const mongoose = require('mongoose');  
  
 // ✅ Import createAdmin service directly (no HTTP call needed) 
-const { createAdmin } = require('./instituteAdmin.service');
+const { createAdmin } = require('./instituteAdmin.service'); 
 
 const activateInstitute = async (onboarding_basic_info_id, transaction_reference_id) => {
   try {

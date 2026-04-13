@@ -1,8 +1,8 @@
-// routes/instituteAdmin.routes.js
+// routes/instituteAdmin.routes.js 
 const express = require('express');
 const router = express.Router();
 const instituteAdminController = require('../controllers/instituteAdmin.controller');
-      
+       
 // Admin CRUD operations  
 router.post('/create', instituteAdminController.createAdmin);
 router.get('/get-all', instituteAdminController.getAllAdmins);
@@ -21,4 +21,4 @@ router.post('/reset-password', instituteAdminController.resetPassword);
 // Get admins by institute type
 router.get('/get-by-type/:type', instituteAdminController.getAdminsByInstituteType);
 
-module.exports = router;
+module.exports = router; 

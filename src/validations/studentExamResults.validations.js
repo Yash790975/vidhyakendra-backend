@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const createStudentExamResultValidation = Joi.object({
-  exam_schedule_id: Joi.string()
+  exam_schedule_id: Joi.string() 
     .pattern(/^[0-9a-fA-F]{24}$/)
     .required()
     .messages({
@@ -60,3 +60,4 @@ module.exports = {
   createStudentExamResultValidation,
   updateStudentExamResultValidation,
 };
+ 

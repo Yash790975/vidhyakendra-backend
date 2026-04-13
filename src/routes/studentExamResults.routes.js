@@ -3,7 +3,7 @@ const router = express.Router();
 const resultController = require("../controllers/studentExamResults.controller");
 
 // ============= STUDENT EXAM RESULTS ============= 
-
+  
 // Create student exam result
 router.post("/", resultController.createStudentExamResult);
 
