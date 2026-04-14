@@ -5,9 +5,8 @@ const onboardingInstituteDetailsSchema = new mongoose.Schema(
     onboarding_basic_info_id: {    
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'OnboardingBasicInformation',
-      // ref: 'onboarding_basic_information',
       required: [true, 'Onboarding basic info ID is required'], 
-      unique: true,
+      unique: true, // ✅ already indexed
     },
     school_board: { 
       type: String,
@@ -65,8 +64,7 @@ const onboardingInstituteDetailsSchema = new mongoose.Schema(
   }
 );
 
-// Indexes
-onboardingInstituteDetailsSchema.index({ onboarding_basic_info_id: 1 }, { unique: true });
+// ✅ Keep only useful indexes
 onboardingInstituteDetailsSchema.index({ school_board: 1 });
 onboardingInstituteDetailsSchema.index({ school_type: 1 });
 onboardingInstituteDetailsSchema.index({ medium: 1 });

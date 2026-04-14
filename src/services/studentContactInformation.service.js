@@ -1,7 +1,7 @@
 const StudentContactInformation = require("../models/studentContactInformation.model");
 const CustomError = require("../exceptions/CustomError");
 const statusCode = require("../enums/statusCode");
-const { sendOTPEmail } = require("./email.service"); 
+const { sendOTPEmail } = require("./email.service");  
 
 // ============= CONTACT INFORMATION =============
     
@@ -52,6 +52,50 @@ const createContact = async (contactData) => {
   return result;
 };
 
+// const verifyOTP = async (email, otp) => {
+//   const contact = await StudentContactInformation.findOne({ email });
+
+//   if (!contact) {
+//     throw new CustomError(
+//       "Contact information not found for this email",
+//       statusCode.NOT_FOUND
+//     );
+//   }
+
+//   if (contact.email_verified && contact.mobile_verified) {
+//     throw new CustomError("Contact already verified", statusCode.BAD_REQUEST);
+//   }
+
+//   if (!contact.otp || !contact.otp_expires_at) {
+//     throw new CustomError(
+//       "No OTP found. Please request a new one",
+//       statusCode.BAD_REQUEST
+//     );
+//   }
+
+//   if (new Date() > contact.otp_expires_at) {
+//     throw new CustomError("OTP has expired", statusCode.BAD_REQUEST);
+//   }
+
+//   if (contact.otp !== otp) {
+//     throw new CustomError("Invalid OTP", statusCode.BAD_REQUEST);
+//   }
+
+//   //  Verification success
+//   contact.email_verified = true;
+//   contact.mobile_verified = true;
+//   contact.otp = undefined;
+//   contact.otp_expires_at = undefined;
+
+//   await contact.save();
+
+//   const result = contact.toObject();
+//   delete result.otp;
+//   delete result.otp_expires_at;
+
+//   return result;
+// };
+
 const verifyOTP = async (email, otp) => {
   const contact = await StudentContactInformation.findOne({ email });
 
@@ -81,13 +125,35 @@ const verifyOTP = async (email, otp) => {
     throw new CustomError("Invalid OTP", statusCode.BAD_REQUEST);
   }
 
-  //  Verification success
+  // Verification success
   contact.email_verified = true;
   contact.mobile_verified = true;
   contact.otp = undefined;
   contact.otp_expires_at = undefined;
 
   await contact.save();
+
+  // ✅ Auto-create student auth credentials after email verification
+  // Only trigger if this is a primary contact (so credentials are sent to the right email)
+  if (contact.is_primary) {
+    try {
+      const studentAuthService = require("./studentAuth.service");
+
+      // Check if auth already exists to avoid duplicate creation
+      const StudentAuth = require("../models/studentAuth.model");
+      const existingAuth = await StudentAuth.findOne({ student_id: contact.student_id });
+
+      if (!existingAuth) { 
+        await studentAuthService.createStudentAuth({
+          student_id: contact.student_id.toString(),
+          status: "active"
+        });
+      }
+    } catch (authError) {
+      // Log the error but don't fail the OTP verification response
+      console.error("Failed to auto-create student auth after email verification:", authError.message);
+    }
+  }
 
   const result = contact.toObject();
   delete result.otp;

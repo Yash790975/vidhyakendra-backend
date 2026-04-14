@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const assessmentAnswersSchema = new mongoose.Schema(
   {
-    institute_id: {
+    institute_id: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: "institutes_master",
       required: true,

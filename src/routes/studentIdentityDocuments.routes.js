@@ -9,7 +9,7 @@ const {
 
 // Get identity documents by student ID
 router.get(
-  "/identity-document/student/:student_id",
+  "/identity-document/student/:student_id", 
   studentsController.getStudentIdentityDocumentsByStudentId
 );
 

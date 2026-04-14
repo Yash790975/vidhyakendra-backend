@@ -25,7 +25,7 @@ const feeReceiptSchema = new mongoose.Schema(
     receipt_number: {
       type: String,
       required: true,
-      unique: true,
+      unique: true, // ✅ already indexed
     },
     amount_paid: {
       type: mongoose.Types.Decimal128,
@@ -72,9 +72,9 @@ const feeReceiptSchema = new mongoose.Schema(
   }
 );
 
+// ✅ Keep only useful indexes
 feeReceiptSchema.index({ student_id: 1 });
 feeReceiptSchema.index({ student_fee_id: 1 });
 feeReceiptSchema.index({ institute_id: 1 });
-feeReceiptSchema.index({ receipt_number: 1 }, { unique: true });
 
-module.exports = mongoose.model("FeeReceipt", feeReceiptSchema); 
+module.exports = mongoose.model("FeeReceipt", feeReceiptSchema);

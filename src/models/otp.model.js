@@ -25,7 +25,7 @@ const otpSchema = new mongoose.Schema(
       type: Date,
       required: true,
       default: function() {
-        return new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
+        return new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
       }
     },
   },
@@ -34,12 +34,11 @@ const otpSchema = new mongoose.Schema(
   }
 );
 
-// Indexes
+// ✅ Indexes (clean)
 otpSchema.index({ mobile: 1 });
-otpSchema.index({ expires_at: 1 });
 otpSchema.index({ is_verified: 1 });
 
-// Auto-delete expired OTPs after 15 minutes
+// ✅ ONLY ONE index for expires_at (TTL)
 otpSchema.index({ expires_at: 1 }, { expireAfterSeconds: 900 });
 
 // Transform to include virtuals

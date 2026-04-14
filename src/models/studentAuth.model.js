@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const studentAuthSchema = new mongoose.Schema({  
   student_id: {    
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'StudentsMaster',  
+    ref: 'StudentsMaster',   
     required: true, 
     unique: true   
-  },   
+  },    
   username: {
     type: String,
     required: true,
@@ -57,8 +57,8 @@ const studentAuthSchema = new mongoose.Schema({
 });
 
 // Indexes for faster queries
-studentAuthSchema.index({ username: 1 });
-studentAuthSchema.index({ student_id: 1 });
+// studentAuthSchema.index({ username: 1 });
+// studentAuthSchema.index({ student_id: 1 });
 studentAuthSchema.index({ status: 1 });
 
 module.exports = mongoose.model('student_auth', studentAuthSchema);

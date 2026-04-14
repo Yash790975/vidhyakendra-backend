@@ -36,7 +36,7 @@ const coachingTeacherDetailSchema = new mongoose.Schema({
 });
 
 // Indexes
-coachingTeacherDetailSchema.index({ teacher_id: 1 });
+// coachingTeacherDetailSchema.index({ teacher_id: 1 });
 coachingTeacherDetailSchema.index({ institute_id: 1 });   
 coachingTeacherDetailSchema.index({ role: 1 });
 coachingTeacherDetailSchema.index({ batch_ids: 1 });

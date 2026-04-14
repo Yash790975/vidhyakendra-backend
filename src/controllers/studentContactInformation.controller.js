@@ -2,7 +2,7 @@ const studentsService = require("../services/studentContactInformation.service")
 const statusCode = require("../enums/statusCode");
 const { 
   createContactValidation,
-  updateContactValidation,
+  updateContactValidation, 
   verifyOTPValidation,
 } = require("../validations/studentContactInformation.validations");
 
@@ -267,7 +267,7 @@ module.exports = {
   verifyOTP,
   resendOTP,
   getContactByStudentId,
-  getAllContactsByStudentId,
+  getAllContactsByStudentId, 
   getPrimaryContactByStudentId,
   updateContact,
   getAllStudentsContacts,

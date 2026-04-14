@@ -3,7 +3,7 @@ const CustomError = require("../exceptions/CustomError");
 const Admin = require("../models/Admin"); 
 const mongoose = require("mongoose");
   
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer'); 
  
 
 
@@ -51,13 +51,6 @@ Vidhya Kendra School Management System Team
     } catch (err) {
       throw new CustomError("Failed to send welcome email. Please try again.", statusCode.INTERNAL_SERVER_ERROR);
     }
-
-
-
-
-
-
-
     return admin;
   } catch (error) {
     throw new CustomError(error.message || "Failed to add admin", statusCode.INTERNAL_SERVER_ERROR);
@@ -65,7 +58,7 @@ Vidhya Kendra School Management System Team
 };
 
 const update = async (data) => {
-  try {
+  try { 
     const id = data.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -84,7 +77,7 @@ const update = async (data) => {
       }
       admin.email = data.email;
     }
-
+ 
     if (data.name) {
       admin.name = data.name;
     }
@@ -112,46 +105,6 @@ const update = async (data) => {
   }
 };
 
- 
-// const update = async (data) => {
-//   try {
-//     const id = data.id;
-//     if (!mongoose.Types.ObjectId.isValid(id)) {
-//       throw new CustomError("Invalid admin ID format", statusCode.BAD_REQUEST);
-//     }
-
-//     const admin = await Admin.findById(id);
-//     if (!admin) {
-//       throw new CustomError("Admin not found", statusCode.NOT_FOUND);
-//     }
-
-//     if (data.email && data.email !== admin.email) {
-//       const conflict = await Admin.findOne({ _id: { $ne: id }, email: data.email });
-//       if (conflict) {
-//         throw new CustomError("Another admin with this email already exists", statusCode.BAD_REQUEST);
-//       }
-//       admin.email = data.email;
-//     }
-
-//     if (data.name) {
-//       admin.name = data.name;
-//     }
-
-//     if (data.mobile !== undefined) {
-//       admin.mobile = data.mobile;
-//     }
-
-//     if (data.password) {      
-//       admin.password = encryptPassword(data.password, admin.key);
-//     }
-
-//     const updatedAdmin = await admin.save();
-//     updatedAdmin.key = "";
-//     return updatedAdmin;
-//   } catch (error) {
-//     throw new CustomError(error.message || "Failed to update admin", statusCode.INTERNAL_SERVER_ERROR);
-//   }
-// };
 
 const remove = async (id) => {
   try {

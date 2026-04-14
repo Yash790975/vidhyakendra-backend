@@ -45,7 +45,7 @@ const teacherContactInformationSchema = new mongoose.Schema(
   }
 );
 
-teacherContactInformationSchema.index({ teacher_id: 1 });
+// teacherContactInformationSchema.index({ teacher_id: 1 });
 teacherContactInformationSchema.index({ email: 1 });
 
 module.exports = mongoose.model(

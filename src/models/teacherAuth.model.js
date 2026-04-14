@@ -63,8 +63,8 @@ const teacherAuthSchema = new mongoose.Schema({
 });
 
 // Indexes for faster queries
-teacherAuthSchema.index({ email: 1 });
-teacherAuthSchema.index({ teacher_id: 1 });
+
+// teacherAuthSchema.index({ teacher_id: 1 });
 teacherAuthSchema.index({ status: 1 });
 
 module.exports = mongoose.model('teacher_auth', teacherAuthSchema);

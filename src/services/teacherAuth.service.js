@@ -6,6 +6,13 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');  
 const statusCode = require('../enums/statusCode');
 
+// Returns the branded system name based on institute type
+// type: 'school' | 'coaching' | 'both' | undefined
+const getSystemLabel = (type) => {
+  if (type === 'coaching') return 'Vidhya Kendra Coaching Management System';
+  return 'Vidhya Kendra School Management System';
+};
+
 // Nodemailer transporter configuration
 const createTransporter = () => {
   return nodemailer.createTransport({
@@ -54,16 +61,17 @@ const decryptPassword = (encryptedPassword) => {
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
   let decrypted = decipher.update(encrypted, 'hex', 'utf8');
   decrypted += decipher.final('utf8');
-
+ 
   return decrypted;
 };
 
 // Send email
-const sendEmail = async (to, subject, html) => {
+const sendEmail = async (to, subject, html, instituteType) => {
   const transporter = createTransporter();
+  const systemLabel = getSystemLabel(instituteType);
 
   const mailOptions = {
-    from: `"School Management System" <${process.env.EMAIL_USER}>`,
+    from: `"${systemLabel}" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html,
@@ -75,7 +83,10 @@ const sendEmail = async (to, subject, html) => {
 // Create teacher auth
 const createTeacherAuth = async (data) => {
   // Check if teacher exists
-  const teacher = await Teacher.findById(data.teacher_id);
+  const teacher = await Teacher.findById(data.teacher_id).populate(
+    'institute_id',
+    'institute_name institute_type'
+  );
   if (!teacher) {
     const error = new Error('Teacher not found');
     error.statusCode = statusCode.NOT_FOUND;
@@ -119,11 +130,13 @@ const createTeacherAuth = async (data) => {
 
   await teacherAuth.save();
 
+  const systemLabel = getSystemLabel(teacher.institute_id?.institute_type);
+
   // Send email with credentials
   const emailSubject = 'Teacher Portal Credentials Created Successfully';
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">Welcome to the Teacher Portal</h2>
+      <h2 style="color: #333;">Welcome to the ${systemLabel} Teacher Portal</h2>
       <p>Dear ${teacher.full_name || 'Teacher'},</p>
       <p>Your Teacher Portal credentials have been created successfully.</p>
       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
@@ -132,11 +145,11 @@ const createTeacherAuth = async (data) => {
       </div>
       <p style="color: #d9534f;"><strong>Important:</strong> This is a temporary password. You will be required to change it upon your first login.</p>
       <p>Please keep these credentials secure and do not share them with anyone.</p>
-      <p>Best regards,<br/>School Management System Team</p>
+      <p>Best regards,<br/>${systemLabel} Team</p>
     </div>
   `;
 
-  await sendEmail(data.email, emailSubject, emailHtml);
+  await sendEmail(data.email, emailSubject, emailHtml, teacher.institute_id?.institute_type);
 
   // Remove sensitive data before returning
   const authObject = teacherAuth.toObject();
@@ -293,13 +306,12 @@ const deleteTeacherAuth = async (id) => {
 };
 
 // Verify login
-// Verify login
 const verifyLogin = async (email, password, login_type) => {
   const teacherAuth = await TeacherAuth.findOne({ email })
     .populate({
       path: 'teacher_id',
       populate: {
-        path: 'institute_id',                                         // ✅ nested populate added
+        path: 'institute_id',
         select: 'institute_name institute_code institute_type status'
       }
     });
@@ -325,7 +337,7 @@ const verifyLogin = async (email, password, login_type) => {
     throw error;
   }
 
-  // ✅ NEW: Validate institute_type against login_type
+  // ✅ Validate institute_type against login_type
   if (login_type) {
     const instituteType = teacherAuth.teacher_id?.institute_id?.institute_type; // 'school' | 'coaching' | 'both'
 
@@ -362,7 +374,13 @@ const verifyLogin = async (email, password, login_type) => {
 
 // Request OTP
 const requestOTP = async (email) => {
-  const teacherAuth = await TeacherAuth.findOne({ email });
+  const teacherAuth = await TeacherAuth.findOne({ email }).populate({
+    path: 'teacher_id',
+    populate: {
+      path: 'institute_id',
+      select: 'institute_type'
+    }
+  });
 
   if (!teacherAuth) {
     const error = new Error('Teacher not found with this email');
@@ -382,23 +400,26 @@ const requestOTP = async (email) => {
   const teacher = await Teacher.findById(teacherAuth.teacher_id);
   const teacherName = teacher ? teacher.full_name : 'Teacher';
 
+  const instituteType = teacherAuth.teacher_id?.institute_id?.institute_type;
+  const systemLabel = getSystemLabel(instituteType);
+
   // Send OTP email
-  const emailSubject = 'OTP for Password Reset';
+  const emailSubject = `OTP for Password Reset - ${systemLabel}`;
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Password Reset OTP</h2>
       <p>Dear ${teacherName},</p>
-      <p>You have requested to reset your password. Please use the following OTP to proceed:</p>
+      <p>You have requested to reset your ${systemLabel} Teacher Portal password. Please use the following OTP to proceed:</p>
       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0; text-align: center;">
         <h1 style="color: #007bff; margin: 0; letter-spacing: 5px;">${otp}</h1>
       </div>
       <p><strong>This OTP is valid for 10 minutes.</strong></p>
       <p>If you did not request this, please ignore this email.</p>
-      <p>Best regards,<br/>School Management System Team</p>
+      <p>Best regards,<br/>${systemLabel} Team</p>
     </div>
   `;
 
-  await sendEmail(email, emailSubject, emailHtml);
+  await sendEmail(email, emailSubject, emailHtml, instituteType);
 
   return { message: 'OTP sent successfully to your email' };
 };
@@ -436,7 +457,13 @@ const verifyOTP = async (email, otp) => {
 
 // Change password
 const changePassword = async (email, old_password, new_password) => {
-  const teacherAuth = await TeacherAuth.findOne({ email });
+  const teacherAuth = await TeacherAuth.findOne({ email }).populate({
+    path: 'teacher_id',
+    populate: {
+      path: 'institute_id',
+      select: 'institute_type'
+    }
+  });
 
   if (!teacherAuth) {
     const error = new Error('Teacher not found');
@@ -465,26 +492,35 @@ const changePassword = async (email, old_password, new_password) => {
   const teacher = await Teacher.findById(teacherAuth.teacher_id);
   const teacherName = teacher ? teacher.full_name : 'Teacher';
 
+  const instituteType = teacherAuth.teacher_id?.institute_id?.institute_type;
+  const systemLabel = getSystemLabel(instituteType);
+
   // Send confirmation email
   const emailSubject = 'Password Changed Successfully';
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Password Changed</h2>
       <p>Dear ${teacherName},</p>
-      <p>Your password has been changed successfully.</p>
+      <p>Your ${systemLabel} Teacher Portal password has been changed successfully.</p>
       <p>If you did not make this change, please contact support immediately.</p>
-      <p>Best regards,<br/>School Management System Team</p>
+      <p>Best regards,<br/>${systemLabel} Team</p>
     </div>
   `;
 
-  await sendEmail(email, emailSubject, emailHtml);
+  await sendEmail(email, emailSubject, emailHtml, instituteType);
 
   return { message: 'Password changed successfully' };
 };
 
 // Reset password (with OTP)
 const resetPassword = async (email, otp, new_password) => {
-  const teacherAuth = await TeacherAuth.findOne({ email });
+  const teacherAuth = await TeacherAuth.findOne({ email }).populate({
+    path: 'teacher_id',
+    populate: {
+      path: 'institute_id',
+      select: 'institute_type'
+    }
+  });
 
   if (!teacherAuth) {
     const error = new Error('Teacher not found');
@@ -526,19 +562,22 @@ const resetPassword = async (email, otp, new_password) => {
   const teacher = await Teacher.findById(teacherAuth.teacher_id);
   const teacherName = teacher ? teacher.full_name : 'Teacher';
 
+  const instituteType = teacherAuth.teacher_id?.institute_id?.institute_type;
+  const systemLabel = getSystemLabel(instituteType);
+
   // Send confirmation email
   const emailSubject = 'Password Reset Successfully';
   const emailHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Password Reset</h2>
       <p>Dear ${teacherName},</p>
-      <p>Your password has been reset successfully.</p>
+      <p>Your ${systemLabel} Teacher Portal password has been reset successfully.</p>
       <p>You can now login with your new password.</p>
-      <p>Best regards,<br/>School Management System Team</p>
+      <p>Best regards,<br/>${systemLabel} Team</p>
     </div>
   `;
 
-  await sendEmail(email, emailSubject, emailHtml);
+  await sendEmail(email, emailSubject, emailHtml, instituteType);
 
   return { message: 'Password reset successfully' };
 };
@@ -556,7 +595,6 @@ module.exports = {
   changePassword,
   resetPassword,
 };
-
 
 
 
@@ -675,7 +713,7 @@ module.exports = {
 //   const decipher = crypto.createDecipheriv(algorithm, key, iv);
 //   let decrypted = decipher.update(encrypted, 'hex', 'utf8');
 //   decrypted += decipher.final('utf8');
-
+ 
 //   return decrypted;
 // };
 
@@ -914,8 +952,16 @@ module.exports = {
 // };
 
 // // Verify login
-// const verifyLogin = async (email, password) => {
-//   const teacherAuth = await TeacherAuth.findOne({ email }).populate('teacher_id');
+// // Verify login
+// const verifyLogin = async (email, password, login_type) => {
+//   const teacherAuth = await TeacherAuth.findOne({ email })
+//     .populate({
+//       path: 'teacher_id',
+//       populate: {
+//         path: 'institute_id',                                         // ✅ nested populate added
+//         select: 'institute_name institute_code institute_type status'
+//       }
+//     });
 
 //   if (!teacherAuth) {
 //     const error = new Error('Invalid email or password');
@@ -938,6 +984,24 @@ module.exports = {
 //     throw error;
 //   }
 
+//   // ✅ NEW: Validate institute_type against login_type
+//   if (login_type) {
+//     const instituteType = teacherAuth.teacher_id?.institute_id?.institute_type; // 'school' | 'coaching' | 'both'
+
+//     if (!instituteType) {
+//       const error = new Error('Institute information not found for this teacher');
+//       error.statusCode = statusCode.FORBIDDEN;
+//       throw error;
+//     }
+
+//     if (instituteType !== 'both' && instituteType !== login_type) {
+//       const error = new Error(`A ${instituteType} teacher cannot log in to the ${login_type} portal`);
+//       error.statusCode = statusCode.FORBIDDEN;
+//       throw error;
+//     }
+//     // instituteType === 'both' → allow login to either portal
+//   }
+
 //   // Update last login
 //   teacherAuth.last_login_at = new Date();
 //   await teacherAuth.save();
@@ -953,6 +1017,7 @@ module.exports = {
 //     is_first_login: teacherAuth.is_first_login,
 //   };
 // };
+
 
 // // Request OTP
 // const requestOTP = async (email) => {
@@ -1150,4 +1215,3 @@ module.exports = {
 //   changePassword,
 //   resetPassword,
 // };
-

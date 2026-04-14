@@ -4,14 +4,14 @@ const assessmentsController = require("../controllers/assessments.controller");
 
 // Create assessment
 // Body must include institute_type: "school" | "coaching"  
-// School  → class_id required, batch_id must be null
-// Coaching → batch_id required, class_id/section_id must be null
+// School  → class_id required, batch_id must be null 
+// Coaching → batch_id required, class_id/section_id must be null 
 router.post("/", assessmentsController.createAssessment);
 
 // Get all assessments
 // Filters: institute_id, institute_type, class_id, section_id,
 //          batch_id, subject_id, created_by, status,
-//          assessment_type, academic_year, available_now
+//          assessment_type, academic_year, available_now 
 router.get("/", assessmentsController.getAllAssessments);
 
 // Get assessment analytics — teacher dashboard

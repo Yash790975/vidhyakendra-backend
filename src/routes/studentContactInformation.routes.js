@@ -17,7 +17,7 @@ router.get("/contacts/:student_id", studentsController.getAllContactsByStudentId
 router.get("/contact/primary/:student_id", studentsController.getPrimaryContactByStudentId);
 
 // Update contact by contact ID
-router.put("/contact/:id", studentsController.updateContact);
+router.put("/contact/:id", studentsController.updateContact); 
 
 // Get all students contacts with filters
 router.get("/contact", studentsController.getAllStudentsContacts);

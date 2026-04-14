@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 // Contact Information Validation
 const createContactValidation = Joi.object({
-  student_id: Joi.string()
+  student_id: Joi.string() 
     .pattern(/^[0-9a-fA-F]{24}$/)
     .required()
     .messages({

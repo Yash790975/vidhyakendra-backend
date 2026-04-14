@@ -33,12 +33,12 @@ const subscriptionPlanMasterSchema = new mongoose.Schema(
     collection: "subscription_plan_master" 
   }
 ); 
-
+ 
 // Indexes
-subscriptionPlanMasterSchema.index({ plan_name: 1 });
+
 subscriptionPlanMasterSchema.index({ is_active: 1 });
 
-const SubscriptionPlanMaster = mongoose.model(
+const SubscriptionPlanMaster = mongoose.model( 
   'SubscriptionPlanMaster',
   subscriptionPlanMasterSchema
 );

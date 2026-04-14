@@ -5,7 +5,7 @@ const optionSchema = Joi.object({
     "any.required": "option_id is required",
   }),
   option_text: Joi.string().required().messages({
-    "any.required": "option_text is required",
+    "any.required": "option_text is required", 
   }),
 });
 
