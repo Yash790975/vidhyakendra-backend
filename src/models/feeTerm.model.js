@@ -5,7 +5,7 @@ const feeTermSchema = new mongoose.Schema(
     institute_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "institutes_master",
-      required: true,
+      required: true, 
     },
     academic_year: {
       type: String,

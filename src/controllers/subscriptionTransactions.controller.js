@@ -4,7 +4,7 @@ const {
   updateSubscriptionTransactionValidation
 } = require('../validations/subscriptionTransactions.validation');
 const statusCode = require('../enums/statusCode');
- 
+  
 const createSubscriptionTransaction = async (req, res) => {
   try {
     const { error } = createSubscriptionTransactionValidation.validate(req.body);

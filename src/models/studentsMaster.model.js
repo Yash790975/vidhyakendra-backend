@@ -34,7 +34,6 @@ const studentsMasterSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    // NEW FIELDS
     religion: {
       type: String,
       default: null,
@@ -54,8 +53,13 @@ const studentsMasterSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["active", "inactive", "blocked", "archived"],
-      default: "active",
+      // "onboarding" = newly created, awaiting admin approval
+      // "active"     = approved and fully enrolled
+      // "inactive"   = temporarily disabled
+      // "blocked"    = access revoked
+      // "archived"   = soft-deleted / alumni
+      enum: ["onboarding", "active", "inactive", "blocked", "archived"],
+      default: "onboarding",
     },
     archived_at: {
       type: Date,
@@ -128,6 +132,33 @@ module.exports = mongoose.model("StudentsMaster", studentsMasterSchema);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // const mongoose = require("mongoose");
 
 // const studentsMasterSchema = new mongoose.Schema(
@@ -136,9 +167,9 @@ module.exports = mongoose.model("StudentsMaster", studentsMasterSchema);
 //       type: mongoose.Schema.Types.ObjectId,
 //       ref: "institutes_master",
 //       required: true,
-//     }, 
+//     },
 //     student_code: {
-//       type: String, 
+//       type: String,
 //       required: true,
 //       description: "Unique institute-level student code",
 //     },
@@ -158,17 +189,34 @@ module.exports = mongoose.model("StudentsMaster", studentsMasterSchema);
 //     },
 //     date_of_birth: {
 //       type: Date,
-//       required: true, 
+//       required: true,
 //     },
 //     blood_group: {
-//       type: String, 
+//       type: String,
 //       default: null,
 //     },
-//     status: {
+//     // NEW FIELDS
+//     religion: {
+//       type: String,
+//       default: null,
+//     },
+//     caste: {
+//       type: String,
+//       default: null,
+//     },
+//     category: {
+//       type: String,
+//       default: null,
+//     },
+//     nationality: {
+//       type: String,
+//       default: null,
+//     },
+//     status: {  
 //       type: String,
 //       required: true,
-//       enum: ["active", "inactive", "blocked", "archived"],
-//       default: "active",
+//       enum: ["active", "inactive", "blocked", "archived"], 
+//       default: "active", 
 //     },
 //     archived_at: {
 //       type: Date,
@@ -177,7 +225,7 @@ module.exports = mongoose.model("StudentsMaster", studentsMasterSchema);
 //   },
 //   {
 //     timestamps: true,
-//     collection: "students_master", 
+//     collection: "students_master",
 //   }
 // );
 
@@ -186,7 +234,7 @@ module.exports = mongoose.model("StudentsMaster", studentsMasterSchema);
 //   { institute_id: 1, student_code: 1 },
 //   { unique: true }
 // );
-   
+
 // // Additional indexes
 // studentsMasterSchema.index({ status: 1 });
 // studentsMasterSchema.index({ student_type: 1 });

@@ -14,7 +14,7 @@ router.put('/subject/:id', subjectsMasterController.updateSubject);
 router.delete('/subject/:id', subjectsMasterController.deleteSubject);
 
 module.exports = router;
-
+ 
 
 
 

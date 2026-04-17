@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const feeTermController = require("../controllers/feeTerm.controller");
 
-// ============= FEE TERMS =============
-
+// ============= FEE TERMS ============= 
+ 
 // Get all fee terms (supports query filters: institute_id, academic_year, status)
 router.get("/fee-term", feeTermController.getAllFeeTerms);
 
@@ -29,3 +29,4 @@ router.put("/fee-term/:id", feeTermController.updateFeeTerm);
 router.delete("/fee-term/:id", feeTermController.deleteFeeTerm);
 
 module.exports = router;
+ 

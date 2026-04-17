@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const createFeeTermValidation = Joi.object({
   institute_id: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/)
+    .pattern(/^[0-9a-fA-F]{24}$/) 
     .required(),
   academic_year: Joi.string().required(),
   term_order: Joi.number().integer().min(1).allow(null).default(null),

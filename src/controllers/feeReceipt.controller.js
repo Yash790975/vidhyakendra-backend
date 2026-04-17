@@ -1,8 +1,8 @@
 const feeReceiptService = require("../services/feeReceipt.service");
 const statusCode = require("../enums/statusCode");
 const {
-  createFeeReceiptValidation,
-} = require("../validations/feeReceipt.validations"); 
+  createFeeReceiptValidation,  
+} = require("../validations/feeReceipt.validations");  
 
 const createFeeReceipt = async (req, res) => {
   try {
@@ -157,7 +157,7 @@ const deleteFeeReceipt = async (req, res) => {
 };
 
 module.exports = {
-  createFeeReceipt,
+  createFeeReceipt, 
   getAllFeeReceipts,
   getFeeReceiptById,
   getFeeReceiptsByStudentId,

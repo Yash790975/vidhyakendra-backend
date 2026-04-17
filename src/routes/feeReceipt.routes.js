@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const feeReceiptController = require("../controllers/feeReceipt.controller");
-
+   
 // ============= FEE RECEIPTS =============
 
 // Get all fee receipts (supports query filters: institute_id, student_id)

@@ -1,7 +1,7 @@
 const InstituteSubscriptionTransactions = require('../models/instituteSubscriptionTransactions.model');
 
 const createSubscriptionTransaction = async (transactionData) => {
-  const transaction = new InstituteSubscriptionTransactions(transactionData);
+  const transaction = new InstituteSubscriptionTransactions(transactionData); 
   return await transaction.save();
 };
  

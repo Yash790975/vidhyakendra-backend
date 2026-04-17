@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const feeReceiptSchema = new mongoose.Schema(
   {
-    institute_id: {
+    institute_id: {  
       type: mongoose.Schema.Types.ObjectId,
       ref: "institutes_master",
       required: true,
     },
     student_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "StudentsMaster", 
+      ref: "StudentsMaster",  
       required: true,
     },
     student_fee_id: {

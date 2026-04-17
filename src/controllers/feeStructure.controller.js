@@ -1,5 +1,6 @@
 const feeStructureService = require("../services/feeStructure.service");
-const statusCode = require("../enums/statusCode");
+const StudentFee          = require("../models/studentFee.model");
+const statusCode          = require("../enums/statusCode");
 const {
   createFeeStructureValidation,
   updateFeeStructureValidation,
@@ -10,30 +11,30 @@ const createFeeStructure = async (req, res) => {
     const { error, value } = createFeeStructureValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
+        success:     false,
         isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: {},
-        message: error.details[0].message,
+        statusCode:  statusCode.BAD_REQUEST,
+        result:      {},
+        message:     error.details[0].message,
       });
     }
 
     const feeStructure = await feeStructureService.createFeeStructure(value);
 
     res.status(statusCode.CREATED).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.CREATED,
-      result: feeStructure,
-      message: "Fee structure created successfully",
+      statusCode:  statusCode.CREATED,
+      result:      feeStructure,
+      message:     "Fee structure created successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to create fee structure",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to create fee structure",
     });
   }
 };
@@ -41,29 +42,29 @@ const createFeeStructure = async (req, res) => {
 const getAllFeeStructures = async (req, res) => {
   try {
     const filters = {
-      institute_id: req.query.institute_id,
-      class_id: req.query.class_id,
-      batch_id: req.query.batch_id,       // Coaching-compatible filter
+      institute_id:  req.query.institute_id,
+      class_id:      req.query.class_id,
+      batch_id:      req.query.batch_id,
       academic_year: req.query.academic_year,
-      status: req.query.status,
+      status:        req.query.status,
     };
 
     const feeStructures = await feeStructureService.getAllFeeStructures(filters);
 
     res.status(statusCode.OK).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.OK,
-      result: feeStructures,
-      message: "Fee structures retrieved successfully",
+      statusCode:  statusCode.OK,
+      result:      feeStructures,
+      message:     "Fee structures retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to retrieve fee structures",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to retrieve fee structures",
     });
   }
 };
@@ -75,19 +76,19 @@ const getFeeStructureById = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.OK,
-      result: feeStructure,
-      message: "Fee structure retrieved successfully",
+      statusCode:  statusCode.OK,
+      result:      feeStructure,
+      message:     "Fee structure retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to retrieve fee structure",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to retrieve fee structure",
     });
   }
 };
@@ -96,7 +97,7 @@ const getFeeStructuresByClass = async (req, res) => {
   try {
     const filters = {
       academic_year: req.query.academic_year,
-      status: req.query.status,
+      status:        req.query.status,
     };
 
     const feeStructures = await feeStructureService.getFeeStructuresByClass(
@@ -105,29 +106,28 @@ const getFeeStructuresByClass = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.OK,
-      result: feeStructures,
-      message: "Fee structures retrieved successfully",
+      statusCode:  statusCode.OK,
+      result:      feeStructures,
+      message:     "Fee structures retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to retrieve fee structures",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to retrieve fee structures",
     });
   }
 };
 
-// Coaching-compatible: get fee structures by batch ID
 const getFeeStructuresByBatch = async (req, res) => {
   try {
     const filters = {
       academic_year: req.query.academic_year,
-      status: req.query.status,
+      status:        req.query.status,
     };
 
     const feeStructures = await feeStructureService.getFeeStructuresByBatch(
@@ -136,35 +136,48 @@ const getFeeStructuresByBatch = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.OK,
-      result: feeStructures,
-      message: "Fee structures retrieved successfully",
+      statusCode:  statusCode.OK,
+      result:      feeStructures,
+      message:     "Fee structures retrieved successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to retrieve fee structures",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to retrieve fee structures",
     });
   }
 };
 
+/**
+ * PUT /fee-structure/:id
+ *
+ * Updates the fee structure and cascades to all student fees linked to it.
+ * Response includes:
+ *   - result.feeStructure        — updated structure (with recomputed total_annual_amount)
+ *   - result.cascadeUpdatedCount — number of student fee records recalculated
+ */
 const updateFeeStructure = async (req, res) => {
   try {
     const { error, value } = updateFeeStructureValidation.validate(req.body);
     if (error) {
       return res.status(statusCode.BAD_REQUEST).json({
-        success: false,
+        success:     false,
         isException: false,
-        statusCode: statusCode.BAD_REQUEST,
-        result: {},
-        message: error.details[0].message,
+        statusCode:  statusCode.BAD_REQUEST,
+        result:      {},
+        message:     error.details[0].message,
       });
     }
+
+    // Count affected student fees before update (for response info)
+    const cascadeCount = await StudentFee.countDocuments({
+      fee_structure_id: req.params.id,
+    });
 
     const feeStructure = await feeStructureService.updateFeeStructure(
       req.params.id,
@@ -172,19 +185,24 @@ const updateFeeStructure = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.OK,
-      result: feeStructure,
-      message: "Fee structure updated successfully",
+      statusCode:  statusCode.OK,
+      result: {
+        feeStructure,
+        cascadeUpdatedCount: cascadeCount,
+      },
+      message: cascadeCount > 0
+        ? `Fee structure updated. ${cascadeCount} student fee record(s) recalculated.`
+        : "Fee structure updated successfully.",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to update fee structure",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to update fee structure",
     });
   }
 };
@@ -196,19 +214,19 @@ const deleteFeeStructure = async (req, res) => {
     );
 
     res.status(statusCode.OK).json({
-      success: true,
+      success:     true,
       isException: false,
-      statusCode: statusCode.OK,
-      result: feeStructure,
-      message: "Fee structure deleted successfully",
+      statusCode:  statusCode.OK,
+      result:      feeStructure,
+      message:     "Fee structure deleted successfully",
     });
   } catch (err) {
     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
+      success:     false,
       isException: err.exception || true,
-      statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
-      result: {},
-      message: err.message || "Failed to delete fee structure",
+      statusCode:  err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+      result:      {},
+      message:     err.message || "Failed to delete fee structure",
     });
   }
 };
@@ -271,36 +289,12 @@ module.exports = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const feeStructureService = require("../services/feeStructure.service");
 // const statusCode = require("../enums/statusCode");
-// const {  
+// const {
 //   createFeeStructureValidation,
 //   updateFeeStructureValidation,
-// } = require("../validations/feeStructure.validations");   
+// } = require("../validations/feeStructure.validations"); 
 
 // const createFeeStructure = async (req, res) => { 
 //   try {
@@ -340,6 +334,7 @@ module.exports = {
 //     const filters = {
 //       institute_id: req.query.institute_id,
 //       class_id: req.query.class_id,
+//       batch_id: req.query.batch_id,       // Coaching-compatible filter
 //       academic_year: req.query.academic_year,
 //       status: req.query.status,
 //     };
@@ -397,6 +392,37 @@ module.exports = {
 
 //     const feeStructures = await feeStructureService.getFeeStructuresByClass(
 //       req.params.class_id,
+//       filters
+//     );
+
+//     res.status(statusCode.OK).json({
+//       success: true,
+//       isException: false,
+//       statusCode: statusCode.OK,
+//       result: feeStructures,
+//       message: "Fee structures retrieved successfully",
+//     });
+//   } catch (err) {
+//     res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
+//       success: false,
+//       isException: err.exception || true,
+//       statusCode: err.statusCode || statusCode.INTERNAL_SERVER_ERROR,
+//       result: {},
+//       message: err.message || "Failed to retrieve fee structures",
+//     });
+//   }
+// };
+
+// // Coaching-compatible: get fee structures by batch ID
+// const getFeeStructuresByBatch = async (req, res) => {
+//   try {
+//     const filters = {
+//       academic_year: req.query.academic_year,
+//       status: req.query.status,
+//     };
+
+//     const feeStructures = await feeStructureService.getFeeStructuresByBatch(
+//       req.params.batch_id,
 //       filters
 //     );
 
@@ -483,6 +509,7 @@ module.exports = {
 //   getAllFeeStructures,
 //   getFeeStructureById,
 //   getFeeStructuresByClass,
+//   getFeeStructuresByBatch,
 //   updateFeeStructure,
 //   deleteFeeStructure,
 // };
